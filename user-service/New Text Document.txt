@@ -1,0 +1,44 @@
+/project-root
+│
+├── /src
+│   ├── /config                # Configuration files
+│   │   └── database.ts
+│   │   └── index.ts
+│   │
+│   ├── /controllers           # HTTP request handlers
+│   │   └── userController.ts
+│   │   └── postController.ts
+│   │
+│   ├── /models                # Mongoose models
+│   │   └── User.ts
+│   │   └── Post.ts
+│   │
+│   ├── /repositories          # Data access layer
+│   │   └── userRepository.ts
+│   │   └── postRepository.ts
+│   │
+│   ├── /routes                # Express routes
+│   │   └── userRoutes.ts
+│   │   └── postRoutes.ts
+│   │
+│   ├── /services              # Business logic
+│   │   └── userService.ts
+│   │   └── postService.ts
+│   │
+│   ├── /utils                 # Utility functions
+│   │   └── logger.ts
+│   │   └── helpers.ts
+│   │
+│   └── app.ts                 # Express app setup
+│
+├── /test                      # Test files
+│   ├── /unit                  # Unit tests
+│   ├── /integration           # Integration tests
+│   └── /e2e                   # End-to-end tests
+│
+├── .env                       # Environment variables
+├── .gitignore                 # Git ignore file
+├── package.json               # NPM dependencies and scripts
+├── tsconfig.json              # TypeScript configuration
+├── README.md                  # Project documentation
+└── server.ts                  # Entry point

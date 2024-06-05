@@ -16,3 +16,9 @@ Jun 4, Tue
 - User-service: Created folder structure.
 
 --- "User-Service : Folder Structure" ---
+
+Jun 5, Wed
+
+- frontend: Created UI of signup page.
+
+--- "Frontend : SignupFormUI" ---

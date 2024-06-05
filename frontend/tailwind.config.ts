@@ -11,7 +11,8 @@ const config: Config = {
     extend: {
       colors: {
         rootBg: '#22c55e', // Define your custom color here
-        feedBg : '#020617'
+        feedBg : '#020617',
+        secColor : '#1e293b' //secondary color: gray
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
