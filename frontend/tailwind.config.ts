@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  mode: 'jit',
+  mode: "jit",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,9 +10,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        rootBg: '#22c55e', // Define your custom color here
-        feedBg : '#020617',
-        secColor : '#1e293b' //secondary color: gray
+        rootBg: "#22c55e", // Define your custom color here
+        rootBgH: "#22c55e", // Define your custom color here: Hover
+        feedBg: "#020617", //black
+        secColor: "#1e293b", //secondary color: gray
+        secColorH: "#475569", //secondary color:  Hover
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -24,4 +26,3 @@ const config: Config = {
   plugins: [],
 };
 export default config;
-

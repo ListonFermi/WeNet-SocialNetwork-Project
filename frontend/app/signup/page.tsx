@@ -1,18 +1,30 @@
 import Navbar from "@/components/Navbar";
-import SignupForm from "@/components/SignupForm/SignupForm";
-import VerifyUserForm from "@/components/SignupForm/VerifyUserForm";
+import SignupForm from "@/components/signup/SignupForm";
+import VerifyUserForm from "@/components/signup/VerifyUserForm";
+import LeftDiv from "@/components/page/LeftDiv";
+import RightDiv from "@/components/page/RightDiv";
 import React from "react";
 
 function Signup() {
   return (
-    <div className="bg-black min-h-screen">
+    <div className="max-h-screen flex flex-col">
+      {/* Navbar */}
       <Navbar />
-      {/* <div className="w-screen flex justify-center pt-8">
-        <h1 className="text-white text-4xl font-bold">Signup</h1>
-      </div> */}
-      <div className="flex justify-center max-h-screen pt-10" >
-        {/* <SignupForm /> */}
-        <VerifyUserForm/>
+      {/* Main Content */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* LeftDiv */}
+        <div className="relative flex-1 hidden md:block bg-gray-800">
+          <LeftDiv />
+        </div>
+        {/* Feed */}
+        <div className="flex-1 md:flex-2 lg:flex-3 xl:flex-4 p-4 h-screen overflow-y-auto no-scrollbar bg-secColor">
+          {/* <SignupForm /> */}
+          <VerifyUserForm/>
+        </div>
+        {/* RightDiv */}
+        <div className="relative flex-1 hidden md:block bg-gray-800">
+          <RightDiv />
+        </div>
       </div>
     </div>
   );

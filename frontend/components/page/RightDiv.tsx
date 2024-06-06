@@ -1,15 +1,17 @@
-// 'use client'
 import Link from "next/link";
 import React from "react";
 import Button from "../Button";
+import Image from "next/image";
 
 function RightDiv() {
   return (
     <div className="relative flex items-center justify-center h-full">
       {/* Background Image */}
-      <img
+      <Image
         src="/img/HomePageRight.jpg"
         alt="Right-Background"
+        width={500}
+        height={500}
         className="absolute inset-0 w-full h-full object-cover opacity-10"
       />
       {/* Text Content */}

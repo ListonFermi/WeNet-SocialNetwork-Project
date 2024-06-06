@@ -22,3 +22,9 @@ Jun 5, Wed
 - frontend: Created UI of signup page.
 
 --- "Frontend : SignupFormUI" ---
+
+Jun 6, Thu
+
+- frontend: Created UI verify user, login and user feed.
+
+--- "Frontend : UserFeedUI" ---
