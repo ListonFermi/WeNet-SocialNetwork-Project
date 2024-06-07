@@ -7,11 +7,12 @@ interface IProfessionalAccount {
 }
 
 interface IUser extends Document {
+  _id? : string | Schema.Types.ObjectId;
   username: string;
   firstName: string;
   lastName: string;
   password: string;
-  email: string;
+  email: string ;
   dateOfBirth?: Date;
   gender?: "male" | "female";
   isRestricted?: boolean;
@@ -38,17 +39,17 @@ const ProfessionalAccountSchema = new Schema<IProfessionalAccount>({
 
 const UserSchema = new Schema<IUser>(
   {
-    username: { type: String, required: true, unique: true },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    password: { type: String, required: true },
-    email: { type: String, unique: true },
+    username: { type: String, trim: true, required: true, unique: true },
+    firstName: { type: String, trim: true, required: true },
+    lastName: { type: String, trim: true, required: true },
+    password: { type: String, trim: true, required: true },
+    email: { type: String, trim: true, unique: true, sparse: true },
     dateOfBirth: { type: Date },
     gender: { type: String, enum: ["male", "female"] },
     isRestricted: { type: Boolean, required: true, default: false },
     bio: { type: String },
-    profilePicUrl: { type: String },
-    coverPicUrl: { type: String },
+    profilePicUrl: { type: String, trim: true },
+    coverPicUrl: { type: String, trim: true },
     followers: [{ type: Schema.Types.ObjectId, ref: "users" }],
     following: [{ type: Schema.Types.ObjectId, ref: "users" }],
     postsCount: { type: Number, required: true, default: 0 },

@@ -28,3 +28,9 @@ Jun 6, Thu
 - frontend: Created UI verify user, login and user feed.
 
 --- "Frontend : UserFeedUI" ---
+
+Jun 7, Fri
+
+- user-service: Did signup api and send otp apis.
+
+--- "User-Service : Signup & SendOTP" ---

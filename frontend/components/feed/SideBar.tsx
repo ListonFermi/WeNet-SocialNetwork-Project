@@ -78,7 +78,7 @@ function SideBar() {
         </div>
         <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
           <Image
-            src="/icons/menu.svg"
+            src="/icons/menu2.svg"
             alt="Home Logo"
             width={50}
             height={50}
