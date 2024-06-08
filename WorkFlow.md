@@ -34,3 +34,10 @@ Jun 7, Fri
 - user-service: Did signup api and send otp apis.
 
 --- "User-Service : Signup & SendOTP" ---
+
+Jun 8, Sat
+
+- user-service: Did verify otp api
+- frontend: completed the functionaliy in the signup page & verify otp pages
+
+--- "Pages Fuctionality : Signup, Verify OTP" ---

@@ -1,11 +1,15 @@
+import StoreProvided from "@/components/redux/StoreProvided";
+
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  )
+    <StoreProvided>
+      <html lang="en">
+        <body>{children}</body>
+      </html>
+    </StoreProvided>
+  );
 }

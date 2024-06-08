@@ -1,8 +1,7 @@
 import Navbar from "@/components/Navbar";
-import SignupForm from "@/components/signup/SignupForm";
-import VerifyUserForm from "@/components/signup/VerifyUserForm";
 import LeftDiv from "@/components/page/LeftDiv";
 import RightDiv from "@/components/page/RightDiv";
+import CenterDiv from "@/components/signup/CenterDiv";
 import React from "react";
 
 function Signup() {
@@ -19,7 +18,7 @@ function Signup() {
         {/* Feed */}
         <div className="flex-1 md:flex-2 lg:flex-3 xl:flex-4 p-4 h-screen overflow-y-auto no-scrollbar bg-secColor">
           {/* <SignupForm /> */}
-          <VerifyUserForm/>
+          <CenterDiv/>
         </div>
         {/* RightDiv */}
         <div className="relative flex-1 hidden md:block bg-gray-800">

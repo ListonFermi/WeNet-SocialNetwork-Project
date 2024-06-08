@@ -18,10 +18,6 @@ export const OTPHelper = {
   }),
   sendMail: async function (email: string, otp: string) {
     try {
-      console.log('process.env.GMAIL_ID: '+process.env.GMAIL_ID+'process.env.GMAIL_PASS: '+process.env.GMAIL_PASS)
-      console.log('transpoter: ')
-      console.log(this.transporter)
-      console.log('email to be sent: '+email)
       await this.transporter.sendMail({
         from: process.env.GMAIL_ID,
         to: email,
@@ -29,7 +25,7 @@ export const OTPHelper = {
         text: `Your OTP is ${otp}`,
       });
     } catch (error: any) {
-      console.log(error)
+      console.error(error)
       throw new Error(error.message)
     }
   },

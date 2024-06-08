@@ -18,8 +18,14 @@ export = {
   },
   sendOTP: async (email: string): Promise<String> => {
     try {
-      await userRepository.sendOTP(email);
-      return "";
+      return await userRepository.sendOTP(email);    
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  verifyOTP: async (_id: string, otp: string): Promise<String> => {
+    try {
+      return await userRepository.verifyOTP(_id,otp);
     } catch (error: any) {
       throw new Error(error.message);
     }

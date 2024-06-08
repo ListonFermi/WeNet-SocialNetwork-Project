@@ -19,7 +19,7 @@ export = {
       const user = new userCollection(userData);
       return await user.save();
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       throw new Error(error.message);
     }
   },
@@ -33,17 +33,36 @@ export = {
       user.gender = gender;
       return await user.save();
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       throw new Error(error.message);
     }
   },
   sendOTP: async (email: string): Promise<string> => {
     try {
-      let otp= OTPHelper.generateOTP()
-      const user = await userCollection.findOne({email})
-      await OTPCollection.insertMany([{_id: user?._id, otp: hash.hashString(otp) }])
-      await OTPHelper.sendMail(email,otp)
-      return "";
+      let otp = OTPHelper.generateOTP();
+      const user = await userCollection.findOne({ email });
+      await OTPCollection.insertMany([
+        { _id: user?._id, otp: hash.hashString(otp) },
+      ]);
+      await OTPHelper.sendMail(email, otp);
+      return "Email sent successfully";
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  verifyOTP: async (_id: string, otp: string): Promise<string> => {
+    try {
+      const otpFromDb: any = await OTPCollection.findOne({ _id });
+      if (!otpFromDb) throw new Error("Error verifying OTP from database");
+
+      const timeNow = new Date().getTime();
+      const otpUpdatedAt = new Date(otpFromDb.updatedAt).getTime();
+      const isWithinLimit = (timeNow - otpUpdatedAt) / 1000 < 60;
+      if (!isWithinLimit) throw new Error("Time limit exceeded");
+
+      const isVerified = hash.compareHash(otp, otpFromDb.otp);
+      if (isVerified) return "Successfully verified OTP";
+      else throw new Error("OTP verification failed");
     } catch (error: any) {
       throw new Error(error.message);
     }

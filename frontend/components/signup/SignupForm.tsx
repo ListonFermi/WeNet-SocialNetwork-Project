@@ -1,9 +1,30 @@
 "use client";
 import React from "react";
+import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import LoginWithGoogle from "../LoginWithGoogle";
+import { ToastContainer, toast, Bounce, ToastOptions } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { verifyUser } from "@/redux/userSlice";
 
-function SignupForm() {
+interface SignupFormProps {
+  setIsVerifyForm: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const toastOptions: ToastOptions = {
+  position: "top-center",
+  autoClose: 1500,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "dark",
+  transition: Bounce,
+};
+
+const SignupForm: React.FC<SignupFormProps> = ({ setIsVerifyForm }) => {
   type Inputs = {
     username: string;
     firstName: string;
@@ -12,6 +33,8 @@ function SignupForm() {
     confirmPassword: string;
   };
 
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -19,10 +42,32 @@ function SignupForm() {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {};
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+      let response: any = await toast.promise(
+        axios.post(`${userServiceUrl}/signup`, data),
+        {
+          pending: "Signing up",
+          success: "User registered successfully",
+          error: "Failed to signup",
+        },
+        toastOptions
+      );
+      dispatch(verifyUser({ _id: response.data._id }));
+      setIsVerifyForm(true);
+    } catch (error: any) {
+      console.error(error)
+      const errorMessage = error?.response?.data?.length
+        ? error.response.data
+        : "Failed to signup";
+      toast.error(errorMessage, toastOptions);
+    }
+  };
 
   return (
     <>
+      <ToastContainer />
       <div className="w-full flex justify-center py-10">
         <h1 className="text-3xl text-white font-bold">Signup</h1>
       </div>
@@ -34,9 +79,6 @@ function SignupForm() {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="mb-4">
-            {/* <label htmlFor="username" className="block text-gray-500 text-sm font-bold mb-2">
-            Username
-          </label> */}
             <input
               type="text"
               id="username"
@@ -46,9 +88,9 @@ function SignupForm() {
                 pattern: {
                   value: /^[A-Za-z]+$/i,
                   message:
-                    "Please valid characters only. [Alphabets A to Z, a to z ]",
+                    "Please use valid characters only. [Alphabets A to Z, a to z ]",
                 },
-                minLength: { value: 5, message: "Enter atleast 5 characters" },
+                minLength: { value: 5, message: "Enter at least 5 characters" },
               })}
               className="bg-black shadow appearance-none  rounded w-full py-2 px-3 text-white text-lg font-semibold leading-tight focus:outline-none focus:shadow-outline"
             />
@@ -56,12 +98,6 @@ function SignupForm() {
           </div>
           <div className="flex mb-4">
             <div className="w-1/2 pr-2">
-              {/* <label
-              htmlFor="firstName"
-              className="block text-gray-500 text-sm font-bold mb-2"
-            >
-              First Name
-            </label> */}
               <input
                 type="text"
                 id="firstName"
@@ -71,11 +107,11 @@ function SignupForm() {
                   pattern: {
                     value: /^[A-Za-z]+$/i,
                     message:
-                      "Please valid characters only. [Alphabets A to Z, a to z ]",
+                      "Please use valid characters only. [Alphabets A to Z, a to z ]",
                   },
                   minLength: {
                     value: 3,
-                    message: "Enter atleast 3 characters",
+                    message: "Enter at least 3 characters",
                   },
                 })}
                 className="shadow appearance-none rounded w-full py-2 px-3 text-white text-lg font-semibold bg-feedBg leading-tight focus:outline-none focus:shadow-outline"
@@ -83,12 +119,6 @@ function SignupForm() {
               <p className="text-red-600">{errors.firstName?.message}</p>
             </div>
             <div className="w-1/2 pl-2">
-              {/* <label
-              htmlFor="lastName"
-              className="block text-gray-500 text-sm font-bold mb-2"
-            >
-              Last Name
-            </label> */}
               <input
                 type="text"
                 id="lastName"
@@ -98,11 +128,11 @@ function SignupForm() {
                   pattern: {
                     value: /^[A-Za-z]+$/i,
                     message:
-                      "Please valid characters only. [Alphabets A to Z, a to z ]",
+                      "Please use valid characters only. [Alphabets A to Z, a to z ]",
                   },
                   minLength: {
                     value: 3,
-                    message: "Enter atleast 3 characters",
+                    message: "Enter at least 3 characters",
                   },
                 })}
                 className="shadow appearance-none rounded w-full py-2 px-3 text-white text-lg font-semibold bg-feedBg leading-tight focus:outline-none focus:shadow-outline"
@@ -111,12 +141,6 @@ function SignupForm() {
             </div>
           </div>
           <div className="mb-4">
-            {/* <label
-            htmlFor="password"
-            className="block text-gray-500 text-sm font-bold mb-2"
-          >
-            Password
-          </label> */}
             <input
               type="password"
               id="password"
@@ -135,12 +159,6 @@ function SignupForm() {
             <p className="text-red-600">{errors.password?.message}</p>
           </div>
           <div className="mb-6">
-            {/* <label
-            htmlFor="confirmPassword"
-            className="block text-gray-500 text-sm font-bold mb-2"
-          >
-            Confirm Password
-          </label> */}
             <input
               type="password"
               id="confirmPassword"
@@ -167,6 +185,6 @@ function SignupForm() {
       </div>
     </>
   );
-}
+};
 
 export default SignupForm;
