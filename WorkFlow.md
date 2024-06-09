@@ -48,3 +48,9 @@ Jun 9, Sun
 - frontend: completed Login page functionality
 
 --- "User-Service: Login&AdminLoginAPI Pages Fuctionality : Login" ---
+
+Jun 10, Mon - Early Morning
+
+- frontend: Created UI of admin dashboard.
+
+--- "Frontend: Created UI of admin dashboard" ---

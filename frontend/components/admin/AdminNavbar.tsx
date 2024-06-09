@@ -1,6 +1,5 @@
 import React from "react";
 import "@/assets/styles/globals.css";
-import Link from "next/link";
 
 function AdminNavbar() {
   return (

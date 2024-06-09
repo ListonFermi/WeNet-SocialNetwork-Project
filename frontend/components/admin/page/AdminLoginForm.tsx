@@ -4,8 +4,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { loginUser } from "@/redux/userSlice";
 import { useRouter } from "next/navigation";
 
 const toastOptions: ToastOptions = {
@@ -22,7 +20,6 @@ const toastOptions: ToastOptions = {
 
 function AdminLoginForm() {
 
-  const dispatch = useDispatch()
   const router = useRouter();
 
   type Inputs = {
