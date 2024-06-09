@@ -41,3 +41,10 @@ Jun 8, Sat
 - frontend: completed the functionaliy in the signup page & verify otp pages
 
 --- "Pages Fuctionality : Signup, Verify OTP" ---
+
+Jun 9, Sun
+
+- user-service: Did user login & admin login api
+- frontend: completed Login page functionality
+
+--- "User-Service: Login&AdminLoginAPI Pages Fuctionality : Login" ---

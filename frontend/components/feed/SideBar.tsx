@@ -1,7 +1,15 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { cookies } from 'next/headers'
+import getUserData from "@/utils/getUserData";
+
 
 function SideBar() {
+  
+  // const userData = getUserData
+
+
+
   return (
     <div className="w-[60%] h-full max-w-full overflow-hidden bg-secColor">
       <div className="h-[30%] flex items-center justify-center">

@@ -1,5 +1,6 @@
-import userRepository from "../repositories/userRepostiory";
+import userRepository from "../repositories/userRepository";
 import { IUser } from "../models/User";
+import { ObjectId } from "mongoose";
 
 export = {
   addUser: async (userData: IUser): Promise<IUser> => {
@@ -30,4 +31,18 @@ export = {
       throw new Error(error.message);
     }
   },
+  verifyLogin: async (username: string, password: string): Promise<IUser> => {
+    try {
+      return await userRepository.verifyLogin(username, password)
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  },
+  generateJWT: async (_id: string | ObjectId | undefined): Promise<string> => {
+    try {
+      return await userRepository.generateJWT(_id)
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
 };

@@ -9,11 +9,8 @@ export const OTPHelper = {
     port: 587,
     secure: false,
     auth: {
-      // bericdondarion98@gmail.com
       user: process.env.GMAIL_ID,
       pass: process.env.GMAIL_PASS,
-      // user: "bericdondarion98@gmail.com",
-      // pass: "dufh ndhy lcnr cjmu",
     },
   }),
   sendMail: async function (email: string, otp: string) {

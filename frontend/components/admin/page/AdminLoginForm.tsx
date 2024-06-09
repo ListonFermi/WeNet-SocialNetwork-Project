@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import LoginWithGoogle from "../LoginWithGoogle";
 import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -21,7 +20,7 @@ const toastOptions: ToastOptions = {
   transition: Bounce,
 };
 
-function LoginForm() {
+function AdminLoginForm() {
 
   const dispatch = useDispatch()
   const router = useRouter();
@@ -39,9 +38,9 @@ function LoginForm() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+      const userServiceAdminUrl = process.env.NEXT_PUBLIC_USER_SERVICE_ADMIN_URL;
       let response: any = await toast.promise(
-        axios.post(`${userServiceUrl}/login`, data, { withCredentials: true }),
+        axios.post(`${userServiceAdminUrl}/login`, data, { withCredentials: true }),
         {
           pending: "Logging in",
           success: "Logged in successfully",
@@ -49,8 +48,7 @@ function LoginForm() {
         },
         toastOptions
       );
-      dispatch(loginUser({ _id: response.data._id }));
-      setTimeout(()=>router.push("/feed"),2500)
+      setTimeout(()=>router.push("admin/dashboard"),2500)
     } catch (error: any) {
       console.error(error)
       const errorMessage = error?.response?.data?.length
@@ -64,11 +62,9 @@ function LoginForm() {
     <>
       <ToastContainer />
       <div className="w-full flex justify-center py-20">
-        <h1 className="text-3xl text-white font-bold">Login</h1>
+        <h1 className="text-3xl text-white font-bold">We-Net Admin Login</h1>
       </div>
       <div className="w-full max-h-full flex flex-col align-middle justify-center items-center">
-        <LoginWithGoogle />
-        <p className="text-center mb-4 font-semibold text-white">OR</p>
         <form className="max-w-md flex-col" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             {/* <label htmlFor="username" className="block text-gray-500 text-sm font-bold mb-2">
@@ -122,4 +118,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default AdminLoginForm;

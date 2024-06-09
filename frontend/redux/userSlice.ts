@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserSliceState {
   verifyUser: string | null;
-  userLogged: boolean;
+  userLogged: string | null;
 }
 
 const initialState: UserSliceState = {
   verifyUser: null,
-  userLogged: false,
+  userLogged: null,
 };
 
 export const userSlice = createSlice({
@@ -18,10 +18,10 @@ export const userSlice = createSlice({
       state.verifyUser = action.payload._id;
     },
     loginUser: (state, action: PayloadAction<{ _id: string }>) => {
-      state.userLogged = true;
+      state.userLogged = action.payload._id;
     },
     logoutUser: (state) => {
-      state.userLogged = false;
+      state.userLogged = null;
     },
   },
 });

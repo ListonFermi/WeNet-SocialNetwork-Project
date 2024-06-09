@@ -24,7 +24,7 @@ export = {
     try {
       const userData: IUser = req.body;
       const user = await userService.addUserData(userData);
-      if (!user) next(new Error("Internal server error"));
+      if (!user) next(new Error("User not found"));
       await userService.sendOTP(user?.email);
       res.status(200).send("OTP sent successfully");
     } catch (error) {
@@ -41,6 +41,28 @@ export = {
       await userService.verifyOTP(otpData._id, otpData.otp);
       res.status(200).send("OTP verified successfully");
     } catch (error) {
+      next(error);
+    }
+  },
+  loginController: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const loginData: { username: string; password: string } = req.body;
+      const userData: IUser = await userService.verifyLogin(
+        loginData.username,
+        loginData.password
+      );
+
+      if (!userData) next(new Error("User doesn't exist"));
+
+      const token = await userService.generateJWT(userData._id);
+      res.cookie("token", token);
+      res.status(200).json({ userData, message: "Logged in successfully" });
+    } catch (error) {
+      console.error(error);
       next(error);
     }
   },

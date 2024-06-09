@@ -1,8 +1,12 @@
+import { ObjectId } from "mongoose";
 import { OTPCollection } from "../models/OTP";
 import userCollection, { IUser } from "../models/User";
 import { OTPHelper } from "../utils/OTPHelper";
 import hash from "../utils/hash";
 import halfwayUser from "../utils/isHalfwayUser";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 export = {
   addUser: async (userData: IUser): Promise<IUser> => {
@@ -63,6 +67,28 @@ export = {
       const isVerified = hash.compareHash(otp, otpFromDb.otp);
       if (isVerified) return "Successfully verified OTP";
       else throw new Error("OTP verification failed");
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  verifyLogin: async (username: string, password: string): Promise<IUser> => {
+    try {
+      const user = await userCollection.findOne({ username });
+      if (!user) throw new Error("Please enter valid credentials");
+
+      const passwordMatches = hash.compareHash(password, user.password);
+      if (!passwordMatches) throw new Error("Please enter valid credentials");
+
+      return user;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  generateJWT: async (_id: string | ObjectId | undefined): Promise<string> => {
+    try {
+      const secret: string | undefined = process.env.JWT_SECRET;
+      if (!secret) throw new Error("JWT Secret not found");
+      return jwt.sign({ _id }, secret, { expiresIn: "1h" });
     } catch (error: any) {
       throw new Error(error.message);
     }

@@ -29,6 +29,7 @@ interface IUser extends Document {
   blockedUsers?: Schema.Types.ObjectId[];
   createdAt?: Date;
   updatedAt?: Date;
+  JWT?: string;
 }
 
 const ProfessionalAccountSchema = new Schema<IProfessionalAccount>({

@@ -1,10 +1,9 @@
 import LoginForm from "@/components/login/LoginForm";
 import Navbar from "@/components/Navbar";
-import SignupForm from "@/components/signup/SignupForm";
-import VerifyUserForm from "@/components/signup/VerifyUserForm";
 import LeftDiv from "@/components/page/LeftDiv";
 import RightDiv from "@/components/page/RightDiv";
 import React from "react";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   return (
