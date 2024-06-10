@@ -21,7 +21,7 @@ function FeedPost() {
   const likesCount = "1.2k";
   const commentsCount = "300";
   return (
-    <div className="bg-secColor mb-4 shadow-md rounded-lg">
+    <div className="bg-secColor mb-2 mt-2 shadow-md rounded-lg">
       <div className="flex justify-evenly py-2">
         <div className="flex items-center">
           <div>

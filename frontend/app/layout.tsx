@@ -6,10 +6,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <StoreProvided>
-      <html lang="en">
+    <html lang="en">
+      <StoreProvided>
         <body>{children}</body>
-      </html>
-    </StoreProvided>
+      </StoreProvided>
+    </html>
   );
 }

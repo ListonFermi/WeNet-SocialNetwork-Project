@@ -7,7 +7,7 @@ May 31, Fri
 
 Jun 1, Sat
 
-- Created the homepage( Before login) 
+- Created the homepage( Before login)
 
 --- "Frontend- Homepage" ---
 
@@ -54,3 +54,14 @@ Jun 10, Mon - Early Morning
 - frontend: Created UI of admin dashboard.
 
 --- "Frontend: Created UI of admin dashboard" ---
+
+Jun 10, Mon - Evening
+
+- Got an error in google authentication- solved with the help of <a href="https://stackoverflow.com/questions/68438293/the-given-origin-is-not-allowed-for-the-given-client-id-gsi" >stackoverflow</a>
+
+- Google auth halfway
+
+- frontend: user profile UI
+
+--- "GoogleAuth-half && UserProfile UI" ---
+

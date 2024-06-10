@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 
 
-function ProfileHeader() {
+function EditProfile() {
   const firstName = "Rajini";
   const lastName = "Kanth";
   const username = "SuperstarRajini";
@@ -48,7 +48,7 @@ function ProfileHeader() {
               type="button"
               className="bg-rootBg hover:bg-green-700 text-white text-xs md:text-sm font-bold p-1 rounded focus:outline-none focus-shadow-outline"
             >
-              Edit Profile
+              Save
             </button></a>
           </div>
         </div>
@@ -80,4 +80,4 @@ function ProfileHeader() {
   );
 }
 
-export default ProfileHeader;
+export default EditProfile;

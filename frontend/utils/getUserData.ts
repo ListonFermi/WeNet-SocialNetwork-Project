@@ -1,12 +1,17 @@
-import axios from 'axios'
-import { cookies } from 'next/headers'
- 
-export default async function getUserData() {
-  const cookieStore = cookies()
-  const userToken = cookieStore.get('userToken')
-  
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
+import { IUser } from "@/types/types";
 
-  const response= axios.post('')
+export default function getUserData(): IUser {
+  const cookieStore = cookies();
+  const token = cookieStore.get("token") || { name: "token", value: "" };
+  if (!token.value) throw new Error("Token not found");
 
-  return '...'
+  const secret = process.env.JWT_SECRET || "";
+  if (!secret) throw new Error("JWT secret not found");
+  try {
+    return jwt.verify(token.value, secret) as IUser;
+  } catch (err: any) {
+    throw new Error(err.message);
+  }
 }

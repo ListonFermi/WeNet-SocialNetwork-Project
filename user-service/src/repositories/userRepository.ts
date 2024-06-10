@@ -5,7 +5,11 @@ import { OTPHelper } from "../utils/OTPHelper";
 import hash from "../utils/hash";
 import halfwayUser from "../utils/isHalfwayUser";
 import jwt from "jsonwebtoken";
+import { JwtPayload, jwtDecode } from "jwt-decode";
 import dotenv from "dotenv";
+import { IGoogleCredentialRes } from "../types/types";
+import "core-js/stable/atob";
+
 dotenv.config();
 
 export = {
@@ -84,12 +88,39 @@ export = {
       throw new Error(error.message);
     }
   },
-  generateJWT: async (_id: string | ObjectId | undefined): Promise<string> => {
+  generateJWT: async (userData: IUser): Promise<string> => {
     try {
       const secret: string | undefined = process.env.JWT_SECRET;
       if (!secret) throw new Error("JWT Secret not found");
-      return jwt.sign({ _id }, secret, { expiresIn: "1h" });
+      return jwt.sign({ userData }, secret, { expiresIn: "1h" });
     } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  googleSignin: async (credentialResponse: IGoogleCredentialRes): Promise<void> => {
+    // {credential: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3NGRiYmE4ZmFlZTY5YW…pfZQrkF54rS2XKD0Df_ThB_512QFQWyr4mtJoRyQtFhEltsGw',
+    // clientId: '404291875462-ko7on4mhdb6bslaabtn3tgb3oko5nvac.apps.googleusercontent.com',
+    // select_by: 'btn'}
+    try {
+      const { credential } = credentialResponse;
+      console.log({credential})
+      const decodedCredential : any = jwtDecode<JwtPayload>(credential);
+      console.log({decodedCredential})
+
+      const { email, given_name, family_name ,picture  } = decodedCredential
+      
+
+      //logic for email already exists
+        // grab the who user data and sign it using JWT & send
+
+      //logic for email doesn't exist
+        // create a new user with email, name and generate random username
+        //grab and sign it using JWT & send
+
+        // Change all the return types in userrepository, service & controller to IUser
+
+    } catch (error: any) {
+      console.log(error)
       throw new Error(error.message);
     }
   },

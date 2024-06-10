@@ -58,7 +58,7 @@ export = {
 
       if (!userData) next(new Error("User doesn't exist"));
 
-      const token = await userService.generateJWT(userData._id);
+      const token = await userService.generateJWT(userData);
       res.cookie("token", token);
       res.status(200).json({ userData, message: "Logged in successfully" });
     } catch (error) {
@@ -66,4 +66,17 @@ export = {
       next(error);
     }
   },
+  googleSigninController :async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try{
+      console.log(req.body)
+      return await userService.googleSignin(req.body)
+    }catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
 };

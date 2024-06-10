@@ -1,6 +1,7 @@
 import userRepository from "../repositories/userRepository";
 import { IUser } from "../models/User";
 import { ObjectId } from "mongoose";
+import { IGoogleCredentialRes } from "../types/types";
 
 export = {
   addUser: async (userData: IUser): Promise<IUser> => {
@@ -38,11 +39,18 @@ export = {
       throw new Error(error.message)
     }
   },
-  generateJWT: async (_id: string | ObjectId | undefined): Promise<string> => {
+  generateJWT: async (userData: IUser): Promise<string> => {
     try {
-      return await userRepository.generateJWT(_id)
+      return await userRepository.generateJWT(userData)
     } catch (error: any) {
       throw new Error(error.message)
+    }
+  },
+  googleSignin: async (credentialResponse: IGoogleCredentialRes): Promise<void> => {
+    try {
+      return await userRepository.googleSignin(credentialResponse)
+    } catch (error) {
+      
     }
   }
 };

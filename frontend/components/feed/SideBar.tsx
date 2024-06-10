@@ -1,26 +1,32 @@
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { cookies } from 'next/headers'
 import getUserData from "@/utils/getUserData";
-
+import Image from "next/image";
 
 function SideBar() {
-  
-  // const userData = getUserData
+  let userData;
+  try {
+    const decoded: any = getUserData();
+    userData = decoded.userData;
+  } catch (error: any) {
+    console.log(error);
+  }
 
-
+  const profilePicUrl =
+    userData?.profilePicUrl || "/img/DefaultProfilePicMale.jpg";
 
   return (
     <div className="w-[60%] h-full max-w-full overflow-hidden bg-secColor">
-      <div className="h-[30%] flex items-center justify-center">
-        <Image
-          src="/img/DemoProfilePic2.webp"
-          alt="Profile Pic"
-          width={150}
-          height={150}
-          className="w-40 h-40 border-2 border-rootBg object-cover rounded-full cursor-pointer hover:border-4"
-        />
-      </div>
+      <a href={`/profile/${userData?.username}`}>
+        {" "}
+        <div className="h-[30%] flex items-center justify-center">
+          <Image
+            src={profilePicUrl}
+            alt="Profile Pic"
+            width={100}
+            height={100}
+            className="w-40 h-40 border-2 border-rootBg object-cover rounded-full cursor-pointer hover:border-4"
+          />
+        </div>
+      </a>
       <div className="h-[50%] flex flex-col">
         <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
           <Image

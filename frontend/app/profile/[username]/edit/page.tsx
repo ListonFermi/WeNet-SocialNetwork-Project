@@ -1,9 +1,8 @@
 import Navbar from "@/components/Navbar";
 import FeedLeftDiv from "@/components/feed/FeedLeftDiv";
-import FeedRightDiv from "@/components/feed/FeedRightDiv";
 import React from "react";
-import UserFeed from "@/components/feed/UserFeed";
 import Profile from "@/components/[username]/Profile";
+import EditProfile from "@/components/[username]/edit/EditProfile";
 
 function page() {
   return (
@@ -18,7 +17,7 @@ function page() {
         </div>
         {/* Profile */}
         <div className="flex-1 md:flex-2 lg:flex-3 xl:flex-4 h-screen overflow-y-auto no-scrollbar bg-feedBg">
-          <Profile/>
+          <EditProfile/>
         </div>
         {/* RightDiv */}
         <div className="relative flex-1 hidden md:block bg-feedBg">
