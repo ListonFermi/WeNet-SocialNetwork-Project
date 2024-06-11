@@ -1,11 +1,10 @@
 import Navbar from "@/components/Navbar";
 import FeedLeftDiv from "@/components/feed/FeedLeftDiv";
 import React from "react";
-import Profile from "@/components/[username]/Profile";
-import EditProfile from "@/components/[username]/edit/EditProfile";
+import ImageUpload from "@/components/[username]/edit/ImageUpload";
+
 
 function page() {
-  
   return (
     <div className="max-h-screen flex flex-col">
       {/* Navbar */}
@@ -18,7 +17,7 @@ function page() {
         </div>
         {/* Profile */}
         <div className="flex-1 md:flex-2 lg:flex-3 xl:flex-4 h-screen overflow-y-auto no-scrollbar bg-feedBg">
-          <EditProfile/>
+          <ImageUpload/>
         </div>
         {/* RightDiv */}
         <div className="relative flex-1 hidden md:block bg-feedBg">

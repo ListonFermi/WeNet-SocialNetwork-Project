@@ -50,7 +50,7 @@ function LoginForm() {
         toastOptions
       );
       dispatch(loginUser({ _id: response.data._id }));
-      setTimeout(()=>router.push("/feed"),2500)
+      setTimeout(()=>router.replace("/feed"),2500)
     } catch (error: any) {
       console.error(error)
       const errorMessage = error?.response?.data?.length

@@ -11,10 +11,10 @@ function SideBar() {
   }
 
   const profilePicUrl =
-    userData?.profilePicUrl || "/img/DefaultProfilePicMale.jpg";
+    userData?.profilePicUrl || "/img/DefaultProfilePicMale.png";
 
   return (
-    <div className="w-[60%] h-full max-w-full overflow-hidden bg-secColor">
+    <div className="w-full h-full max-w-full overflow-hidden bg-secColor">
       <a href={`/profile/${userData?.username}`}>
         {" "}
         <div className="h-[30%] flex items-center justify-center">
@@ -90,16 +90,18 @@ function SideBar() {
           />
           <p className="pl-5 text-2xl text-white font-bold">Create Post</p>
         </div>
-        <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
-          <Image
-            src="/icons/menu2.svg"
-            alt="Home Logo"
-            width={50}
-            height={50}
-            className=""
-          />
-          <p className="pl-5 text-2xl text-white font-bold">More</p>
-        </div>
+        <a href="/settings">
+          <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
+            <Image
+              src="/icons/menu2.svg"
+              alt="Home Logo"
+              width={50}
+              height={50}
+              className=""
+            />
+            <p className="pl-5 text-2xl text-white font-bold">More</p>
+          </div>
+        </a>
       </div>
     </div>
   );

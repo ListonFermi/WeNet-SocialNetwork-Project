@@ -1,26 +1,31 @@
+import { IUser } from "@/types/types";
 import Image from "next/image";
 import React from "react";
 
+function ProfileHeader({ userData }: { userData: IUser }) {
+  const { firstName, lastName, username } = userData;
+  let { dateOfBirth, bio, profilePicUrl, coverPicUrl } = userData;
 
-function ProfileHeader() {
-  const firstName = "Rajini";
-  const lastName = "Kanth";
-  const username = "SuperstarRajini";
-  const coverpic = "https://picsum.photos/400/300";
-  const bio =
-    "Passionate traveler, foodie, and tech enthusiast. Always  exploring!";
-  const dob = "12-12-1950";
+  dateOfBirth = new Date(dateOfBirth + "");
+  const dateOfBirthToDisplay = `${dateOfBirth?.getDate()}-${dateOfBirth?.getMonth()}-${dateOfBirth?.getFullYear()}`;
+
+  if (!bio) bio = "";
+  if (!profilePicUrl) profilePicUrl = "/img/DefaultProfilePicMale.png";
+  if (!coverPicUrl) coverPicUrl = "";
+
   return (
     <div className="h-96 w-full shadow-md bg-secColor">
       {/* Cover Pic */}
-      <div className=" h-1/2">
-        <Image
-          src={coverpic}
-          alt="Cover Pic"
-          width={400}
-          height={300}
-          className="w-full h-full border-2 border-rootBg object-cover"
-        />
+      <div className=" h-1/2 bg-black border-rootBg border-2">
+        {coverPicUrl.length && (
+          <Image
+            src={coverPicUrl}
+            alt="Cover Pic"
+            width={400}
+            height={300}
+            className="w-full h-full border-2 border-rootBg object-cover"
+          />
+        )}
       </div>
       {/* Profile Details */}
       <div className="flex flex-col h-1/2">
@@ -29,7 +34,7 @@ function ProfileHeader() {
           {/* Profile Pic  */}
           <div className="relative w-[30%] left-0 ml-4 -top-20">
             <Image
-              src={"/img/DefaultProfilePicMale.jpg"}
+              src={profilePicUrl}
               alt="Profile Pic"
               width={100}
               height={100}
@@ -44,12 +49,14 @@ function ProfileHeader() {
 
           {/* Edit / follow button */}
           <div className="w-[20%] flex items-center align-middle">
-            <a href={`/profile/${username}/edit`}><button
-              type="button"
-              className="bg-rootBg hover:bg-green-700 text-white text-xs md:text-sm font-bold p-1 rounded focus:outline-none focus-shadow-outline"
-            >
-              Edit Profile
-            </button></a>
+            <a href={`/profile/${username}/edit`}>
+              <button
+                type="button"
+                className="bg-rootBg hover:bg-green-700 text-white text-xs md:text-sm font-bold p-1 rounded focus:outline-none focus-shadow-outline"
+              >
+                Edit Profile
+              </button>
+            </a>
           </div>
         </div>
         {/* Profile Details- Bottom portion :Bio, location */}
@@ -70,7 +77,7 @@ function ProfileHeader() {
                 className="w-4 h-4"
               ></Image>{" "}
               <h1 className="font-semibold px-2 text-white text-sm">
-                Born on {dob}
+                Born on {dateOfBirthToDisplay}
               </h1>
             </div>
           </div>

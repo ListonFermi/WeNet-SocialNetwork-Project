@@ -3,6 +3,7 @@ import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { Bounce, ToastOptions, toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const toastOptions: ToastOptions = {
   position: "top-center",
@@ -17,18 +18,31 @@ const toastOptions: ToastOptions = {
 };
 
 function LoginWithGoogle() {
+
+  const router = useRouter();
+
   async function handleSubmit(credentialResponse: any) {
-    console.log(credentialResponse);
-    const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
-    let response: any = await toast.promise(
-      axios.post(`${userServiceUrl}/login/googleSignin`, credentialResponse),
-      {
-        pending: "Logging in",
-        success: "User logged in successfully",
-        error: "Failed to login",
-      },
-      toastOptions
-    );
+    try {
+      const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+      await toast.promise(
+        axios.post(`${userServiceUrl}/login/googleSignin`, credentialResponse, {
+          withCredentials: true,
+        }),
+        {
+          pending: "Logging in",
+          success: "User logged in successfully",
+          error: "Failed to login",
+        },
+        toastOptions
+      );
+      setTimeout(()=>router.replace("/feed"),2500)
+    } catch (error: any) {
+      console.log(error);
+      const errorMessage = error?.response?.data?.length
+        ? error.response.data
+        : "Failed to signup";
+      toast.error(errorMessage, toastOptions);
+    }
   }
 
   return (

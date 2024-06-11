@@ -45,7 +45,7 @@ function AdminLoginForm() {
         },
         toastOptions
       );
-      setTimeout(()=>router.push("admin/dashboard"),2500)
+      setTimeout(()=>router.replace("admin/dashboard"),2500)
     } catch (error: any) {
       console.error(error)
       const errorMessage = error?.response?.data?.length

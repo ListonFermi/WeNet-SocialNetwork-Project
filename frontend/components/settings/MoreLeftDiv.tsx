@@ -1,14 +1,14 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import SideBar from "./SideBar";
+import SideBar from "../feed/SideBar";
 
-function FeedLeftDiv() {
+function MoreLeftDiv() {
   return (
-    <div className="w-1/2 h-full">
+    <div className="w-full h-full">
       <SideBar/>
     </div>
   );
 }
 
-export default FeedLeftDiv;
+export default MoreLeftDiv;

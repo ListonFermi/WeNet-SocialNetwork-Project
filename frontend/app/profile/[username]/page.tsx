@@ -1,8 +1,6 @@
 import Navbar from "@/components/Navbar";
 import FeedLeftDiv from "@/components/feed/FeedLeftDiv";
-import FeedRightDiv from "@/components/feed/FeedRightDiv";
 import React from "react";
-import UserFeed from "@/components/feed/UserFeed";
 import Profile from "@/components/[username]/Profile";
 
 function page() {

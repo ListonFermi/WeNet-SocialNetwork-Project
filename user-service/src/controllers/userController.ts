@@ -73,7 +73,11 @@ export = {
   ): Promise<void> => {
     try{
       console.log(req.body)
-      return await userService.googleSignin(req.body)
+      const userData= await userService.googleSignin(req.body)
+
+      const token = await userService.generateJWT(userData);
+      res.cookie("token", token);
+      res.status(200).json({ userData, message: "Logged in successfully" });
     }catch (error) {
       console.error(error);
       next(error);

@@ -20,37 +20,39 @@ export = {
   },
   sendOTP: async (email: string): Promise<String> => {
     try {
-      return await userRepository.sendOTP(email);    
+      return await userRepository.sendOTP(email);
     } catch (error: any) {
       throw new Error(error.message);
     }
   },
   verifyOTP: async (_id: string, otp: string): Promise<String> => {
     try {
-      return await userRepository.verifyOTP(_id,otp);
+      return await userRepository.verifyOTP(_id, otp);
     } catch (error: any) {
       throw new Error(error.message);
     }
   },
   verifyLogin: async (username: string, password: string): Promise<IUser> => {
     try {
-      return await userRepository.verifyLogin(username, password)
+      return await userRepository.verifyLogin(username, password);
     } catch (error: any) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   },
   generateJWT: async (userData: IUser): Promise<string> => {
     try {
-      return await userRepository.generateJWT(userData)
+      return await userRepository.generateJWT(userData);
     } catch (error: any) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   },
-  googleSignin: async (credentialResponse: IGoogleCredentialRes): Promise<void> => {
+  googleSignin: async (
+    credentialResponse: IGoogleCredentialRes
+  ): Promise<IUser> => {
     try {
-      return await userRepository.googleSignin(credentialResponse)
-    } catch (error) {
-      
+      return await userRepository.googleSignin(credentialResponse);
+    } catch (error: any) {
+      throw new Error(error.message);
     }
-  }
+  },
 };

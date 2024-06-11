@@ -62,7 +62,7 @@ function VerifyOTP() {
         },
         toastOptions
       );
-      router.push("/login");
+      router.replace("/login");
     } catch (error: any) {
       const errorMessage =
         error.response && error.response.data

@@ -97,30 +97,42 @@ export = {
       throw new Error(error.message);
     }
   },
-  googleSignin: async (credentialResponse: IGoogleCredentialRes): Promise<void> => {
-    // {credential: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3NGRiYmE4ZmFlZTY5YW…pfZQrkF54rS2XKD0Df_ThB_512QFQWyr4mtJoRyQtFhEltsGw',
-    // clientId: '404291875462-ko7on4mhdb6bslaabtn3tgb3oko5nvac.apps.googleusercontent.com',
-    // select_by: 'btn'}
+  googleSignin: async (
+    credentialResponse: IGoogleCredentialRes
+  ): Promise<IUser> => {
     try {
       const { credential } = credentialResponse;
-      console.log({credential})
-      const decodedCredential : any = jwtDecode<JwtPayload>(credential);
-      console.log({decodedCredential})
+      console.log({ credential });
+      const decodedCredential: any = jwtDecode<JwtPayload>(credential);
+      console.log({ decodedCredential });
 
-      const { email, given_name, family_name ,picture  } = decodedCredential
-      
+      const {
+        email,
+        given_name: firstName,
+        family_name: lastName,
+        picture: profilePicUrl,
+      } = decodedCredential;
 
       //logic for email already exists
-        // grab the who user data and sign it using JWT & send
+      // grab the who user data and sign it using JWT & send
+      let user = await userCollection.findOne({ email });
+      if (user) return user;
 
       //logic for email doesn't exist
-        // create a new user with email, name and generate random username
-        //grab and sign it using JWT & send
-
-        // Change all the return types in userrepository, service & controller to IUser
-
+      // create a new user with email, name and generate random username
+      //grab and sign it using JWT & send
+      const userData = {
+        email,
+        firstName,
+        lastName,
+        profilePicUrl,
+        username: `${firstName}${lastName}`,//handle username later
+        password: "tempPassword", //handle password later- giving empty string as of now
+      };
+      user = new userCollection(userData);
+      return await user.save();
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
       throw new Error(error.message);
     }
   },

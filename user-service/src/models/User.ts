@@ -29,6 +29,7 @@ interface IUser extends Document {
   blockedUsers?: Schema.Types.ObjectId[];
   createdAt?: Date;
   updatedAt?: Date;
+  location?: string;
   JWT?: string;
 }
 
@@ -43,7 +44,7 @@ const UserSchema = new Schema<IUser>(
     username: { type: String, trim: true, required: true, unique: true },
     firstName: { type: String, trim: true, required: true },
     lastName: { type: String, trim: true, required: true },
-    password: { type: String, trim: true, required: true },
+    password: { type: String, required: true },
     email: { type: String, trim: true, unique: true, sparse: true },
     dateOfBirth: { type: Date },
     gender: { type: String, enum: ["male", "female"] },
@@ -59,6 +60,7 @@ const UserSchema = new Schema<IUser>(
     professionalAccount: { type: ProfessionalAccountSchema },
     blockedByUsers: [{ type: Schema.Types.ObjectId, ref: "users" }],
     blockedUsers: [{ type: Schema.Types.ObjectId, ref: "users" }],
+    location: {type: String}
   },
   { timestamps: true }
 );

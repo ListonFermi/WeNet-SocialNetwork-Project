@@ -30,4 +30,5 @@ export interface IUser {
   JWT?: string;
   iat? : Number;
   exp? : Number;
+  location? : string
 }

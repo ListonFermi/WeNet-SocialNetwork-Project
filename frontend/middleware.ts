@@ -2,12 +2,20 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
-const protectedRoutes = ["/feed"];
+const protectedRoutes = ["/feed",'/settings'];
 const toBeRedirectedRoutes = ["/", "/login", "/signup"];
 const profileRoutePattern = /^\/profile\/[^/]+\/?.*$/;
 
+const adminRoutes = /^\/admin\/.+/;
+
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+
+  if(adminRoutes.test(pathname)){
+    const tokenVerified = await verifyToken("adminToken", req);
+    if(tokenVerified) return NextResponse.next();
+    else NextResponse.redirect(new URL("/admin", req.url));
+  }
 
   const tokenVerified = await verifyToken("token", req);
 

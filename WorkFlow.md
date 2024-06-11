@@ -65,3 +65,12 @@ Jun 10, Mon - Evening
 
 --- "GoogleAuth-half && UserProfile UI" ---
 
+Jun 12, Wed - Early Morning 
+
+- frontend UI: edit profile page halfway, settings page- halfway
+
+- frontend functionalities : User logout , completed google authentication
+
+- backend- google authentication
+
+--- "GoogleAuth-completed && profile page-edit user started"

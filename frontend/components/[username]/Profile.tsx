@@ -1,12 +1,24 @@
 import React from "react";
 import ProfileHeader from "./ProfileHeader";
 import ProfileHeaderBottom from "./ProfileHeaderBottom";
-import FeedPost from "../FeedPost";
+import getUserData from "@/utils/getUserData";
 
 function Profile() {
+
+  let userData
+  try {
+    const decoded : any = getUserData()
+    userData = decoded.userData
+  } catch (error: any) {
+    console.log(error.message)
+    return <div>Error getting user's data</div>
+  }
+
+  console.log(userData)
+
   return (
     <div>
-      <ProfileHeader />
+      <ProfileHeader userData={userData} />
       <ProfileHeaderBottom />
       <div className="h-10 w-full flex bg-secColor">
         <div className="shadow-inner rounded-sm shadow-rootBg w-1/2 flex items-center justify-center">
