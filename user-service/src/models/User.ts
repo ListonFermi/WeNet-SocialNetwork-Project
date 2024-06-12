@@ -7,13 +7,13 @@ interface IProfessionalAccount {
 }
 
 interface IUser extends Document {
-  _id? : string | Schema.Types.ObjectId;
+  _id?: string | Schema.Types.ObjectId;
   username: string;
   firstName: string;
   lastName: string;
   password: string;
-  email: string ;
-  dateOfBirth?: Date;
+  email: string;
+  dateOfBirth?: Date | string ;
   gender?: "male" | "female";
   isRestricted?: boolean;
   bio?: string;
@@ -60,7 +60,7 @@ const UserSchema = new Schema<IUser>(
     professionalAccount: { type: ProfessionalAccountSchema },
     blockedByUsers: [{ type: Schema.Types.ObjectId, ref: "users" }],
     blockedUsers: [{ type: Schema.Types.ObjectId, ref: "users" }],
-    location: {type: String}
+    location: { type: String, default: "India" },
   },
   { timestamps: true }
 );

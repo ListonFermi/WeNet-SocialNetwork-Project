@@ -74,3 +74,11 @@ Jun 12, Wed - Early Morning
 - backend- google authentication
 
 --- "GoogleAuth-completed && profile page-edit user started"
+
+- frontend UI: add profile pic
+
+- backend- s3 bucket, 
+
+- pages functionality- user profile edit, Admin logout, admin dashboard, usermanagement
+
+--- "Profile edit && admin user management display" ---

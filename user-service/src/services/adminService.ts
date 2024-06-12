@@ -1,4 +1,3 @@
-import { ObjectId } from "mongoose";
 import adminRepository from "../repositories/adminRepository";
 
 export = {

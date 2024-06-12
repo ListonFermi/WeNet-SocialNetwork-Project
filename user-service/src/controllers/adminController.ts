@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import adminService from "../services/adminService";
+import userCollection from "../models/User";
 
 export = {
   login: async (
@@ -18,4 +19,16 @@ export = {
       next(error);
     }
   },
+  userManagement: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const userData = await userCollection.find()
+      res.status(200).json(userData)
+    }catch(error: any){
+      next(error)
+    }
+  }
 };

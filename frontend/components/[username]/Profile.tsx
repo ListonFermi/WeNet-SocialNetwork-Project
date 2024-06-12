@@ -2,6 +2,7 @@ import React from "react";
 import ProfileHeader from "./ProfileHeader";
 import ProfileHeaderBottom from "./ProfileHeaderBottom";
 import getUserData from "@/utils/getUserData";
+import FeedPost from "../FeedPost";
 
 function Profile() {
 
@@ -13,8 +14,6 @@ function Profile() {
     console.log(error.message)
     return <div>Error getting user's data</div>
   }
-
-  console.log(userData)
 
   return (
     <div>
@@ -28,9 +27,7 @@ function Profile() {
           <h1 className="text-white font-bold cursor-pointer">Likes</h1>
         </div>
       </div>
-      {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(() => (
-        <FeedPost />
-      ))} */}
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(() =>    <FeedPost />) }
     </div>
   );
 }

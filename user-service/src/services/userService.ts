@@ -1,6 +1,5 @@
 import userRepository from "../repositories/userRepository";
 import { IUser } from "../models/User";
-import { ObjectId } from "mongoose";
 import { IGoogleCredentialRes } from "../types/types";
 
 export = {

@@ -1,4 +1,3 @@
-import { ObjectId } from "mongoose";
 import { OTPCollection } from "../models/OTP";
 import userCollection, { IUser } from "../models/User";
 import { OTPHelper } from "../utils/OTPHelper";

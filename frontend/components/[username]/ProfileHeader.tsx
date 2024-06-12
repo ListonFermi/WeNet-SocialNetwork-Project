@@ -4,7 +4,7 @@ import React from "react";
 
 function ProfileHeader({ userData }: { userData: IUser }) {
   const { firstName, lastName, username } = userData;
-  let { dateOfBirth, bio, profilePicUrl, coverPicUrl } = userData;
+  let { dateOfBirth, bio, profilePicUrl, coverPicUrl, location } = userData;
 
   dateOfBirth = new Date(dateOfBirth + "");
   const dateOfBirthToDisplay = `${dateOfBirth?.getDate()}-${dateOfBirth?.getMonth()}-${dateOfBirth?.getFullYear()}`;
@@ -16,7 +16,7 @@ function ProfileHeader({ userData }: { userData: IUser }) {
   return (
     <div className="h-96 w-full shadow-md bg-secColor">
       {/* Cover Pic */}
-      <div className=" h-1/2 bg-black border-rootBg border-2">
+      <div className=" h-1/2 bg-black">
         {coverPicUrl.length && (
           <Image
             src={coverPicUrl}
@@ -67,7 +67,18 @@ function ProfileHeader({ userData }: { userData: IUser }) {
           </div>
           {/* Dob, place  */}
           <div className="flex flex-row">
-            <div className="w-1/2"></div>
+            <div className="w-1/2 flex items-center justify-center align-middle">
+              <Image
+                src="/icons/location.svg"
+                alt="dob icon"
+                width={100}
+                height={100}
+                className="w-4 h-4"
+              ></Image>{" "}
+              <h1 className="font-semibold px-2 text-white text-sm">
+                {`Location: ${location}`}
+              </h1>
+            </div>
             <div className="w-1/2 flex items-center justify-center align-middle">
               <Image
                 src="/icons/dob.svg"

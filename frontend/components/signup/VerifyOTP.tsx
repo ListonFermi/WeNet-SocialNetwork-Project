@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function VerifyOTP() {
   type Inputs = {
