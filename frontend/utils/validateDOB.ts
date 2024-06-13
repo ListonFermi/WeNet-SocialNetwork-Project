@@ -32,7 +32,7 @@ export const validateDateOfBirth = (value: Date) => {
   return true;
 };
 
-export const validateDateOfBirthEdit  = (dateString: string) => {
+export const validateDateOfBirthEdit = (dateString: string) => {
   const selectedDate = new Date(dateString);
   if (isNaN(selectedDate.getTime())) {
     return "Invalid date format";
@@ -40,7 +40,10 @@ export const validateDateOfBirthEdit  = (dateString: string) => {
   const currentDate = new Date();
   let age = currentDate.getFullYear() - selectedDate.getFullYear();
   const monthDiff = currentDate.getMonth() - selectedDate.getMonth();
-  if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < selectedDate.getDate())) {
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && currentDate.getDate() < selectedDate.getDate())
+  ) {
     age--;
   }
   return age >= 18 || "You must be at least 18 years old";

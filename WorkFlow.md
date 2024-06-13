@@ -82,3 +82,7 @@ Jun 12, Wed - Early Morning
 - pages functionality- user profile edit, Admin logout, admin dashboard, usermanagement
 
 --- "Profile edit && admin user management display" ---
+
+- Rearranged the s3 bucket codes
+
+--- "Rearranged s3 bucket codes" ---

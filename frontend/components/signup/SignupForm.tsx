@@ -60,7 +60,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ setIsVerifyForm }) => {
       console.error(error)
       const errorMessage = error?.response?.data?.length
         ? error.response.data
-        : "Failed to signup";
+        : "Internal server error";
       toast.error(errorMessage, toastOptions);
     }
   };

@@ -9,3 +9,9 @@ export interface IGoogleCredentialRes{
   clientId: string;
   select_by : string
 }
+
+export interface IMulterFile {
+  originalname: string;
+  buffer: Buffer;
+  mimetype: string;
+}

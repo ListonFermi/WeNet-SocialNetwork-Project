@@ -5,8 +5,7 @@ import getUserData from "@/utils/getUserData";
 import FeedPost from "../FeedPost";
 
 function Profile() {
-
-  let userData
+    let userData
   try {
     const decoded : any = getUserData()
     userData = decoded.userData

@@ -34,7 +34,7 @@ export = {
     try {
       const { _id, email, dateOfBirth, gender } = userData;
       const user = await userCollection.findOne({ _id });
-      if (!user) throw new Error("Internal server error");
+      if (!user) throw new Error("Error finding the username");
       user.email = email;
       user.dateOfBirth = dateOfBirth;
       user.gender = gender;
@@ -60,7 +60,7 @@ export = {
   verifyOTP: async (_id: string, otp: string): Promise<string> => {
     try {
       const otpFromDb: any = await OTPCollection.findOne({ _id });
-      if (!otpFromDb) throw new Error("Error verifying OTP from database");
+      if (!otpFromDb) throw new Error("Error getting the OTP from database");
 
       const timeNow = new Date().getTime();
       const otpUpdatedAt = new Date(otpFromDb.updatedAt).getTime();
@@ -69,7 +69,7 @@ export = {
 
       const isVerified = hash.compareHash(otp, otpFromDb.otp);
       if (isVerified) return "Successfully verified OTP";
-      else throw new Error("OTP verification failed");
+      else throw new Error("Invalid OTP");
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -113,7 +113,7 @@ export = {
       } = decodedCredential;
 
       //logic for email already exists
-      // grab the who user data and sign it using JWT & send
+      //grab the user data and sign it using JWT & send
       let user = await userCollection.findOne({ email });
       if (user) return user;
 
@@ -125,7 +125,7 @@ export = {
         firstName,
         lastName,
         profilePicUrl,
-        username: `${firstName}${lastName}`,//handle username later
+        username: `${firstName}${lastName}`, //handle username later
         password: "tempPassword", //handle password later- giving empty string as of now
       };
       user = new userCollection(userData);

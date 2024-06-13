@@ -5,7 +5,7 @@ import { IUser } from "@/types/types";
 export default function getUserData(): IUser {
   const cookieStore = cookies();
   const token = cookieStore.get("token") || { name: "token", value: "" };
-  if (!token.value) throw new Error("Token not found");
+  if (!token.value.length) throw new Error("Token not found");
 
   const secret = process.env.JWT_SECRET || "";
   if (!secret) throw new Error("JWT secret not found");

@@ -1,7 +1,8 @@
-import mongoose, { ObjectId } from "mongoose";
+import { ObjectId } from "mongoose";
 import userCollection, { IUser } from "../models/User";
 import jwt from "jsonwebtoken";
-import { request } from "http";
+import { uploadToS3Bucket } from "../utils/s3Bucket";
+import { IMulterFile } from "../types/types";
 
 export = {
   getUserData: async (_id: string | ObjectId): Promise<IUser> => {
@@ -13,34 +14,28 @@ export = {
       throw new Error(error.message);
     }
   },
-  editUserData: async (userData: IUser): Promise<IUser> => {
+  editUserData: async (_id: string | ObjectId,userData: IUser): Promise<IUser> => {
     try {
-      let { _id } = userData;
-
-      const user:any = await userCollection.findOne({ _id });
+      const user: any = await userCollection.findOne({ _id });
       if (!user) {
         throw new Error("User not found");
       }
 
-      console.log({ user });
-      console.log({ userData });
       const updatedUser = {
         ...user._doc,
         ...userData,
         dateOfBirth: new Date(userData?.dateOfBirth || user.dateOfBirth || ""),
       };
-      console.log({updatedUser})
       const result = await userCollection.findOneAndUpdate(
         { _id },
         { $set: updatedUser },
         { new: true } // new: true returns the updated document
       );
-      console.log({ result });
 
       if (!result) {
         throw new Error("User not found");
       }
-
+      console.log({result})
       return result as IUser;
     } catch (error: any) {
       throw new Error(error.message);
@@ -55,11 +50,12 @@ export = {
       throw new Error(error.message);
     }
   },
-  // uploadProfilePic: async (files: any): Promise<String> => {
-  //   try {
-      
-  //   } catch (error: any) {
-  //     throw new Error(error.message);
-  //   }
-  // }
+  uploadImage: async (imageFile: unknown, imageType: string): Promise<string> => {
+    try {
+      const folderName = imageType;
+      return await uploadToS3Bucket(imageFile as IMulterFile, folderName);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

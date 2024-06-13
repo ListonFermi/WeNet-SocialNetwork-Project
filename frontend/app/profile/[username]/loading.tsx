@@ -1,8 +1,8 @@
 import Navbar from "@/components/Navbar";
 import FeedLeftDiv from "@/components/feed/FeedLeftDiv";
 import React from "react";
-import ProfileLoading from "@/components/[username]/ProfileHeaderLoading";
 import Profile from "@/components/[username]/Profile";
+import ProfileLoading from "@/components/[username]/ProfileHeaderLoading";
 
 function page() {
   return (
@@ -17,8 +17,7 @@ function page() {
         </div>
         {/* Profile */}
         <div className="flex-1 md:flex-2 lg:flex-3 xl:flex-4 h-screen overflow-y-auto no-scrollbar bg-feedBg">
-          <Profile/>
-          {/* <ProfileLoading/> */}
+          <ProfileLoading/>
         </div>
         {/* RightDiv */}
         <div className="relative flex-1 hidden md:block bg-feedBg">

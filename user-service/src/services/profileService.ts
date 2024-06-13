@@ -10,9 +10,9 @@ export = {
       throw new Error(error.message);
     }
   },
-  editUserData: async (userData: IUser): Promise<IUser> => {
+  editUserData: async (_id: string | ObjectId, userData: IUser): Promise<IUser> => {
     try {
-      return profileRepository.editUserData(userData);
+      return profileRepository.editUserData(_id,userData);
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -24,4 +24,11 @@ export = {
       throw new Error(error.message)
     }
   },
+  uploadImage: async (imageFile: unknown, imageType: string): Promise<string> => {
+    try {
+      return await profileRepository.uploadImage(imageFile,imageType)
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
 };
