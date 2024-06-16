@@ -1,0 +1,65 @@
+/project-root
+│
+├── /src
+│   ├── /domain                    # Enterprise Business Rules
+│   │   ├── /entities              # Core entities
+│   │   │   └── User.ts
+│   │   │   └── Post.ts
+│   │   ├── /repositories          # Repository Interfaces
+│   │   │   └── IUserRepository.ts
+│   │   │   └── IPostRepository.ts
+│   │   └── /services              # Business logic interfaces
+│   │       └── IUserService.ts
+│   │       └── IPostService.ts
+│   │
+│   ├── /application               # Application Business Rules
+│   │   ├── /usecases              # Use cases (interactors)
+│   │   │   └── user               # User use cases
+│   │   │       └── createUser.ts
+│   │   │       └── getUser.ts
+│   │   │   └── post               # Post use cases
+│   │   │       └── createPost.ts
+│   │   │       └── getPost.ts
+│   │   └── /dto                   # Data Transfer Objects
+│   │       └── UserDTO.ts
+│   │       └── PostDTO.ts
+│   │
+│   ├── /interface                 # Interface Adapters
+│   │   ├── /controllers           # HTTP request handlers
+│   │   │   └── userController.ts
+│   │   │   └── postController.ts
+│   │   ├── /routes                # Express routes
+│   │   │   └── userRoutes.ts
+│   │   │   └── postRoutes.ts
+│   │   ├── /models                # Mongoose models
+│   │   │   └── UserModel.ts
+│   │   │   └── PostModel.ts
+│   │   ├── /repositories          # Data access layer implementations
+│   │   │   └── userRepository.ts
+│   │   │   └── postRepository.ts
+│   │   └── /services              # Business logic implementations
+│   │       └── userService.ts
+│   │       └── postService.ts
+│   │
+│   ├── /infrastructure            # Frameworks & Drivers
+│   │   ├── /database              # Database configuration
+│   │   │   └── database.ts
+│   │   ├── /config                # Environment variables and config
+│   │   │   └── index.ts
+│   │   ├── /logging               # Logging
+│   │   │   └── logger.ts
+│   │   └── app.ts                 # Express app setup
+│   │
+│   └── server.ts                  # Entry point
+│
+├── /test                          # Test files
+│   ├── /unit                      # Unit tests
+│   ├── /integration               # Integration tests
+│   └── /e2e                       # End-to-end tests
+│
+├── .env                           # Environment variables
+├── .gitignore                     # Git ignore file
+├── package.json                   # NPM dependencies and scripts
+├── tsconfig.json                  # TypeScript configuration
+├── README.md                      # Project documentation
+└── server.ts                      # Entry point

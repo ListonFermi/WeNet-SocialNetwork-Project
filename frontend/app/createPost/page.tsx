@@ -1,7 +1,8 @@
 import Navbar from "@/components/Navbar";
 import FeedLeftDiv from "@/components/feed/FeedLeftDiv";
 import React from "react";
-import AddImage from "@/components/[username]/edit/AddImage";
+import CropImage from "@/components/createPost/CropImage";
+
 
 function page() {
   
@@ -17,7 +18,7 @@ function page() {
         </div>
         {/* Profile */}
         <div className="flex-1 md:flex-2 lg:flex-3 xl:flex-4 h-screen overflow-y-auto no-scrollbar bg-feedBg">
-          <AddImage/>
+          <CropImage/>
         </div>
         {/* RightDiv */}
         <div className="relative flex-1 hidden md:block bg-feedBg">

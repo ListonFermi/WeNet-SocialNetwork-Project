@@ -80,16 +80,18 @@ function SideBar() {
         </div>
       </div>
       <div className="h-[20%]">
-        <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
-          <Image
-            src="/icons/createPost.svg"
-            alt="Home Logo"
-            width={50}
-            height={50}
-            className=""
-          />
-          <p className="pl-5 text-2xl text-white font-bold">Create Post</p>
-        </div>
+        <a href="/createPost">
+          <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
+            <Image
+              src="/icons/createPost.svg"
+              alt="Home Logo"
+              width={50}
+              height={50}
+              className=""
+            />
+            <p className="pl-5 text-2xl text-white font-bold">Create Post</p>
+          </div>
+        </a>
         <a href="/settings">
           <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
             <Image

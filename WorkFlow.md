@@ -86,3 +86,9 @@ Jun 12, Wed - Early Morning
 - Rearranged the s3 bucket codes
 
 --- "Rearranged s3 bucket codes" ---
+
+Jun 16, Sun
+
+- Posts Service- Folder structure
+
+--- "Posts Service- Folder structure" ---

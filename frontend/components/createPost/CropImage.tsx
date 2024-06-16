@@ -4,7 +4,6 @@ import React, {
   createRef,
   ChangeEvent,
   FormEvent,
-  useRef,
 } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -29,7 +28,7 @@ const toastOptions: ToastOptions = {
   transition: Bounce,
 };
 
-const AddImage: React.FC = () => {
+const CropImage: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
   const cropperRef = createRef<ReactCropperElement>();
   const [cropData, setCropData] = useState<string>("/");
@@ -115,7 +114,7 @@ const AddImage: React.FC = () => {
 
       <div className="h-full w-full bg-secColor">
         <div className="h-[15%] flex items-center justify-center">
-          <h1 className="text-white font-bold text-2xl">Add profile pic</h1>
+          <h1 className="text-white font-bold text-2xl">Create a new post</h1>
         </div>
         <div className="h-[55%] flex flex-col items-center justify-center">
           {image ? (
@@ -164,7 +163,7 @@ const AddImage: React.FC = () => {
               type="submit"
               className="bg-rootBg hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus-shadow-outline"
             >
-              Upload
+              Crop Image
             </button>
           </div>
         )}
@@ -173,4 +172,4 @@ const AddImage: React.FC = () => {
   );
 };
 
-export default AddImage;
+export default CropImage;
