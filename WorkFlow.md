@@ -92,3 +92,10 @@ Jun 16, Sun
 - Posts Service- Folder structure
 
 --- "Posts Service- Folder structure" ---
+
+Jun 18, Tue
+
+- frontend- crop image && add caption pages- UI
+- posts-service- wrote rabbitmq codes (not implemented)
+
+--- "Frontend- createpost UI && posts-service- sudo codes" ---

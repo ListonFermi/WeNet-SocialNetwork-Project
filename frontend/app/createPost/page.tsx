@@ -2,10 +2,10 @@ import Navbar from "@/components/Navbar";
 import FeedLeftDiv from "@/components/feed/FeedLeftDiv";
 import React from "react";
 import CropImage from "@/components/createPost/CropImage";
-
+import "react-toastify/dist/ReactToastify.css";
+import CenterDiv from "@/components/createPost/CenterDiv";
 
 function page() {
-  
   return (
     <div className="max-h-screen flex flex-col">
       {/* Navbar */}
@@ -18,7 +18,7 @@ function page() {
         </div>
         {/* Profile */}
         <div className="flex-1 md:flex-2 lg:flex-3 xl:flex-4 h-screen overflow-y-auto no-scrollbar bg-feedBg">
-          <CropImage/>
+          <CenterDiv />
         </div>
         {/* RightDiv */}
         <div className="relative flex-1 hidden md:block bg-feedBg">

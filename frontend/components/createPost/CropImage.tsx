@@ -4,6 +4,7 @@ import React, {
   createRef,
   ChangeEvent,
   FormEvent,
+  SetStateAction,
 } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -28,7 +29,12 @@ const toastOptions: ToastOptions = {
   transition: Bounce,
 };
 
-const CropImage: React.FC = () => {
+interface CropImageProps {
+  setIsCaptionPage: React.Dispatch<React.SetStateAction<boolean>>;
+  setPostData: React.Dispatch<React.SetStateAction<any>>;
+}
+
+function CropImage({ setIsCaptionPage, setPostData }: CropImageProps) {
   const [image, setImage] = useState<string | null>(null);
   const cropperRef = createRef<ReactCropperElement>();
   const [cropData, setCropData] = useState<string>("/");
@@ -69,12 +75,12 @@ const CropImage: React.FC = () => {
       const formData = new FormData();
       formData.append("image", croppedBlob, "croppedImage.png");
 
-      const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+      const postsServiceUrl = process.env.NEXT_PUBLIC_POSTS_SERVICE_URL;
 
       try {
-        await toast.promise(
+        const res :any = await toast.promise(
           axios.post(
-            `${userServiceUrl}/profile/userData/image/profilePic`,
+            `${postsServiceUrl}/createPost/image`,
             formData,
             {
               withCredentials: true,
@@ -87,7 +93,9 @@ const CropImage: React.FC = () => {
           },
           toastOptions
         );
-        router.replace("/");
+        //res.data will have the _id of the post
+        setPostData(res?.data)
+        setIsCaptionPage(true)
       } catch (error) {
         console.error("Upload error:", error);
         toast.error("Failed to upload image");
