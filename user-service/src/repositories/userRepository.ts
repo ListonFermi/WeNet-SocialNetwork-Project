@@ -8,6 +8,8 @@ import { JwtPayload, jwtDecode } from "jwt-decode";
 import dotenv from "dotenv";
 import { IGoogleCredentialRes } from "../types/types";
 import "core-js/stable/atob";
+import { MQUserData, publisher } from "../../rabbitMq/publisher";
+import mongoose from "mongoose";
 
 dotenv.config();
 
@@ -133,6 +135,30 @@ export = {
     } catch (error: any) {
       console.log(error);
       throw new Error(error.message);
+    }
+  },
+  sendUserDataToMQ: async (_id: string) => {
+    try {
+      const objectId = new mongoose.Types.ObjectId(_id);
+      const user = await userCollection.findOne({_id: objectId});
+
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      //user data to publish:
+      const { username, firstName, lastName, profilePicUrl } = user;
+      const userData: MQUserData = {
+        _id: user._id,
+        username,
+        firstName,
+        lastName,
+        profilePicUrl: profilePicUrl? profilePicUrl : '',
+      };
+      await publisher.publishSignupMessage(userData);
+    } catch (error: any) {
+      console.error("Error sending user data to MQ:", error.message);
+      throw new Error(error.message)
     }
   },
 };

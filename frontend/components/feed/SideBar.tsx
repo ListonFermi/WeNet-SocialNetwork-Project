@@ -21,9 +21,9 @@ function SideBar() {
           <Image
             src={profilePicUrl}
             alt="Profile Pic"
-            width={100}
-            height={100}
-            className="w-40 h-40 border-2 border-rootBg object-cover rounded-full cursor-pointer hover:border-4"
+            width={500}
+            height={500}
+            className="w-28 h-28 border-2 border-rootBg object-cover rounded-full cursor-pointer hover:border-4"
           />
         </div>
       </a>
@@ -34,9 +34,9 @@ function SideBar() {
             alt="Home Logo"
             width={50}
             height={50}
-            className="h-12 w-12"
+            className="h-10 w-10"
           />
-          <p className="pl-5 text-2xl text-white font-bold">Home</p>
+          <p className="pl-5 text-xl text-white font-bold">Home</p>
         </div>
         <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
           <Image
@@ -44,9 +44,9 @@ function SideBar() {
             alt="Home Logo"
             width={50}
             height={50}
-            className=""
+            className="h-10 w-10"
           />
-          <p className="pl-5 text-2xl text-white font-bold">Notifications</p>
+          <p className="pl-5 text-xl text-white font-bold">Notifications</p>
         </div>
         <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
           <Image
@@ -54,9 +54,9 @@ function SideBar() {
             alt="Home Logo"
             width={50}
             height={50}
-            className=""
+            className="h-10 w-10"
           />
-          <p className="pl-5 text-2xl text-white font-bold">Messages</p>
+          <p className="pl-5 text-xl text-white font-bold">Messages</p>
         </div>
         <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
           <Image
@@ -64,9 +64,9 @@ function SideBar() {
             alt="Home Logo"
             width={50}
             height={50}
-            className=""
+            className="h-10 w-10"
           />
-          <p className="pl-5 text-2xl text-white font-bold">Bookmarks</p>
+          <p className="pl-5 text-xl text-white font-bold">Bookmarks</p>
         </div>
         <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
           <Image
@@ -74,9 +74,9 @@ function SideBar() {
             alt="Home Logo"
             width={50}
             height={50}
-            className=""
+            className="h-10 w-10"
           />
-          <p className="pl-5 text-2xl text-white font-bold">Search</p>
+          <p className="pl-5 text-xl text-white font-bold">Search</p>
         </div>
       </div>
       <div className="h-[20%]">
@@ -87,9 +87,9 @@ function SideBar() {
               alt="Home Logo"
               width={50}
               height={50}
-              className=""
+              className="h-10 w-10"
             />
-            <p className="pl-5 text-2xl text-white font-bold">Create Post</p>
+            <p className="pl-5 text-xl text-white font-bold">Create Post</p>
           </div>
         </a>
         <a href="/settings">
@@ -99,9 +99,9 @@ function SideBar() {
               alt="Home Logo"
               width={50}
               height={50}
-              className=""
+              className="h-10 w-10"
             />
-            <p className="pl-5 text-2xl text-white font-bold">More</p>
+            <p className="pl-5 text-xl text-white font-bold">More</p>
           </div>
         </a>
       </div>

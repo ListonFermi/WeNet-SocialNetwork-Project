@@ -25,10 +25,10 @@ const toastOptions: ToastOptions = {
 
 function AddCaption({ postData }: props) {
   type Inputs = {
-    _id? : string;
+    _id: string;
     caption: string;
   };
-
+  console.log({postData})
   const {
     register,
     handleSubmit,
@@ -36,21 +36,17 @@ function AddCaption({ postData }: props) {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const router = useRouter()
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const postsServiceUrl = process.env.NEXT_PUBLIC_POSTS_SERVICE_URL;
     try {
       console.log(data);
-      data._id = postData._id
-      await toast.promise(
-        axios.post(
-          `${postsServiceUrl}/createPost`,
-           data,
-          {
-            withCredentials: true,
-          }
-        ),
+      data._id = postData._id;
+      const res: any= await toast.promise(
+        axios.post(`${postsServiceUrl}/createPost`, data, {
+          withCredentials: true,
+        }),
         {
           pending: "Creating post",
           success: "Post created successfully",
@@ -58,7 +54,8 @@ function AddCaption({ postData }: props) {
         },
         toastOptions
       );
-      router.replace('/')
+
+      toast(res.data._id)
     } catch (error: any) {
       console.error(error);
       const errorMessage = error?.response?.data?.length

@@ -4,14 +4,12 @@ import React, {
   createRef,
   ChangeEvent,
   FormEvent,
-  SetStateAction,
 } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import axios from "axios";
 import Image from "next/image";
 import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 
 type ReactCropperElement = HTMLDivElement & {
   cropper: Cropper;
@@ -38,8 +36,6 @@ function CropImage({ setIsCaptionPage, setPostData }: CropImageProps) {
   const [image, setImage] = useState<string | null>(null);
   const cropperRef = createRef<ReactCropperElement>();
   const [cropData, setCropData] = useState<string>("/");
-
-  const router = useRouter();
 
   function imageHandler(e: ChangeEvent<HTMLInputElement> | DragEvent) {
     e.preventDefault();
@@ -78,14 +74,11 @@ function CropImage({ setIsCaptionPage, setPostData }: CropImageProps) {
       const postsServiceUrl = process.env.NEXT_PUBLIC_POSTS_SERVICE_URL;
 
       try {
-        const res :any = await toast.promise(
-          axios.post(
-            `${postsServiceUrl}/createPost/image`,
-            formData,
-            {
-              withCredentials: true,
-            }
-          ),
+        console.log(`${postsServiceUrl}/createPost/image`)
+        const res: any = await toast.promise(
+          axios.post(`${postsServiceUrl}/createPost/image`, formData, {
+            withCredentials: true,
+          }),
           {
             pending: "Uploading image",
             success: "Image uploaded successfully",
@@ -94,11 +87,11 @@ function CropImage({ setIsCaptionPage, setPostData }: CropImageProps) {
           toastOptions
         );
         //res.data will have the _id of the post
-        setPostData(res?.data)
-        setIsCaptionPage(true)
+        setPostData(res?.data.postData);
+        setIsCaptionPage(true);
       } catch (error) {
         console.error("Upload error:", error);
-        toast.error("Failed to upload image");
+        toast.error("Failed to upload image", toastOptions);
       }
     }
   }
@@ -178,6 +171,6 @@ function CropImage({ setIsCaptionPage, setPostData }: CropImageProps) {
       </div>
     </form>
   );
-};
+}
 
 export default CropImage;

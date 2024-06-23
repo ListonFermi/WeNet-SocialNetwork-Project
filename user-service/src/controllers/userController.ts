@@ -37,8 +37,13 @@ export = {
     next: NextFunction
   ): Promise<void> => {
     try {
+      console.log('hello')
       const otpData: { _id: string; otp: string } = req.body;
-      await userService.verifyOTP(otpData._id, otpData.otp);
+      const { _id, otp } = otpData;
+      await userService.verifyOTP(_id, otp);
+
+      await userService.sendUserDataToMQ(_id);
+
       res.status(200).send("OTP verified successfully");
     } catch (error) {
       next(error);
@@ -66,21 +71,21 @@ export = {
       next(error);
     }
   },
-  googleSigninController :async (
+  googleSigninController: async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
-    try{
-      console.log(req.body)
-      const userData= await userService.googleSignin(req.body)
+    try {
+      console.log(req.body);
+      const userData = await userService.googleSignin(req.body);
 
       const token = await userService.generateJWT(userData);
       res.cookie("token", token);
       res.status(200).json({ userData, message: "Logged in successfully" });
-    }catch (error) {
+    } catch (error) {
       console.error(error);
       next(error);
     }
-  }
+  },
 };

@@ -54,4 +54,11 @@ export = {
       throw new Error(error.message);
     }
   },
+  sendUserDataToMQ : async (_id: string) : Promise<void> =>{
+    try {
+      await userRepository.sendUserDataToMQ(_id)
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
 };

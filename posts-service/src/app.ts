@@ -1,10 +1,12 @@
 import express from "express";
-import userRoutes from "./routes/userRoutes";
-import adminRoutes from "./routes/adminRoutes";
+import startConsumer from "./rabbitmq/startConsumer";
+import postsRoutes from "./routes/postsRoutes";
+import dotenv from "dotenv";
 import cors from "cors";
-import { errorHandler } from "../src/middlewares/errorHandler";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import { errorHandler } from "./middlewares/errorHandler";
+dotenv.config();
 
 const app = express();
 
@@ -13,18 +15,18 @@ const corsOptions = {
   origin: frontEndUrl,
   credentials: true,
 };
-
 app.use(cors(corsOptions));
-
-// Handle preflight requests
-app.options("*", cors(corsOptions));
+app.options("*", cors(corsOptions)); // Handle preflight requests
 
 app.use(morgan("dev"));
 
 app.use(cookieParser());
 app.use(express.json());
-app.use("/api/user-service/", userRoutes);
-app.use("/api/user-service/admin/", adminRoutes);
+
+app.use("/api/posts-service/", postsRoutes);
+
 app.use(errorHandler);
+
+startConsumer();
 
 export default app;

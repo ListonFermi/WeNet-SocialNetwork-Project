@@ -35,7 +35,6 @@ export = {
       if (!result) {
         throw new Error("User not found");
       }
-      console.log({result})
       return result as IUser;
     } catch (error: any) {
       throw new Error(error.message);

@@ -1,11 +1,12 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CropImage from "./CropImage";
 import AddCaption from "./AddCaption";
 
 function CenterDiv() {
   const [isCaptionPage, setIsCaptionPage] = useState(false);
-  const [postData, setPostData] = useState(null);
+  const [postData, setPostData] = useState(null);  //this will get the postId
+
   return isCaptionPage && postData ? (
     <AddCaption postData={postData} />
   ) : (

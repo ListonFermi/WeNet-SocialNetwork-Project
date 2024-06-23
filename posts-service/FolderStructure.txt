@@ -46,8 +46,8 @@
 │   │   │   └── database.ts
 │   │   ├── /config                # Environment variables and config
 │   │   │   └── index.ts
-│   │   ├── /logging               # Logging
-│   │   │   └── logger.ts
+│   │   ├── /rabbitmq               # rabbitmq
+│   │   │   └── messageHandler.ts
 │   │   └── app.ts                 # Express app setup
 │   │
 │   └── server.ts                  # Entry point

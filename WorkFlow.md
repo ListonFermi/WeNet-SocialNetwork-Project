@@ -99,3 +99,10 @@ Jun 18, Tue
 - posts-service- wrote rabbitmq codes (not implemented)
 
 --- "Frontend- createpost UI && posts-service- sudo codes" ---
+
+Jun 24, Sun
+
+- Implemented rabbitmq to share message when an user is created
+- Completed create post functionality
+
+--- "RabbitMQ 1st MQ && CreatePost functionality" ---
