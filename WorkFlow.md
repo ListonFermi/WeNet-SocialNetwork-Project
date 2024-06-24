@@ -112,3 +112,9 @@ Jun 25, Mon
 - Designed single post page, like and comments UI
 
 --- "Single page post UI" ---
+
+Jun 26, Mon
+
+- -b messages-ui : started messages ui design
+
+--- "-b messages-ui : started" ---
