@@ -2,44 +2,34 @@ import Image from "next/image";
 import React from "react";
 
 type post = {
-  username: String;
-  firstName: String;
-  lastName: String;
-  imageUrl: String;
-  caption: String;
-  time: Date;
-  likesCount: Number;
-  commentsCount : Number;
-  isLiked : boolean;
+  name: String;
+  handle: String;
+  content: String;
+  timestamp: String;
+  retweets: Number;
+  likes: Number;
 };
 
-function FeedPost() {
-  const username = "Buffet";
-  const firstName = "Warren";
-  const lastName = "Buffet";
-  const imageUrl = "/img/DemoProfilePic.jpg";
-  const caption =
-    "Excited to visit Tokyo soon! Cant wait to explore the city and enjoy all it has to offer";
-  const timestamp = "5 min ago";
-  const likesCount = "1.2k";
-  const commentsCount = "300";
-  const isLiked = false
+function FeedPostSkeleton() {
+  const firstName = ".......";
+  const lastName = ".............";
+
+  const timestamp = ".....";
+  const likesCount = "........";
+  const commentsCount = ".....";
+  const isLiked = false;
   return (
     <div className="bg-secColor mb-2 mt-2 shadow-md rounded-lg">
       <div className="flex justify-evenly py-2">
         <div className="flex items-center">
           <div>
-            <Image
-              src={imageUrl}
-              alt="Profile Pic"
-              width={150}
-              height={150}
-              className="w-16 h-16 object-cover rounded-full"
-            />
-            <p className="text-white text-sm font-semibold">@{username}</p>
+            <div className="w-16 h-16 object-cover rounded-full bg-secColorH animate-pulse"></div>
+            <p className="text-secColorH text-sm font-semibold bg-secColorH rounded-lg animate-pulse">
+              ........
+            </p>
           </div>
           <div className="px-4">
-            <h3 className="text-white text-xl font-bold">{`${firstName} ${lastName}`}</h3>
+            <h3 className="text-secColorH text-xl font-bold bg-secColorH rounded-lg animate-pulse">{`${firstName} ${lastName}`}</h3>
             <div className="flex items-center">
               <Image
                 src="/icons/show.svg"
@@ -48,7 +38,7 @@ function FeedPost() {
                 height={150}
                 className="h-4 w-4"
               />
-              <p className="text-gray-400 text-xs font-semibold px-2">
+              <p className="text-secColorH  text-xs font-semibold px-2 bg-secColorH rounded-lg animate-pulse">
                 {timestamp}
               </p>
             </div>
@@ -62,24 +52,29 @@ function FeedPost() {
           className="h-8 w-8 mt-4 justify-end"
         />
       </div>
-      <p className="font-semibold p-2 text-white">{caption}</p>
-      <Image
+      <p className="font-semibold p-2 text-secColorH bg-secColorH animate-pulse rounded-lg mx-2">
+
+      </p>
+      <div className="w-full h-[400px] object-cover  mt-4 bg-secColorH animate-pulse rounded-lg"></div>
+      {/* <Image
         src="/img/DemoPost.jpg"
         alt="Tokyo"
         width={1000}
         height={1000}
         className="w-full h-[400px] object-cover  mt-4"
-      />
+      /> */}
       <div className="flex justify-between items-center p-4">
-        <span className={`${isLiked ? 'text-pink-500' : 'text-rootBg'} flex`}>
+        <span className={`${isLiked ? "text-pink-500" : "text-rootBg"} flex`}>
           <Image
-            src={`/icons/${isLiked ? 'heart.svg': 'notLiked.png' }`}
+            src={`/icons/${isLiked ? "heart.svg" : "notLiked.png"}`}
             width={150}
             height={150}
             alt=""
             className="h-8 w-8"
           />
-          <p className="font-bold">{likesCount}</p>
+          <p className="font-bold text-secColorH bg-secColorH animate-pulse rounded-lg">
+            {likesCount}
+          </p>
         </span>
         <span className="text-purple-500 flex items-center">
           <Image
@@ -89,7 +84,7 @@ function FeedPost() {
             alt=""
             className="h-8 w-8"
           />
-          <p className="font-bold">{commentsCount}</p>
+          <p className="font-bold text-secColorH bg-secColorH animate-pulse rounded-lg">{commentsCount}</p>
         </span>
         <Image
           src="/icons/bookmark.svg"
@@ -103,4 +98,4 @@ function FeedPost() {
   );
 }
 
-export default FeedPost;
+export default FeedPostSkeleton;

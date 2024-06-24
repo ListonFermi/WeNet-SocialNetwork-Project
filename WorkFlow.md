@@ -106,3 +106,9 @@ Jun 24, Sun
 - Completed create post functionality
 
 --- "RabbitMQ 1st MQ && CreatePost functionality" ---
+
+Jun 25, Mon
+
+- Designed single post page, like and comments UI
+
+--- "Single page post UI" ---
