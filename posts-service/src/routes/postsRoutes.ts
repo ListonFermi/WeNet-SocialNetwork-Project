@@ -12,5 +12,7 @@ router.post(
   postsController.createPost
 );
 router.post("/createPost", verifyUser, postsController.addCaption);
+router.get("/singlePost/:postId", postsController.getSinglePost); //protect route
+
 
 export default router;

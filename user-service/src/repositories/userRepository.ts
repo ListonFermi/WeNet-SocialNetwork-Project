@@ -40,6 +40,11 @@ export = {
       user.email = email;
       user.dateOfBirth = dateOfBirth;
       user.gender = gender;
+
+      if (user.gender === "male")
+        user.profilePicUrl = "/img/DefaultProfilePicMale.png";
+      else user.profilePicUrl = "/img/DefaultProfilePicFemale.png";
+
       return await user.save();
     } catch (error: any) {
       console.error(error);
@@ -140,7 +145,7 @@ export = {
   sendUserDataToMQ: async (_id: string) => {
     try {
       const objectId = new mongoose.Types.ObjectId(_id);
-      const user = await userCollection.findOne({_id: objectId});
+      const user = await userCollection.findOne({ _id: objectId });
 
       if (!user) {
         throw new Error("User not found");
@@ -153,12 +158,12 @@ export = {
         username,
         firstName,
         lastName,
-        profilePicUrl: profilePicUrl? profilePicUrl : '',
+        profilePicUrl: profilePicUrl ? profilePicUrl : "",
       };
       await publisher.publishSignupMessage(userData);
     } catch (error: any) {
       console.error("Error sending user data to MQ:", error.message);
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   },
 };

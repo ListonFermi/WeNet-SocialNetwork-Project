@@ -11,6 +11,8 @@ interface IPost extends Document {
   WeNetAds: IWeNetAds;
   bookmarkedBy: Types.ObjectId[];
   reports: Types.ObjectId[];
+  updatedAt? : Date;
+  createdAt? : Date;
 }
 
 interface IWeNetAds {

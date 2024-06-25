@@ -112,3 +112,9 @@ Jun 25, Mon
 - Designed single post page, like and comments UI
 
 --- "Single page post UI" ---
+
+Jun 26, Wed
+
+- Display single post
+
+--- "Show single post" ---

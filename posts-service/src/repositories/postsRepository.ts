@@ -30,7 +30,7 @@ export = {
         throw new Error("Post Id not found");
       }
 
-      const updatedPost = { ...post._doc, caption };
+      const updatedPost = { ...post._doc, caption, isDeleted: false };
       const result = await postsCollection.findOneAndUpdate(
         { _id },
         { $set: updatedPost },
@@ -40,9 +40,28 @@ export = {
       if (!result) {
         throw new Error("Post not found");
       }
+
       return result as IPost;
     } catch (error: any) {
       throw new Error(error.message);
     }
   },
+  getSinglePost: async function (postId: string): Promise<IPost> {
+    try {
+      const _id = new Types.ObjectId(postId);
+      const postData = await postsCollection.findOne({ _id });
+      if (!postData) throw new Error("Post not found");
+      if (postData.isDeleted) throw new Error("This post has been deleted");
+      return postData;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  // addComment : async function (comment: string, postId: string): Promise<IComment> {
+  //   try {
+      
+  //   } catch (error) {
+      
+  //   }
+  // }
 };

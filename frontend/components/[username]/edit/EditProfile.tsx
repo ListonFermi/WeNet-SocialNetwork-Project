@@ -214,10 +214,6 @@ function EditProfile() {
                             value: 3,
                             message: "Enter at least 3 characters",
                           },
-                          maxLength: {
-                            value: 5,
-                            message: "Enter at least 5 characters",
-                          },
                         })}
                         className="text-xl w-[80%] lg:text-2xl md:text-xl sm:text-lg font-bold text-black px-3 sm:px-2"
                       />

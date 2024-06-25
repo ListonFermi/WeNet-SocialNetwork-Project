@@ -26,4 +26,11 @@ export = {
       throw new Error(error.message);
     }
   },
+  getSinglePost: async function (postId: string): Promise<IPost> {
+    try {
+      return await postsRepository.getSinglePost(postId)
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

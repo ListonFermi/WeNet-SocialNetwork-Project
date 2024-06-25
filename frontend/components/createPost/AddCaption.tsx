@@ -54,8 +54,7 @@ function AddCaption({ postData }: props) {
         },
         toastOptions
       );
-
-      toast(res.data._id)
+      router.push(`/post/${res.data._id}`)
     } catch (error: any) {
       console.error(error);
       const errorMessage = error?.response?.data?.length
@@ -84,8 +83,8 @@ function AddCaption({ postData }: props) {
             className="h-[50%] w-[75%] bg-black text-white"
             {...register("caption", {
               maxLength: {
-                value: 50,
-                message: "Caption should be less than 50 characters",
+                value: 140,
+                message: "Caption should be less than 140 characters",
               },
             })}
           ></textarea>
