@@ -40,7 +40,7 @@ function SettingsBar() {
         ))}
       </div>
       <div className="h-20% flex justify-center">
-        <AlertDialog onConfirm={handleLogout}>
+        <AlertDialog onConfirm={handleLogout} alert="You really wanna logout of Wenet ?">
           <button
             className="py-4 md:px-4 w-[75%] bg-red-700 flex justify-center items-center rounded-3xl hover:bg-red-500"
           >

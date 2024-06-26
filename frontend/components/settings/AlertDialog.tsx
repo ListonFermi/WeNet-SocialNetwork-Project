@@ -9,9 +9,11 @@ import DialogTitle from "@mui/material/DialogTitle";
 interface AlertDialogProps {
   children: React.ReactElement;
   onConfirm: () => void;
+  alert: string;
 }
 
-function AlertDialog({ children, onConfirm }: AlertDialogProps): JSX.Element {
+function AlertDialog(props: AlertDialogProps): JSX.Element {
+  const { children, onConfirm, alert } = props;
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -38,12 +40,10 @@ function AlertDialog({ children, onConfirm }: AlertDialogProps): JSX.Element {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"You really wanna logout of Wenet ?"}
+          {alert}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            
-          </DialogContentText>
+          <DialogContentText id="alert-dialog-description"></DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>No</Button>

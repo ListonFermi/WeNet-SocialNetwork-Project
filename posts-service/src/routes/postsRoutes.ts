@@ -13,6 +13,9 @@ router.post(
 );
 router.post("/createPost", verifyUser, postsController.addCaption);
 router.get("/singlePost/:postId", postsController.getSinglePost); //protect route
+router.patch("/editPost/:postId",verifyUser, postsController.editPost)
+router.delete("/deletePost/:postId",verifyUser, postsController.deletePost)
+router.patch('/toggleLike/:entity/:entityId', verifyUser,postsController.toggleLike)
 
 
 export default router;

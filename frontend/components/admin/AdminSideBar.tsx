@@ -1,13 +1,12 @@
-'use client'
+"use client";
 import Image from "next/image";
 import AlertDialog from "../settings/AlertDialog";
 import { useRouter } from "next/navigation";
 import { deleteCookie } from "@/utils/deleteCookie";
 
 function AdminSideBar() {
-
   const router = useRouter();
-  function handleLogout () {
+  function handleLogout() {
     deleteCookie("adminToken");
     router.replace("/admin");
   }
@@ -76,10 +75,11 @@ function AdminSideBar() {
       </div>
       <div className="h-[30%]"></div>
       <div className="h-[20%]">
-      <AlertDialog onConfirm={handleLogout}>
-          <button
-            className="py-4 md:px-4 w-[75%] bg-red-700 flex justify-center items-center rounded-3xl hover:bg-red-500"
-          >
+        <AlertDialog
+          onConfirm={handleLogout}
+          alert="You really wanna logout of Wenet as Admin ?"
+        >
+          <button className="py-4 md:px-4 w-[75%] bg-red-700 flex justify-center items-center rounded-3xl hover:bg-red-500">
             <Image
               src="/icons/logout.svg"
               width={24}

@@ -28,7 +28,32 @@ export = {
   },
   getSinglePost: async function (postId: string): Promise<IPost> {
     try {
-      return await postsRepository.getSinglePost(postId)
+      return await postsRepository.getSinglePost(postId);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  editPost: async function (postId: string, caption: string): Promise<string> {
+    try {
+      return await postsRepository.editPost(postId, caption);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  deletePost: async function (postId: string): Promise<string> {
+    try {
+      return await postsRepository.deletePost(postId);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  toggleLike: async function (
+    entity: string,
+    entityId: string,
+    userId: string
+  ): Promise<number> {
+    try {
+      return await postsRepository.toggleLike(entity, entityId, userId);
     } catch (error: any) {
       throw new Error(error.message);
     }

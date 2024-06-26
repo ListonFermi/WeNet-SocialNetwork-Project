@@ -2,35 +2,57 @@ import Image from "next/image";
 import React from "react";
 import FeedPostSkeleton from "./FeedPostSkeleton";
 import { formatDate } from "@/utils/formatDate";
+import BasicPopover from "./post/[id]/BasicPopover";
+import HeartAnimation from "./post/[id]/HeartAnimation";
+import postService from "@/utils/apiCalls/postService";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { IPost } from "@/types/types";
 
-type post = {
-  username: string;
-  firstName: string;
-  lastName: string;
-  profilePicUrl: string;
-  caption: string;
-  imageUrl: string;
-  time: Date;
-  likedBy: string[];
-  comments: string[];
-  updatedAt: string;
-  isLiked: boolean;
+
+type props = {
+  postData: IPost | null;
+  currentUserId: string;
 };
 
-function FeedPost({ postData }: { postData: post | null }) {
+function FeedPost({ postData, currentUserId }: props) {
   if (!postData) return <FeedPostSkeleton />;
 
-  const { username, firstName, lastName, caption, imageUrl, isLiked } =
-    postData;
-
-  let { profilePicUrl } = postData;
-
-  if (!profilePicUrl.length) profilePicUrl = "/img/DefaultProfilePicMale.png";
+  const {
+    _id,
+    username,
+    firstName,
+    lastName,
+    caption,
+    imageUrl,
+    isLiked,
+    profilePicUrl,
+  } = postData;
 
   const { likedBy, comments, updatedAt } = postData;
-  const likesCount = likedBy.length;
   const commentsCount = comments.length;
   const timestamp = formatDate(updatedAt);
+
+  const [showHeart, setShowHeart] = React.useState(false);
+  const [liked, setLiked] = React.useState(isLiked);
+  const [likesCount, setLikesCount] = React.useState(likedBy.length)
+
+  const postId = postData._id;
+  const isOwnPost = postData.userId === currentUserId;
+
+  const handleLike = async () => {
+    try {
+      setLiked(!liked);
+      if (!liked) {
+        setShowHeart(true);
+        setTimeout(() => setShowHeart(false), 2500);
+      }
+      const likesCount = await postService.toggleLike('post',_id)
+      setLikesCount(likesCount)
+    } catch (error: any) {
+      toast.error(error.message)
+    }
+  };
 
   return (
     <div className="bg-secColor mb-2 mt-2 shadow-md rounded-lg">
@@ -62,26 +84,26 @@ function FeedPost({ postData }: { postData: post | null }) {
             </div>
           </div>
         </div>
-        <Image
-          src="/icons/menu.svg"
-          alt=""
-          width={150}
-          height={150}
-          className="h-8 w-8 mt-4 justify-end"
-        />
+        <BasicPopover isOwnPost={isOwnPost} postId={postId} />
       </div>
       <p className="font-semibold px-6 py-2 text-white">{caption}</p>
-      <Image
-        src={imageUrl}
-        alt="Tokyo"
-        width={1000}
-        height={1000}
-        className="w-full h-[400px] object-cover  mt-4"
-      />
+      <div className="relative" onDoubleClick={handleLike}>
+        <Image
+          src={imageUrl}
+          alt="Tokyo"
+          width={1000}
+          height={1000}
+          className="w-full h-[400px] object-cover  mt-4"
+        />
+        <HeartAnimation visible={showHeart} />
+      </div>
       <div className="flex justify-between items-center p-4">
-        <span className={`${isLiked ? "text-pink-500" : "text-rootBg"} flex`}>
+        <span
+          className={`${liked ? "text-pink-500" : "text-rootBg"} flex`}
+          onClick={handleLike}
+        >
           <Image
-            src={`/icons/${isLiked ? "heart.svg" : "notLiked.png"}`}
+            src={`/icons/${liked ? "heart.svg" : "notLiked.png"}`}
             width={150}
             height={150}
             alt=""

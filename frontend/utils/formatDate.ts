@@ -12,7 +12,7 @@ export function formatDate(dateString: string) {
     const ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12 || 12;  
 
-    const formattedDate = `${day} ${month} ${year}, ${hours}:${minutes}${ampm}`;
+    const formattedDate = `${day} ${month} '${year}, ${hours}:${minutes}${ampm}`;
     
     return formattedDate;
 }

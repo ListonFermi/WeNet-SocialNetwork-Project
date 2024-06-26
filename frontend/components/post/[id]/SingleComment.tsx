@@ -1,60 +1,43 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
+import Comment from "./Comment";
+import { IComment, IUser } from "@/types/types";
+import { useSelector } from "react-redux";
 
-function SingleComment() {
-  const isLiked= false
+type props = {
+  userId: string;
+};
+
+function SingleComment({ userId }: props) {
+  const postData = useSelector((store: any) => store?.post?.postData);
+  console.log({ postData });
+
   return (
-    <div className="w-full h-32 bg-secColor flex rounded-lg overflow-hidden mt-2">
-      <div className="h-full w-[25%] flex flex-col items-center justify-center">
-        <Image
-          src={""}
-          alt="Profile Pic"
-          width={500}
-          height={500}
-          className="w-20 h-20 object-cover rounded-full cursor-pointer hover:border-2"
-        />
-        <h1 className="text-white font-semibold">@Charlie</h1>
-      </div>
-      <div className="h-full w-[75%]">
-        <div className="h-4/5 flex align-top justify-center">
-          <p className="p-1 text-md font-semibold text-white">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim.
-          </p>
-        </div>
-        <div className="h-1/5 flex justify-between first-line px-5">
-          <div className="flex items-center">
-            <Image
-              src="/icons/show.svg"
-              alt=""
-              width={150}
-              height={150}
-              className="h-4 w-4"
-            />
-            <p className="text-gray-400 text-xs font-semibold px-2">{"now"}</p>
-          </div>
-          <span className={`${isLiked ? 'text-pink-500' : 'text-rootBg'} flex`}>
-            <Image
-              src={`/icons/${isLiked ? 'heart.svg': 'notLiked.png' }`}
-              width={150}
-              height={150}
-              alt=""
-              className="h-6 w-6"
-            />
-            <p className="font-bold text-sm">{100}</p>
-          </span>
-          <Image
-            src="/icons/menu.svg"
-            alt=""
-            width={150}
-            height={150}
-            className="h-6 w-6"
-          />
-        </div>
-      </div>
-    </div>
+    <>
+      {(userId && postData) ? (
+        postData.comments.map((comment:any) => {
+          return <Comment key={comment._id} commentData={seggregateData(comment)} currentUserId={userId}/>;
+        })
+      ) : (
+        <div>Comments are loading...</div>
+      )}
+    </>
   );
 }
 
 export default SingleComment;
+
+function seggregateData(singleCommentData:any): IComment {
+  const { _id,userId, comment, updatedAt } = singleCommentData;
+  const { profilePicUrl, username } = userId;
+
+  return {
+    _id,
+    userId: userId._id,
+    profilePicUrl,
+    username,
+    comment,
+    updatedAt,
+  };
+}

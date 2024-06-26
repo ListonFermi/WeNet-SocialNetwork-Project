@@ -118,3 +118,13 @@ Jun 26, Wed
 - Display single post
 
 --- "Show single post" ---
+
+Jun 27, Thu
+
+- edit post
+- delete post
+- like post
+- add comment
+- display comment
+
+-- "Edit, delete, like post, add & display comment" ---

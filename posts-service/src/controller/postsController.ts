@@ -51,6 +51,8 @@ export = {
       const isLiked = false; /// should check if the current user has liked the post - do this after implementing like feature
 
       const postData = {
+        _id: postId,
+        userId,
         username,
         firstName,
         lastName,
@@ -64,6 +66,48 @@ export = {
       };
 
       res.status(200).json(postData);
+    } catch (error) {
+      next(error);
+    }
+  },
+  editPost: async function (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { postId } = req.params;
+      const { caption } = req.body;
+      const message = await postsServices.editPost(postId, caption);
+      res.status(200).send(message);
+    } catch (error) {
+      next(error);
+    }
+  },
+  deletePost: async function (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { postId } = req.params;
+      const message = await postsServices.deletePost(postId);
+      res.status(200).send(message);
+    } catch (error) {
+      next(error);
+    }
+  },
+  toggleLike: async function (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { _id } = req.user;
+      const { entity, entityId } = req.params;
+      const entityCount = await postsServices.toggleLike(entity, entityId, _id);
+      console.log({entityCount})
+      res.status(200).send(entityCount+'');
     } catch (error) {
       next(error);
     }

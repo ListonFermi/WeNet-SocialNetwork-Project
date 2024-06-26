@@ -1,21 +1,27 @@
-import React from "react";
+import React, { use } from "react";
 import SingleComment from "./SingleComment";
-import AddComment from "./AddComment";
 import Post from "./Post";
+import getUserData from "@/utils/getUserData";
+import AddCommentForm from "./AddCommentForm";
 
 function SinglePost() {
 
-  
-   
+  let userData;
+  try {
+    const decoded: any = getUserData();
+    userData = decoded.userData;
+  } catch (error: any) {
+    console.log(error);
+  } 
 
   return (
     <>
       <div className="">
-        <Post />
+        <Post userId={userData?._id}/>
       </div>
       <div>
-        <AddComment />
-        <SingleComment />
+        <AddCommentForm userData={userData} />
+        <SingleComment userId={userData?._id} />
       </div>
     </>
   );

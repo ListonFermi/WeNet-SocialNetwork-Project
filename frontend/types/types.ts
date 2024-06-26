@@ -28,7 +28,34 @@ export interface IUser {
   createdAt?: Date;
   updatedAt?: Date;
   JWT?: string;
-  iat? : Number;
-  exp? : Number;
-  location? : string
+  iat?: Number;
+  exp?: Number;
+  location?: string;
+}
+
+export interface IPost {
+  _id: string;
+  userId: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  profilePicUrl: string;
+  caption: string;
+  imageUrl: string;
+  time: Date;
+  likedBy: string[];
+  comments: string[];
+  updatedAt: string;
+  isLiked: boolean;
+}
+
+export interface IComment {
+  _id: string;
+  userId: string;
+  username: string;
+  profilePicUrl: string;
+  comment: string;
+  likedBy?: string[];
+  updatedAt: string;
+  isLiked?: boolean;
 }
