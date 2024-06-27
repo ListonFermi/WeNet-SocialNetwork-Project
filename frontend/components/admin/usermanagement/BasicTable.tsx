@@ -34,8 +34,8 @@ interface Column {
     | "privacy"
     | "followersCount"
     | "followingCount"
-    | "postsCount"
-    // | "actions";
+    | "postsCount";
+  // | "actions";
   label: string;
   minWidth?: number;
   align?: "right" | "center";
@@ -62,13 +62,13 @@ const columns: readonly Column[] = [
     align: "right",
     format: (value: number) => value.toLocaleString("en-US"),
   },
-  {
-    id: "postsCount",
-    label: "Posts",
-    minWidth: 100,
-    align: "right",
-    format: (value: number) => value.toLocaleString("en-US"),
-  },
+  // {
+  //   id: "postsCount",
+  //   label: "Posts",
+  //   minWidth: 100,
+  //   align: "right",
+  //   format: (value: number) => value.toLocaleString("en-US"),
+  // },
   // { id: "actions", label: "Actions", minWidth: 150, align: "center" },
 ];
 
@@ -81,7 +81,6 @@ interface Data {
   privacy: string;
   followersCount: number;
   followingCount: number;
-  postsCount: number;
   // actions: string;
 }
 
@@ -92,8 +91,7 @@ function createData(
   accountStatus: string,
   privacy: string,
   followersCount: number,
-  followingCount: number,
-  postsCount: number
+  followingCount: number
 ): Data {
   // const actions = "Restrict";
   return {
@@ -104,7 +102,6 @@ function createData(
     privacy,
     followersCount,
     followingCount,
-    postsCount,
     // actions,
   };
 }
@@ -118,16 +115,8 @@ export default function AdminUserManagementTable() {
     (async function grabData() {
       const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
       try {
-        let response: any = await toast.promise(
-          axios.get(`${userServiceUrl}/admin/usermanagement`, {
-            withCredentials: true,
-          }),
-          {
-            pending: "Loading user data",
-            success: "Loading user successfully",
-            error: "Error loading user data",
-          },
-          toastOptions
+        let response: any = await axios.get(
+          `${userServiceUrl}/admin/usermanagement`
         );
         const users = response.data.map((user: any) =>
           createData(
@@ -137,8 +126,7 @@ export default function AdminUserManagementTable() {
             user.isRestricted ? "Restricted" : "Unrestricted",
             user.isPrivate ? "Private" : "Public",
             user.followers.length,
-            user.following.length,
-            user.postsCount
+            user.following.length
           )
         );
         setRows(users);
@@ -163,9 +151,16 @@ export default function AdminUserManagementTable() {
     setPage(0);
   };
 
+  if (!rows.length)
+    return (
+      <div className="h-full w-full flex items-center justify-center">
+        <h1 className="text-white text-4xl font-bold">Loading...</h1>
+      </div>
+    );
+
   return (
     <>
-    <ToastContainer />
+      <ToastContainer />
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">

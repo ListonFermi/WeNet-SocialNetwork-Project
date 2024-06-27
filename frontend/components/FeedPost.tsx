@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IPost } from "@/types/types";
 
-
 type props = {
   postData: IPost | null;
   currentUserId: string;
@@ -35,7 +34,7 @@ function FeedPost({ postData, currentUserId }: props) {
 
   const [showHeart, setShowHeart] = React.useState(false);
   const [liked, setLiked] = React.useState(isLiked);
-  const [likesCount, setLikesCount] = React.useState(likedBy.length)
+  const [likesCount, setLikesCount] = React.useState(likedBy.length);
 
   const postId = postData._id;
   const isOwnPost = postData.userId === currentUserId;
@@ -47,11 +46,25 @@ function FeedPost({ postData, currentUserId }: props) {
         setShowHeart(true);
         setTimeout(() => setShowHeart(false), 2500);
       }
-      const likesCount = await postService.toggleLike('post',_id)
-      setLikesCount(likesCount)
+      const likesCount = await postService.toggleLike("post", _id);
+      setLikesCount(likesCount);
     } catch (error: any) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
+  };
+
+  const handleBookmarkPost = async () => {
+    // try {
+    //   setLiked(!liked);
+    //   if (!liked) {
+    //     setShowHeart(true);
+    //     setTimeout(() => setShowHeart(false), 2500);
+    //   }
+    //   const likesCount = await postService.toggleLike("post", _id);
+    //   setLikesCount(likesCount);
+    // } catch (error: any) {
+    //   toast.error(error.message);
+    // }
   };
 
   return (
@@ -122,6 +135,7 @@ function FeedPost({ postData, currentUserId }: props) {
           <p className="font-bold">{commentsCount}</p>
         </span>
         <Image
+          onClick={handleBookmarkPost}
           src="/icons/bookmark.svg"
           width={150}
           height={150}

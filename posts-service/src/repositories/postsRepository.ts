@@ -42,6 +42,11 @@ export = {
         throw new Error("Post not found");
       }
 
+      await userCollection.updateOne(
+        {_id: result.userId},
+        { $addToSet: { posts: result._id } }
+      )
+
       return result as IPost;
     } catch (error: any) {
       throw new Error(error.message);
@@ -67,13 +72,6 @@ export = {
       throw new Error(error.message);
     }
   },
-  // addComment : async function (comment: string, postId: string): Promise<IComment> {
-  //   try {
-
-  //   } catch (error) {
-
-  //   }
-  // }
   editPost: async function (postId: string, caption: string): Promise<string> {
     try {
       const _id = new Types.ObjectId(postId);

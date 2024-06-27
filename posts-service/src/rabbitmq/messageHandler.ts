@@ -1,6 +1,7 @@
 import { Channel } from "amqplib";
 import userServices from "../services/userServices";
 import { IUser } from "../models/userCollection";
+import { MQActions } from "./config";
 
 interface IMessageHandler {
   handle: (
@@ -18,17 +19,12 @@ export const MessageHandler: IMessageHandler = {
       let response;
 
       switch (operation) {
-        case "createUser": {
+        case `${MQActions.addUser}`: {
           response = await createUser(data);
           break;
         }
-        case "updateUser":
-          // Example operation to update a user
+        case `${MQActions.editUser}`:
           response = await updateUser(data);
-          break;
-        case "deleteUser":
-          // Example operation to delete a user
-          response = await deleteUser(data);
           break;
         default:
           throw new Error(`Unknown operation: ${operation}`);
@@ -57,12 +53,11 @@ async function createUser(data: IUser) {
   }
 }
 
-async function updateUser(data: any) {
-  // Perform the user update logic
-  return { success: true, message: "User updated", data };
+async function updateUser(data: IUser) {
+  try {
+    return await userServices.updateUser(data);
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
 }
 
-async function deleteUser(data: any) {
-  // Perform the user deletion logic
-  return { success: true, message: "User deleted", data };
-}

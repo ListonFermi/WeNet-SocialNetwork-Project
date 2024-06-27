@@ -17,5 +17,4 @@ router.patch("/editPost/:postId",verifyUser, postsController.editPost)
 router.delete("/deletePost/:postId",verifyUser, postsController.deletePost)
 router.patch('/toggleLike/:entity/:entityId', verifyUser,postsController.toggleLike)
 
-
 export default router;

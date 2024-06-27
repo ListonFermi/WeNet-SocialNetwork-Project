@@ -1,6 +1,6 @@
 import amqp, { Channel, Connection } from "amqplib";
 import { ObjectId } from "mongoose";
-import { v4 as uuidv4 } from "uuid";
+import { MQExchangeName, MQRoutingKey } from "./config";
 
 export type MQUserData = {
   _id: string | ObjectId;
@@ -35,17 +35,17 @@ export const publisher = {
     }
   },
 
-  publishSignupMessage: async function (userData: MQUserData) {
+  publishUserMessage: async function (userData: MQUserData, action: string) {
     try {
       const [channel, connection] = await this.connectRabbitMQ();
 
-      const exchangeName = "wenet_exchange";
-      const routingKey = "user.signup"; // Specific routing key
+      const exchangeName = MQExchangeName;
+      const routingKey = MQRoutingKey ; // Specific routing key
       await channel.assertExchange(exchangeName, "direct", { durable: true });
 
       const messageProperties = {
         headers: {
-          function: "createUser",
+          function: action,
         },
       };
 
@@ -64,27 +64,6 @@ export const publisher = {
       console.error("Error publishing message to RabbitMQ:", error);
       throw new Error(error.message);
     }
-    //   try {
-    //     // Establish connection to RabbitMQ
-    //     const connection = await amqp.connect('amqp://rabbitmq:5672');
-
-    //     const channel = await connection.createChannel();
-
-    //     // Declare exchange
-    //     const exchangeName = 'user_signup_exchange';
-    //     await channel.assertExchange(exchangeName, 'direct', { durable: false });
-
-    //     // Publish message
-    //     const message = JSON.stringify(userData);
-    //     await channel.publish(exchangeName, '', Buffer.from(message));
-
-    //     console.log('Message published to RabbitMQ: ', userData);
-
-    //     // Close connection
-    //     await channel.close();
-    //     await connection.close();
-    // } catch (error) {
-    //     console.error('Error publishing message to RabbitMQ:', error);
-    // }
   },
+
 };

@@ -106,7 +106,6 @@ export = {
       const { _id } = req.user;
       const { entity, entityId } = req.params;
       const entityCount = await postsServices.toggleLike(entity, entityId, _id);
-      console.log({entityCount})
       res.status(200).send(entityCount+'');
     } catch (error) {
       next(error);

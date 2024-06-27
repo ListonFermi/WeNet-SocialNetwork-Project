@@ -28,4 +28,26 @@ export = {
       throw new Error(error.message);
     }
   },
+  updateUser: async function (userData: IUser): Promise<string> {
+    try {
+      const _id = new Types.ObjectId( userData._id) 
+      const user: any = await userCollection.findOne({ _id});
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      const updatedUser = {
+        ...user._doc,
+        ...userData,
+      };
+      await userCollection.findOneAndUpdate(
+        { _id },
+        { $set: updatedUser },
+      );
+
+      return "User data updated successfully";
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

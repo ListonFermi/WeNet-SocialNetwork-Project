@@ -17,4 +17,11 @@ export = {
       throw new Error(error.message);
     }
   },
+  updateUser: async function (userData: IUser): Promise<string> {
+    try {
+      return await userRepository.updateUser(userData);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

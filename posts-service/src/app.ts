@@ -2,6 +2,8 @@ import express from "express";
 import startConsumer from "./rabbitmq/startConsumer";
 import postsRoutes from "./routes/postsRoutes";
 import commentsRoutes from "./routes/commentsRoutes";
+import reportsRoutes from "./routes/reportsRoutes";
+import adminRoutes from "./routes/adminRoutes";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -26,6 +28,8 @@ app.use(express.json());
 
 app.use("/api/posts-service/", postsRoutes);
 app.use("/api/posts-service/comment", commentsRoutes);
+app.use("/api/posts-service/report", reportsRoutes);
+app.use("/api/posts-service/admin", adminRoutes);
 
 
 app.use(errorHandler);

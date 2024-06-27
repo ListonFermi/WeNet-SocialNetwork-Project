@@ -1,6 +1,6 @@
 import AdminNavbar from "@/components/admin/AdminNavbar";
 import AdminSideBar from "@/components/admin/AdminSideBar";
-import UserManagement from "@/components/admin/usermanagement/UserManagement";
+import ReportManagement from "@/components/admin/reportManagement/ReportManagementTable";
 import React from "react";
 
 function page() {
@@ -19,7 +19,7 @@ function page() {
         {/* Feed */}
         <div className="flex-1 p-4 h-screen overflow-y-auto no-scrollbar bg-feedBg">
           <div className="w-full h-full flex flex-col">
-            <UserManagement />
+            <ReportManagement />
           </div>
         </div>
       </div>

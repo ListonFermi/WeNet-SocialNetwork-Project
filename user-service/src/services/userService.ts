@@ -54,9 +54,9 @@ export = {
       throw new Error(error.message);
     }
   },
-  sendUserDataToMQ : async (_id: string) : Promise<void> =>{
+  sendUserDataToMQ : async (_id: string, action: string) : Promise<void> =>{
     try {
-      await userRepository.sendUserDataToMQ(_id)
+      await userRepository.sendUserDataToMQ(_id, action)
     } catch (error: any) {
       throw new Error(error.message);
     }

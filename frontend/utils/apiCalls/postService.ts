@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const postServiceUrl = process.env.NEXT_PUBLIC_POSTS_SERVICE_URL;
+const postServiceAdminUrl = process.env.NEXT_PUBLIC_POSTS_SERVICE_ADMIN_URL;
 
 export default {
   //posts
@@ -74,6 +75,71 @@ export default {
         error.response && error.response.data
           ? error.response.data.message
           : "Failed to comment on the post";
+      throw new Error(errorMessage);
+    }
+  },
+
+  //reports
+  reportEntity: async function (
+    entityType: "posts" | "comments" | "users",
+    entityId: string,
+    reportType: string,
+    reportDescription: string
+  ) {
+    try {
+      const url = `${postServiceUrl}/report/${entityType}/${entityId}`;
+      const res = await axios.post(
+        url,
+        { reportType, reportDescription },
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response.data
+          ? error.response.data.message
+          : "Failed to report the post";
+      throw new Error(errorMessage);
+    }
+  },
+
+  //reports- admin
+  getReportManagementData: async function () {
+    try {
+      const url = `${postServiceAdminUrl}/reports`;
+      const res = await axios.get(url, { withCredentials: true });
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response.data
+          ? error.response.data.message
+          : "Failed to get report management data";
+      throw new Error(errorMessage);
+    }
+  },
+  deletePostByAdmin: async function (postId: string) {
+    try {
+      const url = `${postServiceAdminUrl}/deletePost/${postId}`;
+      const res = await axios.delete(url, { withCredentials: true });
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response.data
+          ? error.response.data.message
+          : "Failed to delete the post";
+      throw new Error(errorMessage);
+    }
+  },
+  resolveReport: async function (reportId: string) {
+    try {
+      const url = `${postServiceAdminUrl}/reports/${reportId}`;
+      const res = await axios.patch(url, {} , { withCredentials: true });
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response.data
+          ? error.response.data.message
+          : "Failed to update report management data";
       throw new Error(errorMessage);
     }
   },

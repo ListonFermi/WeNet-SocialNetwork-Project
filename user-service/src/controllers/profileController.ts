@@ -1,6 +1,8 @@
 import { NextFunction, Response } from "express";
 import profileService from "../services/profileService";
 import AWS from "aws-sdk";
+import userService from "../services/userService";
+import { MQActions } from "../../rabbitMq/config";
 
 export = {
   getUser: async (
@@ -26,10 +28,14 @@ export = {
       const user = req?.user;
       if (!user) throw new Error("No user found");
 
-      const userData = await profileService.editUserData(req.user._id,req.body);
+      const userData: any = await profileService.editUserData(req.user._id,req.body);
+      if(!userData) throw new Error("User data not found")
+
+      await userService.sendUserDataToMQ(userData._id, MQActions.editUser);
 
       const token = await profileService.generateJWT(userData);
       res.cookie("token", token);
+
       res.status(200).send("User data edited successfully");
     } catch (error) {
       next(error);

@@ -104,7 +104,10 @@ export default function BasicPopover({ postId, isOwnPost }: prop) {
             <button className=" text-white font-bold hover:bg-secColorH p-2">
               Copy Link
             </button>
-            <button className=" text-white font-bold hover:bg-secColorH p-2">
+            <button
+              className=" text-white font-bold hover:bg-secColorH p-2"
+              onClick={() => router.push(`/post/report/${postId}`)}
+            >
               Report
             </button>
           </div>

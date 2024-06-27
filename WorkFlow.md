@@ -128,3 +128,11 @@ Jun 27, Thu
 - display comment
 
 -- "Edit, delete, like post, add & display comment" ---
+
+Jun 28, Fri
+
+- report post
+- Admin: Report management table
+- Admin: Resolve reports- Post Reports
+
+--- "Report Management" ---

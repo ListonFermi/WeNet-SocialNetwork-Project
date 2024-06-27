@@ -142,7 +142,7 @@ export = {
       throw new Error(error.message);
     }
   },
-  sendUserDataToMQ: async (_id: string) => {
+  sendUserDataToMQ: async (_id: string, action: string) => {
     try {
       const objectId = new mongoose.Types.ObjectId(_id);
       const user = await userCollection.findOne({ _id: objectId });
@@ -160,7 +160,7 @@ export = {
         lastName,
         profilePicUrl: profilePicUrl ? profilePicUrl : "",
       };
-      await publisher.publishSignupMessage(userData);
+      await publisher.publishUserMessage(userData, action);
     } catch (error: any) {
       console.error("Error sending user data to MQ:", error.message);
       throw new Error(error.message);
