@@ -36,7 +36,7 @@ export = {
     }
   },
   getSinglePost: async function (
-    req: Request,
+    req: any,
     res: Response,
     next: NextFunction
   ): Promise<void> {
@@ -48,7 +48,8 @@ export = {
       const { username, firstName, lastName, profilePicUrl } =
         await userServices.getUser(userId);
 
-      const isLiked = false; /// should check if the current user has liked the post - do this after implementing like feature
+      // const isLiked = false; /// should check if the current user has liked the post - do this after implementing like feature
+      const isLiked = await postsServices.postIsLiked(req.user._id, postId);
 
       const postData = {
         _id: postId,
@@ -105,8 +106,110 @@ export = {
     try {
       const { _id } = req.user;
       const { entity, entityId } = req.params;
+      console.log({ _id });
       const entityCount = await postsServices.toggleLike(entity, entityId, _id);
-      res.status(200).send(entityCount+'');
+      res.status(200).send(entityCount + "");
+    } catch (error) {
+      next(error);
+    }
+  },
+  toggleBookmark: async function (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { _id } = req.user;
+      const { postId } = req.params;
+      const message = await postsServices.toggleBookmark(postId, _id);
+      res.status(200).send(message);
+    } catch (error) {
+      next(error);
+    }
+  },
+  getPublicFeed: async function (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const topPosts = await postsServices.getTopPosts();
+
+      let topPostsData: any = topPosts.map(async (postId) => {
+        try {
+          const { userId, imageUrl, caption, likedBy, comments, updatedAt } =
+            await postsServices.getSinglePost(postId);
+
+          const { username, firstName, lastName, profilePicUrl } =
+            await userServices.getUser(userId);
+          const isLiked = false;
+          const isBookmarked = false;
+
+          return {
+            _id: postId,
+            userId,
+            username,
+            firstName,
+            lastName,
+            profilePicUrl,
+            caption,
+            imageUrl,
+            likedBy,
+            isLiked,
+            comments,
+            updatedAt,
+            isBookmarked,
+          };
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
+      });
+
+      topPostsData = await Promise.all(topPostsData);
+      res.status(200).json({ topPostsData });
+    } catch (error) {
+      next(error);
+    }
+  },
+  getBookmarkedPosts: async function (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const bookmarkedPosts = await postsServices.getBookmarkedPosts(
+        req.user._id
+      );
+
+      let postsData: any = bookmarkedPosts.map(async (postId) => {
+        const { userId, imageUrl, caption, likedBy, comments, updatedAt } =
+          await postsServices.getSinglePost(postId);
+
+        const { username, firstName, lastName, profilePicUrl } =
+          await userServices.getUser(userId);
+        const isLiked = false;
+        const isBookmarked = false;
+
+        return {
+          _id: postId,
+          userId,
+          username,
+          firstName,
+          lastName,
+          profilePicUrl,
+          caption,
+          imageUrl,
+          likedBy,
+          isLiked,
+          comments,
+          updatedAt,
+          isBookmarked,
+        };
+      });
+
+      postsData = await Promise.all(postsData);
+      res.status(200).json(postsData);
     } catch (error) {
       next(error);
     }

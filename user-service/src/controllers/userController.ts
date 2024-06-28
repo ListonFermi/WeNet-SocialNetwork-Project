@@ -78,12 +78,50 @@ export = {
     next: NextFunction
   ): Promise<void> => {
     try {
-      console.log(req.body);
-      const userData = await userService.googleSignin(req.body);
+      const userData: any = await userService.googleSignin(req.body);
+
+      await userService.sendUserDataToMQ(userData._id, MQActions.addUser);
 
       const token = await userService.generateJWT(userData);
       res.cookie("token", token);
       res.status(200).json({ userData, message: "Logged in successfully" });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
+  changePassword: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const userId = req.user._id;
+      const { newPassword, currentPassword } = req.body;
+
+      const message = await userService.changePassword(
+        userId,
+        currentPassword,
+        newPassword
+      );
+
+      res.status(200).send(message);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
+  forgotPassword: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { email } = req.body;
+
+      const message= await userService.forgotPassword(email)
+
+      res.status(200).send(message);
     } catch (error) {
       console.error(error);
       next(error);

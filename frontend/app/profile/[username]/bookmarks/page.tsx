@@ -4,6 +4,7 @@ import FeedRightDiv from '@/components/feed/FeedRightDiv'
 import React from 'react'
 import UserFeed from '@/components/feed/UserFeed'
 import Feed from '@/components/page/Feed'
+import Bookmarks from '@/components/[username]/bookmarks/Bookmarks'
 
 function page() {
   return (
@@ -18,7 +19,7 @@ function page() {
         </div>
         {/* Feed */}
         <div className="flex-1 md:flex-2 lg:flex-3 xl:flex-4 p-4 h-screen overflow-y-auto no-scrollbar bg-feedBg">
-          <Feed/>
+          <Bookmarks/>
         </div>
         {/* RightDiv */}
         <div className="relative flex-1 hidden md:block bg-feedBg">

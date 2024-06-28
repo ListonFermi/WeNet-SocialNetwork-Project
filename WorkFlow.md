@@ -136,3 +136,15 @@ Jun 28, Fri
 - Admin: Resolve reports- Post Reports
 
 --- "Report Management" ---
+
+- report post
+- Admin: Report management table
+- Admin: Resolve reports- Post Reports
+
+--- "Report Management" ---
+
+- public feed posts
+- bookmark post implemented
+- change password and forget password
+
+--- "feed posts, bookmark posts, change/forget password" ---

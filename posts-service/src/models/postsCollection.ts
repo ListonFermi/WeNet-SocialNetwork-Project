@@ -34,7 +34,7 @@ const PostSchema = new Schema(
     comments: [{ type: Types.ObjectId, ref: 'comments' }],
     isDeleted: { type: Boolean, required: true, default: true },
     WeNetAds: { type: WeNetAdsSchema },
-    bookmarkedBy: [{ type: Types.ObjectId }],
+    bookmarkedBy: [{ type: Types.ObjectId, ref: "users" }],
     reports: [{ type: Types.ObjectId }],
   },
   { timestamps: true }

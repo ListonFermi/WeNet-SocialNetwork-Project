@@ -43,9 +43,9 @@ export = {
       }
 
       await userCollection.updateOne(
-        {_id: result.userId},
+        { _id: result.userId },
         { $addToSet: { posts: result._id } }
-      )
+      );
 
       return result as IPost;
     } catch (error: any) {
@@ -162,6 +162,106 @@ export = {
       } else {
         throw new Error("Invalid entity type");
       }
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  toggleBookmark: async function (
+    postId: string | Types.ObjectId,
+    userId: string | Types.ObjectId
+  ): Promise<string> {
+    try {
+      userId = new Types.ObjectId(userId);
+      const user = await userCollection.findOne({ _id: userId });
+      if (!user) throw new Error("User not found");
+
+      postId = new Types.ObjectId(postId);
+      const postIndex = user.postsBookmarked.findIndex((id: Types.ObjectId) =>
+        id.equals(postId)
+      );
+
+      let message;
+      if (postIndex !== -1) {
+        //remove bookmark
+        user.postsBookmarked.splice(postIndex, 1);
+        await postsCollection.updateOne(
+          { _id: postId },
+          { $pull: { bookmarkedBy: userId } }
+        );
+        message = "Post removed from bookmark successfully";
+      } else {
+        //add bookmark
+        user.postsBookmarked.push(postId);
+        await postsCollection.updateOne(
+          { _id: postId },
+          { $addToSet: { bookmarkedBy: userId } }
+        );
+        message = "Post added to bookmark successfully";
+      }
+      await user.save();
+
+      return message;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  postIsLiked: async function (
+    userId: string,
+    postId: string
+  ): Promise<boolean> {
+    try {
+      const user = await userCollection
+        .findById(userId)
+        .select("postsLiked")
+        .exec();
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      const isLiked = user.postsLiked.includes(
+        postId as unknown as Types.ObjectId
+      );
+      return isLiked;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getTopPosts: async function (): Promise<string[]> {
+    try {
+      const posts = await postsCollection.aggregate([
+        {
+          $addFields: {
+            likesCount: { $size: "$likedBy" },
+          },
+        },
+        {
+          $sort: { likesCount: -1 },
+        },
+        {
+          $limit: 35,
+        },
+        {
+          $project: {
+            _id: 1,
+          },
+        },
+      ]);
+
+      return posts.map((post) => post._id.toString());
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getBookmarkedPosts: async function (userId: string): Promise<string[]> {
+    try {
+      const user = await userCollection.findById(userId).select("postsBookmarked").exec();
+
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      // Return the array of bookmarked post IDs
+      return user.postsBookmarked.map((postId) => postId.toString());
     } catch (error: any) {
       throw new Error(error.message);
     }

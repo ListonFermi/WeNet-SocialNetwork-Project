@@ -54,11 +54,33 @@ export = {
       throw new Error(error.message);
     }
   },
-  sendUserDataToMQ : async (_id: string, action: string) : Promise<void> =>{
+  sendUserDataToMQ: async (_id: string, action: string): Promise<void> => {
     try {
-      await userRepository.sendUserDataToMQ(_id, action)
+      await userRepository.sendUserDataToMQ(_id, action);
     } catch (error: any) {
       throw new Error(error.message);
+    }
+  },
+  changePassword: async (
+    userId: string,
+    currentPassword: string,
+    newPassword: string
+  ): Promise<string> => {
+    try {
+      return await userRepository.changePassword(
+        userId,
+        currentPassword,
+        newPassword
+      );
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  forgotPassword: async (email: string) : Promise<string> => {
+    try {      
+      return await userRepository.forgotPassword(email)
+    } catch (error: any) {
+      throw new Error(error.message)
     }
   }
 };

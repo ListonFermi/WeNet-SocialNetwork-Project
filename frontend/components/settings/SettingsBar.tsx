@@ -9,10 +9,10 @@ import AlertDialog from "./AlertDialog";
 function SettingsBar() {
   const [selected, setSelected] = useState("Change Password"); //use the 1st index of settings[[]] to set
   const settings = [
-    ["Account Privacy", "accountPrivacy"],
+    // ["Account Privacy", "accountPrivacy"],
     ["Change Password", "changePassword"],
     ["Blocked Users", "blockedUsers"],
-    ["Account Type", "accountType"],
+    ["Account Type", "accountType"],  
   ];
 
   const router = useRouter();

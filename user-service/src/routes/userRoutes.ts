@@ -14,6 +14,11 @@ userRoutes.post("/signup/verifyOTP", userController.verifyOTPController);
 userRoutes.post("/login", userController.loginController);
 userRoutes.post("/login/googleSignin", userController.googleSigninController);
 
+//forgot and change password
+userRoutes.post('/forgotPassword', userController.forgotPassword)
+userRoutes.patch('/changePassword', verifyUser, userController.changePassword)
+
+
 // Profile routes
 const profileRoutes = Router();
 profileRoutes.get("/userData", verifyUser, profileController.getUser);
@@ -26,7 +31,7 @@ profileRoutes.post(
   profileController.editUser
 );
 
-// Use the routes
+// Routes
 router.use("/", userRoutes);
 router.use("/profile", profileRoutes);
 

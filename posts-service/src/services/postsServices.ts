@@ -58,4 +58,38 @@ export = {
       throw new Error(error.message);
     }
   },
+  toggleBookmark: async function (
+    postId: string,
+    userId: string
+  ): Promise<string> {
+    try {
+      return await postsRepository.toggleBookmark(postId, userId);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  postIsLiked: async function (
+    userId: string,
+    postId: string
+  ): Promise<boolean> {
+    try {
+      return await postsRepository.postIsLiked(userId, postId);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getTopPosts: async function (): Promise<string[]> {
+    try {
+      return await postsRepository.getTopPosts();
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getBookmarkedPosts: async function (userId: string): Promise<string[]> {
+    try {
+      return await postsRepository.getBookmarkedPosts(userId);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

@@ -47,6 +47,7 @@ export interface IPost {
   comments: string[];
   updatedAt: string;
   isLiked: boolean;
+  isBookmarked: boolean;
 }
 
 export interface IComment {

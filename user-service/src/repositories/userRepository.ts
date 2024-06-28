@@ -10,6 +10,7 @@ import { IGoogleCredentialRes } from "../types/types";
 import "core-js/stable/atob";
 import { MQUserData, publisher } from "../../rabbitMq/publisher";
 import mongoose from "mongoose";
+import { generateStrongPassword } from "../utils/generateStrongPassword";
 
 dotenv.config();
 
@@ -166,4 +167,37 @@ export = {
       throw new Error(error.message);
     }
   },
+  changePassword: async (userId: string, currentPassword: string, newPassword: string) : Promise<string> => {
+    try {
+      const user = await userCollection.findOne({ _id: userId });
+      if (!user) throw new Error("User not found");
+
+      const passwordMatches = hash.compareHash(currentPassword, user.password);
+      if (!passwordMatches) throw new Error("Please enter valid credentials");
+
+      user.password = hash.hashString(newPassword);
+      await user.save()
+      
+      return 'Password changed successfully'
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  },
+  forgotPassword: async (email: string) : Promise<string> => {
+    try {
+      const user = await userCollection.findOne({ email: email });
+      if (!user) throw new Error("Email not found");
+
+      const newPassword = generateStrongPassword()
+
+      await OTPHelper.sendMail(email, newPassword);
+
+      user.password = hash.hashString(newPassword);
+      await user.save()
+      
+      return 'New password is send to your email'
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
 };

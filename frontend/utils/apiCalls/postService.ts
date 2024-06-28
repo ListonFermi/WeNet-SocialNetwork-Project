@@ -6,6 +6,34 @@ const postServiceAdminUrl = process.env.NEXT_PUBLIC_POSTS_SERVICE_ADMIN_URL;
 export default {
   //posts
 
+  getPublicFeed: async function () {
+    try {
+      const url = `${postServiceUrl}/publicFeed`;
+      const res = await axios.get(url, { withCredentials: false });
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+      error.response && error.response.data
+        ? error.response.data.message
+        : "Failed to get posts data";
+    throw new Error(errorMessage);
+    }
+  },
+  getBookmarkedPosts: async function () {
+    try {
+      const url = `${postServiceUrl}/bookmarkedPosts`;
+      const res = await axios.get(url, { withCredentials: true });
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+      error.response && error.response.data
+        ? error.response.data
+        : "Failed to get bookmarked posts";
+    throw new Error(errorMessage);
+    }
+  },
+
+
   getSinglePostData: async function (id: string) {
     try {
       const url = `${postServiceUrl}/singlePost/${id}`;
@@ -59,6 +87,19 @@ export default {
         error.response && error.response.data
           ? error.response.data.message
           : `Failed to toggle ${entity} like`;
+      throw new Error(errorMessage);
+    }
+  },
+  toggleBookmark: async function (postId: string) {
+    try {
+      const url = `${postServiceUrl}/toggleBookmark/${postId}`;
+      const res = await axios.patch(url, "", { withCredentials: true });
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response.data
+          ? error.response.data.message
+          : `Failed to toggle bookmark`;
       throw new Error(errorMessage);
     }
   },

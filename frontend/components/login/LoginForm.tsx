@@ -108,6 +108,9 @@ function LoginForm() {
             />
             <p className="text-red-600">{errors.password?.message}</p>
           </div>
+          <div className="mb-6">
+            <a href="/forgotPassword/sendEmail" className="text-white">Forgot your password ? Click here!</a>
+          </div>
           <div className="w-full flex justify-center items-center">
             <button
               type="submit"

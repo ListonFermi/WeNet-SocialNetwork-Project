@@ -58,26 +58,28 @@ function SideBar() {
           />
           <p className="pl-5 text-xl text-white font-bold">Messages</p>
         </div>
-        <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
-          <Image
-            src="/icons/bookmark.svg"
-            alt="Home Logo"
-            width={50}
-            height={50}
-            className="h-10 w-10"
-          />
-          <p className="pl-5 text-xl text-white font-bold">Bookmarks</p>
-        </div>
-        <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
-          <Image
-            src="/icons/search.svg"
-            alt="Home Logo"
-            width={50}
-            height={50}
-            className="h-10 w-10"
-          />
-          <p className="pl-5 text-xl text-white font-bold">Search</p>
-        </div>
+        <a href={`/profile/${userData?.username}/bookmarks`}>
+          <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
+            <Image
+              src="/icons/bookmark.svg"
+              alt="Home Logo"
+              width={50}
+              height={50}
+              className="h-10 w-10"
+            />
+            <p className="pl-5 text-xl text-white font-bold">Bookmarks</p>
+          </div>
+          <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
+            <Image
+              src="/icons/search.svg"
+              alt="Home Logo"
+              width={50}
+              height={50}
+              className="h-10 w-10"
+            />
+            <p className="pl-5 text-xl text-white font-bold">Search</p>
+          </div>
+        </a>
       </div>
       <div className="h-[20%]">
         <a href="/createPost">

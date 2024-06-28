@@ -12,9 +12,14 @@ router.post(
   postsController.createPost
 );
 router.post("/createPost", verifyUser, postsController.addCaption);
-router.get("/singlePost/:postId", postsController.getSinglePost); //protect route
+router.get("/singlePost/:postId",verifyUser, postsController.getSinglePost); //protect route
 router.patch("/editPost/:postId",verifyUser, postsController.editPost)
 router.delete("/deletePost/:postId",verifyUser, postsController.deletePost)
 router.patch('/toggleLike/:entity/:entityId', verifyUser,postsController.toggleLike)
+router.patch('/toggleBookmark/:postId', verifyUser,postsController.toggleBookmark)
+
+router.get("/publicFeed", postsController.getPublicFeed);
+router.get("/bookmarkedPosts", verifyUser,postsController.getBookmarkedPosts); 
+
 
 export default router;
