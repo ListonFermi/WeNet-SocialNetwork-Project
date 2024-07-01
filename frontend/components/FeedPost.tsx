@@ -2,7 +2,6 @@
 import Image from "next/image";
 import React from "react";
 import FeedPostSkeleton from "./FeedPostSkeleton";
-import { formatDate } from "@/utils/formatDate";
 import BasicPopover from "./post/[id]/BasicPopover";
 import HeartAnimation from "./post/[id]/HeartAnimation";
 import postService from "@/utils/apiCalls/postService";
@@ -11,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { IPost } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { toastOptions } from "@/utils/toastOptions";
+import { formatDate } from "@/utils/formatString";
 
 type props = {
   postData: IPost | null;

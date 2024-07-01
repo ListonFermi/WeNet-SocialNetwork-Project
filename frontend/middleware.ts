@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
-const protectedRoutes = ["/feed",'/settings'];
+const protectedRoutes = ["/feed"]; //removed settings route
 const toBeRedirectedRoutes = ["/", "/login", "/signup"];
 const profileRoutePattern = /^\/profile\/[^/]+\/?.*$/;
 
@@ -11,15 +11,20 @@ const adminRoutes = /^\/admin\/.+/;
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  if(adminRoutes.test(pathname)){
+  // Improved matcher for static assets
+  if (pathname.startsWith("/_next/") || pathname.startsWith("/favicon.ico")) {
+    return NextResponse.next();
+  }
+
+  if (adminRoutes.test(pathname)) {
     const tokenVerified = await verifyToken("adminToken", req);
-    if(tokenVerified) return NextResponse.next();
-    else NextResponse.redirect(new URL("/admin", req.url));
+    if (tokenVerified) return NextResponse.next();
+    else return NextResponse.redirect(new URL("/admin", req.url));
   }
 
   const tokenVerified = await verifyToken("token", req);
 
-  //protected Routes logic - redirect to home if it doesn't have token in cookies
+  // Protected Routes logic - redirect to home if it doesn't have token in cookies
   const isProtectedRoute =
     protectedRoutes.includes(pathname) || profileRoutePattern.test(pathname);
 
@@ -28,7 +33,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  //toBeRedirected Routes logic - redirect to feed if it has token in cookies
+  // ToBeRedirected Routes logic - redirect to feed if it has token in cookies
   const isToBeRedirectedRoute = toBeRedirectedRoutes.includes(pathname);
 
   if (isToBeRedirectedRoute && tokenVerified) {
@@ -43,9 +48,12 @@ export const config = {
   matcher: "/((?!api|_next/static|_next/image|favicon.ico).*)",
 };
 
-async function verifyToken(tokenName: string, req: NextRequest): Promise<boolean> {
-  const token = req.cookies.get("token");
-
+async function verifyToken(
+  tokenName: string,
+  req: NextRequest
+): Promise<boolean> {
+  const token = req.cookies.get(tokenName);
+  console.log({ token });
   if (!token?.value) {
     console.log(`${tokenName} not found in cookies`);
     return false;
@@ -58,7 +66,20 @@ async function verifyToken(tokenName: string, req: NextRequest): Promise<boolean
   }
 
   try {
-    const { payload } = await jwtVerify(token.value, new TextEncoder().encode(secret));
+    const { payload } = await jwtVerify(
+      token.value,
+      new TextEncoder().encode(secret)
+    );
+
+    console.log({payload})
+    
+    if(payload){
+
+    }else{
+
+    }
+
+
     return Boolean(payload);
   } catch (err: any) {
     console.log(`failed to verify ${tokenName}`, err.message);

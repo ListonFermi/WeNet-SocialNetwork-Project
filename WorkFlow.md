@@ -137,14 +137,14 @@ Jun 28, Fri
 
 --- "Report Management" ---
 
-- report post
-- Admin: Report management table
-- Admin: Resolve reports- Post Reports
-
---- "Report Management" ---
-
 - public feed posts
 - bookmark post implemented
 - change password and forget password
 
 --- "feed posts, bookmark posts, change/forget password" ---
+
+Jul 02, Tue- Early morning
+
+- Messages UI
+
+--- "frontend: Messages UI" ---

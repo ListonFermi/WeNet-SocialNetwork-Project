@@ -230,6 +230,9 @@ export = {
     try {
       const posts = await postsCollection.aggregate([
         {
+          $match: { isDeleted: false },
+        },
+        {
           $addFields: {
             likesCount: { $size: "$likedBy" },
           },
@@ -254,7 +257,10 @@ export = {
   },
   getBookmarkedPosts: async function (userId: string): Promise<string[]> {
     try {
-      const user = await userCollection.findById(userId).select("postsBookmarked").exec();
+      const user = await userCollection
+        .findById(userId)
+        .select("postsBookmarked")
+        .exec();
 
       if (!user) {
         throw new Error("User not found");

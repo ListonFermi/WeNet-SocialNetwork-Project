@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import userService from "../services/userService";
 import { IUser } from "../models/User";
-import { MQActions } from "../../rabbitMq/config";
+import { MQActions } from "../rabbitMq/config";
 
 export = {
   signupController: async (
@@ -38,7 +38,6 @@ export = {
     next: NextFunction
   ): Promise<void> => {
     try {
-      console.log("hello");
       const otpData: { _id: string; otp: string } = req.body;
       const { _id, otp } = otpData;
       await userService.verifyOTP(_id, otp);

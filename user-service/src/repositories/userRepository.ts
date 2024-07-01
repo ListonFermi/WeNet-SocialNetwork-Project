@@ -8,9 +8,9 @@ import { JwtPayload, jwtDecode } from "jwt-decode";
 import dotenv from "dotenv";
 import { IGoogleCredentialRes } from "../types/types";
 import "core-js/stable/atob";
-import { MQUserData, publisher } from "../../rabbitMq/publisher";
 import mongoose from "mongoose";
 import { generateStrongPassword } from "../utils/generateStrongPassword";
+import { MQUserData, publisher } from "../rabbitMq/publisher";
 
 dotenv.config();
 
@@ -99,7 +99,9 @@ export = {
     try {
       const secret: string | undefined = process.env.JWT_SECRET;
       if (!secret) throw new Error("JWT Secret not found");
-      return jwt.sign({ userData }, secret, { expiresIn: "1h" });
+      return jwt.sign({ userData, role: "wenet-user" }, secret, {
+        expiresIn: "1h",
+      });
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -167,7 +169,11 @@ export = {
       throw new Error(error.message);
     }
   },
-  changePassword: async (userId: string, currentPassword: string, newPassword: string) : Promise<string> => {
+  changePassword: async (
+    userId: string,
+    currentPassword: string,
+    newPassword: string
+  ): Promise<string> => {
     try {
       const user = await userCollection.findOne({ _id: userId });
       if (!user) throw new Error("User not found");
@@ -176,28 +182,28 @@ export = {
       if (!passwordMatches) throw new Error("Please enter valid credentials");
 
       user.password = hash.hashString(newPassword);
-      await user.save()
-      
-      return 'Password changed successfully'
+      await user.save();
+
+      return "Password changed successfully";
     } catch (error: any) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   },
-  forgotPassword: async (email: string) : Promise<string> => {
+  forgotPassword: async (email: string): Promise<string> => {
     try {
       const user = await userCollection.findOne({ email: email });
       if (!user) throw new Error("Email not found");
 
-      const newPassword = generateStrongPassword()
+      const newPassword = generateStrongPassword();
 
       await OTPHelper.sendMail(email, newPassword);
 
       user.password = hash.hashString(newPassword);
-      await user.save()
-      
-      return 'New password is send to your email'
+      await user.save();
+
+      return "New password is send to your email";
     } catch (error: any) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
-  }
+  },
 };

@@ -12,10 +12,10 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import { Card } from "@mui/material";
 import postService from "@/utils/apiCalls/postService";
-import { formatDate } from "@/utils/formatDate";
 import AlertDialog from "@/components/settings/AlertDialog";
 import { toastOptions } from "@/utils/toastOptions";
 import "react-toastify/dist/ReactToastify.css";
+import { formatDate } from "@/utils/formatString";
 
 type Report = {
   _id: string;

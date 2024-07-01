@@ -1,5 +1,5 @@
 import { IComment } from "@/types/types";
-import { formatDate } from "@/utils/formatDate";
+import { formatDate } from "@/utils/formatString";
 import Image from "next/image";
 import React from "react";
 

@@ -15,6 +15,7 @@ export function verifyAdmin(req: Request, res: Response, next: NextFunction) {
 
   try {
     const decoded: any = jwt.verify(adminToken, secret);
+
     if (!decoded?.role || decoded.role != "wenet-admin") {
       return res.status(401).send("Invalid admin JWT");
     }

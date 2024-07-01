@@ -5,7 +5,7 @@ interface IProfessionalAccount {
 }
 
 export interface IUser {
-  _id?: string;
+  _id: string;
   username: string;
   firstName: string;
   lastName: string;
@@ -15,7 +15,7 @@ export interface IUser {
   gender?: "male" | "female";
   isRestricted?: boolean;
   bio?: string;
-  profilePicUrl?: string;
+  profilePicUrl: string;
   coverPicUrl?: string;
   followers?: string[];
   following?: string[];

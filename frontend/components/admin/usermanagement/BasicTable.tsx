@@ -116,7 +116,8 @@ export default function AdminUserManagementTable() {
       const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
       try {
         let response: any = await axios.get(
-          `${userServiceUrl}/admin/usermanagement`
+          `${userServiceUrl}/admin/usermanagement`,
+          { withCredentials: true }
         );
         const users = response.data.map((user: any) =>
           createData(
@@ -133,8 +134,8 @@ export default function AdminUserManagementTable() {
       } catch (error: any) {
         const errorMessage =
           error.response && error.response.data
-            ? error.response.data.message
-            : "Failed to verify OTP";
+            ? error.response.data
+            : "Failed get user data";
         toast.error(errorMessage, toastOptions);
       }
     })();

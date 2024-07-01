@@ -1,8 +1,7 @@
 import { NextFunction, Response } from "express";
 import profileService from "../services/profileService";
-import AWS from "aws-sdk";
 import userService from "../services/userService";
-import { MQActions } from "../../rabbitMq/config";
+import { MQActions } from "../rabbitMq/config";
 
 export = {
   getUser: async (
@@ -28,10 +27,17 @@ export = {
       const user = req?.user;
       if (!user) throw new Error("No user found");
 
-      const userData: any = await profileService.editUserData(req.user._id,req.body);
-      if(!userData) throw new Error("User data not found")
+      const userData: any = await profileService.editUserData(
+        req.user._id,
+        req.body
+      );
+      if (!userData) throw new Error("User data not found");
 
-      await userService.sendUserDataToMQ(userData._id, MQActions.editUser);
+      try {
+        await userService.sendUserDataToMQ(userData._id, MQActions.editUser);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
 
       const token = await profileService.generateJWT(userData);
       res.cookie("token", token);
@@ -50,7 +56,7 @@ export = {
       const imageFile = req.file;
       if (!imageFile) throw new Error("Image File not found");
 
-      const {imageType} = req.params;
+      const { imageType } = req.params;
       if (!imageType) throw new Error("Image type not found");
 
       req.body[`${imageType}Url`] = await profileService.uploadImage(
