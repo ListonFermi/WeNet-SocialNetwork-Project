@@ -17,16 +17,14 @@ type props = {
 
 function ConvoListSingle(props: props) {
   const router = useRouter();
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
 
   const { convoId, username, firstName, lastName, profilePicUrl } = props;
   let { timestamp, lastMessage } = props;
   timestamp = formatDate(timestamp);
   lastMessage = formatLastMessage(lastMessage);
 
-  // const params = useParams();
-  // const currPage = router.query.pageId
-  const currentConvoId = searchParams.get('convoId');
+  const currentConvoId = searchParams.get("convoId");
   const isSelected = currentConvoId === convoId;
 
   function handleButtonClick() {
@@ -34,7 +32,6 @@ function ConvoListSingle(props: props) {
   }
 
   return (
-    // <Link href={`/messages/${convoId}`}>
     <div
       className="h-36 w-full bg-black flex p-2 cursor-pointer"
       onClick={handleButtonClick}
@@ -82,7 +79,6 @@ function ConvoListSingle(props: props) {
         </div>
       </div>
     </div>
-    // </Link>
   );
 }
 

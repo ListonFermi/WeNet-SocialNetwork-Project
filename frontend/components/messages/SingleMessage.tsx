@@ -11,8 +11,7 @@ type props = {
 };
 
 function SingleMessage(props: props) {
-  console.log('from singleMsg comp')
-  console.log({props})
+
   const { currUser, senderId, message, timestamp } = props;
   const isOwnMessage = currUser?._id === senderId._id;
 

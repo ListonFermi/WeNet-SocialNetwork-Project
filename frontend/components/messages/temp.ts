@@ -106,7 +106,7 @@ const sampleConversations = [
 export default sampleConversations;
 
 export const sampleUser: IUser = {
-  _id: "60d0fe4f5311236168a109ca",
+  _id: "3",
   username: "johndoe",
   firstName: "John",
   lastName: "Doe",
@@ -140,92 +140,363 @@ type Props = {
 export const sampleMsgData: Props[] = [
   {
     senderId: {
-      _id: "60d0fe4f5311236168a109ca",
+      _id: "1",
       username: "alice",
-      profilePicUrl: "https://i.pravatar.cc/150?img=1"
+      profilePicUrl: "https://i.pravatar.cc/150?img=1",
     },
-    message: "Hello! How are you doing today?",
-    timestamp: "2024-07-01T10:15:30.000Z"
+    message:
+      "Hello! How are you doing today? dajfnafndsnfkajdsjfadfnawuihiewuhflllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+    timestamp: "2024-07-01T10:15:30.000Z",
   },
   {
     senderId: {
-      _id: "60d0fe4f5311236168a109cb",
+      _id: "2",
       username: "bob",
-      profilePicUrl: "https://i.pravatar.cc/150?img=2"
+      profilePicUrl: "https://i.pravatar.cc/150?img=2",
     },
     message: "Are we still meeting up for lunch tomorrow?",
-    timestamp: "2024-07-01T11:00:45.000Z"
+    timestamp: "2024-07-01T11:00:45.000Z",
   },
   {
     senderId: {
-      _id: "60d0fe4f5311236168a109cc",
+      _id: "3",
       username: "charlie",
-      profilePicUrl: "https://i.pravatar.cc/150?img=3"
+      profilePicUrl: "https://i.pravatar.cc/150?img=3",
     },
     message: "Check out this cool new project I'm working on!",
-    timestamp: "2024-07-01T12:20:15.000Z"
+    timestamp: "2024-07-01T12:20:15.000Z",
   },
   {
     senderId: {
       _id: "60d0fe4f5311236168a109cd",
       username: "david",
-      profilePicUrl: "https://i.pravatar.cc/150?img=4"
+      profilePicUrl: "https://i.pravatar.cc/150?img=4",
     },
     message: "Don't forget about the team meeting this afternoon.",
-    timestamp: "2024-07-01T13:45:00.000Z"
+    timestamp: "2024-07-01T13:45:00.000Z",
   },
   {
     senderId: {
       _id: "60d0fe4f5311236168a109ce",
       username: "eva",
-      profilePicUrl: "https://i.pravatar.cc/150?img=5"
+      profilePicUrl: "https://i.pravatar.cc/150?img=5",
     },
     message: "Can you send me the files by the end of the day?",
-    timestamp: "2024-07-01T14:30:22.000Z"
+    timestamp: "2024-07-01T14:30:22.000Z",
   },
   {
     senderId: {
       _id: "60d0fe4f5311236168a109cf",
       username: "frank",
-      profilePicUrl: "https://i.pravatar.cc/150?img=6"
+      profilePicUrl: "https://i.pravatar.cc/150?img=6",
     },
     message: "Looking forward to our weekend trip!",
-    timestamp: "2024-07-01T15:05:37.000Z"
+    timestamp: "2024-07-01T15:05:37.000Z",
   },
   {
     senderId: {
       _id: "60d0fe4f5311236168a109d0",
       username: "grace",
-      profilePicUrl: "https://i.pravatar.cc/150?img=7"
+      profilePicUrl: "https://i.pravatar.cc/150?img=7",
     },
     message: "Great job on the presentation today!",
-    timestamp: "2024-07-01T16:40:10.000Z"
+    timestamp: "2024-07-01T16:40:10.000Z",
   },
   {
     senderId: {
       _id: "60d0fe4f5311236168a109d1",
       username: "hank",
-      profilePicUrl: "https://i.pravatar.cc/150?img=8"
+      profilePicUrl: "https://i.pravatar.cc/150?img=8",
     },
     message: "I've sent you the document for review.",
-    timestamp: "2024-07-01T17:15:55.000Z"
+    timestamp: "2024-07-01T17:15:55.000Z",
   },
   {
     senderId: {
       _id: "60d0fe4f5311236168a109d2",
       username: "ivy",
-      profilePicUrl: "https://i.pravatar.cc/150?img=9"
+      profilePicUrl: "https://i.pravatar.cc/150?img=9",
     },
     message: "Can we reschedule our meeting to next week?",
-    timestamp: "2024-07-01T18:20:45.000Z"
+    timestamp: "2024-07-01T18:20:45.000Z",
   },
   {
     senderId: {
       _id: "60d0fe4f5311236168a109d3",
       username: "jack",
-      profilePicUrl: "https://i.pravatar.cc/150?img=10"
+      profilePicUrl: "https://i.pravatar.cc/150?img=10",
     },
     message: "Let's catch up soon!",
-    timestamp: "2024-07-01T19:10:30.000Z"
-  }
+    timestamp: "2024-07-01T19:10:30.000Z",
+  },
+  {
+    senderId: {
+      _id: "1",
+      username: "alice",
+      profilePicUrl: "https://i.pravatar.cc/150?img=1",
+    },
+    message: "Hello! How are you doing today?",
+    timestamp: "2024-07-01T10:15:30.000Z",
+  },
+  {
+    senderId: {
+      _id: "2",
+      username: "bob",
+      profilePicUrl: "https://i.pravatar.cc/150?img=2",
+    },
+    message: "Are we still meeting up for lunch tomorrow?",
+    timestamp: "2024-07-01T11:00:45.000Z",
+  },
+  {
+    senderId: {
+      _id: "3",
+      username: "charlie",
+      profilePicUrl: "https://i.pravatar.cc/150?img=3",
+    },
+    message: "Check out this cool new project I'm working on!",
+    timestamp: "2024-07-01T12:20:15.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109cd",
+      username: "david",
+      profilePicUrl: "https://i.pravatar.cc/150?img=4",
+    },
+    message: "Don't forget about the team meeting this afternoon.",
+    timestamp: "2024-07-01T13:45:00.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109ce",
+      username: "eva",
+      profilePicUrl: "https://i.pravatar.cc/150?img=5",
+    },
+    message: "Can you send me the files by the end of the day?",
+    timestamp: "2024-07-01T14:30:22.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109cf",
+      username: "frank",
+      profilePicUrl: "https://i.pravatar.cc/150?img=6",
+    },
+    message: "Looking forward to our weekend trip!",
+    timestamp: "2024-07-01T15:05:37.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109d0",
+      username: "grace",
+      profilePicUrl: "https://i.pravatar.cc/150?img=7",
+    },
+    message: "Great job on the presentation today!",
+    timestamp: "2024-07-01T16:40:10.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109d1",
+      username: "hank",
+      profilePicUrl: "https://i.pravatar.cc/150?img=8",
+    },
+    message: "I've sent you the document for review.",
+    timestamp: "2024-07-01T17:15:55.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109d2",
+      username: "ivy",
+      profilePicUrl: "https://i.pravatar.cc/150?img=9",
+    },
+    message: "Can we reschedule our meeting to next week?",
+    timestamp: "2024-07-01T18:20:45.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109d3",
+      username: "jack",
+      profilePicUrl: "https://i.pravatar.cc/150?img=10",
+    },
+    message: "Let's catch up soon!",
+    timestamp: "2024-07-01T19:10:30.000Z",
+  },
+  {
+    senderId: {
+      _id: "1",
+      username: "alice",
+      profilePicUrl: "https://i.pravatar.cc/150?img=1",
+    },
+    message: "Hello! How are you doing today?",
+    timestamp: "2024-07-01T10:15:30.000Z",
+  },
+  {
+    senderId: {
+      _id: "2",
+      username: "bob",
+      profilePicUrl: "https://i.pravatar.cc/150?img=2",
+    },
+    message: "Are we still meeting up for lunch tomorrow?",
+    timestamp: "2024-07-01T11:00:45.000Z",
+  },
+  {
+    senderId: {
+      _id: "3",
+      username: "charlie",
+      profilePicUrl: "https://i.pravatar.cc/150?img=3",
+    },
+    message: "Check out this cool new project I'm working on!",
+    timestamp: "2024-07-01T12:20:15.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109cd",
+      username: "david",
+      profilePicUrl: "https://i.pravatar.cc/150?img=4",
+    },
+    message: "Don't forget about the team meeting this afternoon.",
+    timestamp: "2024-07-01T13:45:00.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109ce",
+      username: "eva",
+      profilePicUrl: "https://i.pravatar.cc/150?img=5",
+    },
+    message: "Can you send me the files by the end of the day?",
+    timestamp: "2024-07-01T14:30:22.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109cf",
+      username: "frank",
+      profilePicUrl: "https://i.pravatar.cc/150?img=6",
+    },
+    message: "Looking forward to our weekend trip!",
+    timestamp: "2024-07-01T15:05:37.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109d0",
+      username: "grace",
+      profilePicUrl: "https://i.pravatar.cc/150?img=7",
+    },
+    message: "Great job on the presentation today!",
+    timestamp: "2024-07-01T16:40:10.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109d1",
+      username: "hank",
+      profilePicUrl: "https://i.pravatar.cc/150?img=8",
+    },
+    message: "I've sent you the document for review.",
+    timestamp: "2024-07-01T17:15:55.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109d2",
+      username: "ivy",
+      profilePicUrl: "https://i.pravatar.cc/150?img=9",
+    },
+    message: "Can we reschedule our meeting to next week?",
+    timestamp: "2024-07-01T18:20:45.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109d3",
+      username: "jack",
+      profilePicUrl: "https://i.pravatar.cc/150?img=10",
+    },
+    message: "Let's catch up soon!",
+    timestamp: "2024-07-01T19:10:30.000Z",
+  },
+  {
+    senderId: {
+      _id: "1",
+      username: "alice",
+      profilePicUrl: "https://i.pravatar.cc/150?img=1",
+    },
+    message: "Hello! How are you doing today?",
+    timestamp: "2024-07-01T10:15:30.000Z",
+  },
+  {
+    senderId: {
+      _id: "2",
+      username: "bob",
+      profilePicUrl: "https://i.pravatar.cc/150?img=2",
+    },
+    message: "Are we still meeting up for lunch tomorrow?",
+    timestamp: "2024-07-01T11:00:45.000Z",
+  },
+  {
+    senderId: {
+      _id: "3",
+      username: "charlie",
+      profilePicUrl: "https://i.pravatar.cc/150?img=3",
+    },
+    message: "Check out this cool new project I'm working on!",
+    timestamp: "2024-07-01T12:20:15.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109cd",
+      username: "david",
+      profilePicUrl: "https://i.pravatar.cc/150?img=4",
+    },
+    message: "Don't forget about the team meeting this afternoon.",
+    timestamp: "2024-07-01T13:45:00.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109ce",
+      username: "eva",
+      profilePicUrl: "https://i.pravatar.cc/150?img=5",
+    },
+    message: "Can you send me the files by the end of the day?",
+    timestamp: "2024-07-01T14:30:22.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109cf",
+      username: "frank",
+      profilePicUrl: "https://i.pravatar.cc/150?img=6",
+    },
+    message: "Looking forward to our weekend trip!",
+    timestamp: "2024-07-01T15:05:37.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109d0",
+      username: "grace",
+      profilePicUrl: "https://i.pravatar.cc/150?img=7",
+    },
+    message: "Great job on the presentation today!",
+    timestamp: "2024-07-01T16:40:10.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109d1",
+      username: "hank",
+      profilePicUrl: "https://i.pravatar.cc/150?img=8",
+    },
+    message: "I've sent you the document for review.",
+    timestamp: "2024-07-01T17:15:55.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109d2",
+      username: "ivy",
+      profilePicUrl: "https://i.pravatar.cc/150?img=9",
+    },
+    message: "Can we reschedule our meeting to next week?",
+    timestamp: "2024-07-01T18:20:45.000Z",
+  },
+  {
+    senderId: {
+      _id: "60d0fe4f5311236168a109d3",
+      username: "jack",
+      profilePicUrl: "https://i.pravatar.cc/150?img=10",
+    },
+    message: "Let's catch up soon!",
+    timestamp: "2024-07-01T19:10:30.000Z",
+  },
 ];

@@ -1,29 +1,32 @@
 "use client";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import React from "react";
 import SingleConvo from "./SingleConvo";
 import ConvoList from "./ConvoList";
+import { IUser } from "@/types/types";
 
-function MobileView() {
-  const param = useParams();
+function MobileView({ currUser }: { currUser: IUser }) {
+  const searchParams = useSearchParams();
+
+  const convoId = searchParams.get("convoId");
 
   return (
-    <div className="h-full w-full md:hidden bg-fuchsia-600 flex flex-col">
-      {param?.convoId ? (
+    <div className="h-full w-full md:hidden flex flex-col">
+      {convoId ? (
         <>
-          <div className="absolute w-full bg-black h-16 flex items-center">
+          <div className="absolute m-4  w-8 bg-black h-8 flex items-center">
             <a href="/messages">
               <Image
                 src={"/icons/back.png"}
                 alt="back button"
-                width={50}
-                height={50}
+                width={25}
+                height={25}
               />
             </a>
           </div>
-          <SingleConvo />
-        </>
+          <SingleConvo currUser={currUser} />
+        </> 
       ) : (
         <ConvoList />
       )}

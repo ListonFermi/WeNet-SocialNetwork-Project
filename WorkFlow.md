@@ -148,3 +148,7 @@ Jul 02, Tue- Early morning
 - Messages UI
 
 --- "frontend: Messages UI" ---
+
+- Messages basic UI completed
+
+--- "frontend: Messages basic UI completed" ---

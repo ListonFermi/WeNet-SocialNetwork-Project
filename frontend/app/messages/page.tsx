@@ -7,14 +7,14 @@ import React from "react";
 export default function MessagesPage() {
   let currUser= sampleUser;
   return (
-    <div className="max-h-screen w-full bg-red-300 flex">
+    <div className="max-h-screen w-full bg-black flex">
       <div className="max-h-screen w-[30%] hidden md:block">
         <ConvoList />
       </div>
       <div className="h-full w-[70%] hidden md:block">
         <SingleConvo currUser={currUser}/>
       </div>
-      <MobileView />
+      <MobileView  currUser={currUser}/>
     </div>
   );
 }
