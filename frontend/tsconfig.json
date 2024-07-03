@@ -4,6 +4,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "types": ["@reduxjs/toolkit"],
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",

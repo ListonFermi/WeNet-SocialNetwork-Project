@@ -1,8 +1,7 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
-import { IUser } from "@/types/types";
 
-export default function getUserData(): IUser {
+export default function getUserData() : any {
   const cookieStore = cookies();
   const token = cookieStore.get("token") || { name: "token", value: "" };
   if (!token.value.length) throw new Error("Token not found");
@@ -10,7 +9,7 @@ export default function getUserData(): IUser {
   const secret = process.env.JWT_SECRET || "";
   if (!secret) throw new Error("JWT secret not found");
   try {
-    return jwt.verify(token.value, secret) as IUser;
+    return jwt.verify(token.value, secret)
   } catch (err: any) {
     throw new Error(err.message);
   }

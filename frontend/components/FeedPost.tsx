@@ -72,7 +72,6 @@ function FeedPost({ postData, currentUserId='' }: props) {
         toastOptions
       );
       setLiked(!bookmarked);
-      console.log({response})
       toast(response, toastOptions)
     } catch (error: any) {
       toast.error(error);

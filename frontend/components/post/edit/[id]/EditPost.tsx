@@ -60,7 +60,6 @@ function EditPost() {
     );
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
-    console.log({ data });
     try {
       await toast.promise(
         postService.editPost(id, data.caption),

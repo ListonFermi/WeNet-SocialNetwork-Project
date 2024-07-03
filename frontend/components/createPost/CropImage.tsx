@@ -74,7 +74,6 @@ function CropImage({ setIsCaptionPage, setPostData }: CropImageProps) {
       const postsServiceUrl = process.env.NEXT_PUBLIC_POSTS_SERVICE_URL;
 
       try {
-        console.log(`${postsServiceUrl}/createPost/image`)
         const res: any = await toast.promise(
           axios.post(`${postsServiceUrl}/createPost/image`, formData, {
             withCredentials: true,

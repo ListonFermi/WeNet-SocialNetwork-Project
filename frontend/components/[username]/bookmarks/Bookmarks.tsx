@@ -15,7 +15,6 @@ function Bookmarks() {
       try {
         const bookmarkedPosts: IPost[] = await postService.getBookmarkedPosts();
         setBookmarkedPosts(bookmarkedPosts);
-        console.log({bookmarkedPosts})
       } catch (error: any) {
         toast.error(error.message);
       }

@@ -41,7 +41,6 @@ function AddCaption({ postData }: props) {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const postsServiceUrl = process.env.NEXT_PUBLIC_POSTS_SERVICE_URL;
     try {
-      console.log(data);
       data._id = postData._id;
       const res: any= await toast.promise(
         axios.post(`${postsServiceUrl}/createPost`, data, {

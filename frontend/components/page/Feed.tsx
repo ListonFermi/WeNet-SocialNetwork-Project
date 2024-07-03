@@ -15,7 +15,6 @@ function Feed() {
       try {
         const {topPostsData}: {topPostsData: IPost[]} = await postService.getPublicFeed();
         setTopPostsData(topPostsData);
-        console.log({topPostsData})
       } catch (error: any) {
         toast.error(error.message);
       }

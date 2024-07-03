@@ -17,7 +17,9 @@ export function verifyUser(req: any, res: Response, next: NextFunction) {
     const decoded: any = jwt.verify(userToken, secret);
 
     req.user = decoded?.userData;
-
+    console.log('req.user')
+    console.log(req.user)
+    console.log({decoded})
     if (!decoded?.role || decoded.role != "wenet-user") {
       return res.status(401).send("Invalid JWT");
     }

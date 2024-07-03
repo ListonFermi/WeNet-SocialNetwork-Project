@@ -11,7 +11,6 @@ type props = {
 
 function SingleComment({ userId }: props) {
   const postData = useSelector((store: any) => store?.post?.postData);
-  console.log({ postData });
 
   return (
     <>

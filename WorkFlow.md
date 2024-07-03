@@ -152,3 +152,13 @@ Jul 02, Tue- Early morning
 - Messages basic UI completed
 
 --- "frontend: Messages basic UI completed" ---
+
+Jul 04, Thu- Early morning
+
+- Created message service
+- Implemented basic features for the message-service
+- Connected socket in the backend
+- Did the socket-client in the redux in the frontend
+- Socket connected client and backend - just connected for test
+
+--- "Message-Service && Socket.io: Just connected" ---

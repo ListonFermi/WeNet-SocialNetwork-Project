@@ -65,8 +65,14 @@ function EditProfile() {
     fetchUserData();
   }, []);
 
-  if (loading) return <div className="text-white">Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) {
+    toast("loading", toastOptions);
+    return <div className="text-white">Loading...</div>;
+  }
+  if (error) {
+    toast(error, toastOptions);
+    return <div className="text-white">{error}</div>;
+  }
 
   // Destructure and format userData
   const {
@@ -182,9 +188,9 @@ function EditProfile() {
                             message: "Enter at least 3 characters",
                           },
                           maxLength: {
-                            value: 6,
+                            value: 10,
                             message:
-                              "First name should be less than 6 characters",
+                              "First name should be less than 10 characters",
                           },
                         })}
                         className="text-xl w-[80%] lg:text-2xl md:text-xl sm:text-lg font-bold text-black px-3 sm:px-2"

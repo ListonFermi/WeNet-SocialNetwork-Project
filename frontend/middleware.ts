@@ -53,9 +53,7 @@ async function verifyToken(
   req: NextRequest
 ): Promise<boolean> {
   const token = req.cookies.get(tokenName);
-  console.log({ token });
   if (!token?.value) {
-    console.log(`${tokenName} not found in cookies`);
     return false;
   }
 
@@ -71,7 +69,6 @@ async function verifyToken(
       new TextEncoder().encode(secret)
     );
 
-    console.log({payload})
     
     if(payload){
 

@@ -5,20 +5,22 @@ import { IUser } from "@/types/types";
 
 type props = {
   currUser: IUser;
-  senderId: { _id: string; username: string; profilePicUrl: string };
+  sender: { _id: string; username: string; profilePicUrl: string };
   message: string;
   timestamp: string;
 };
 
 function SingleMessage(props: props) {
 
-  const { currUser, senderId, message, timestamp } = props;
-  const isOwnMessage = currUser?._id === senderId._id;
+  const { currUser, sender, message, timestamp } = props;
+
+  if(!currUser) return <h1>Loading2</h1>
+  const isOwnMessage = currUser?._id === sender._id;
 
   if (isOwnMessage) {
     return <OwnMessage message={message} timestamp={timestamp} />;
   } else {
-    const { username, profilePicUrl } = senderId;
+    const { username, profilePicUrl } = sender;
     return (
       <RecievedMessage
         username={username}

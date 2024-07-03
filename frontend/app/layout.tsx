@@ -1,4 +1,5 @@
-import StoreProvided from "@/components/redux/StoreProvided";
+import StoreProvider from "@/components/redux/StoreProvider";
+
 
 export default function RootLayout({
   children,
@@ -7,9 +8,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <StoreProvided>
+      <StoreProvider>
         <body>{children}</body>
-      </StoreProvided>
+      </StoreProvider>
     </html>
   );
 }

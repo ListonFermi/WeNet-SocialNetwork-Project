@@ -34,7 +34,6 @@ function ChangePassword() {
         },
         toastOptions
       );
-      console.log({response})
       router.replace('/settings')
     } catch (error: any) {
       toast.error(error.message, toastOptions);

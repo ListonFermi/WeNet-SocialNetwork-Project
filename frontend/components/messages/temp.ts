@@ -106,7 +106,7 @@ const sampleConversations = [
 export default sampleConversations;
 
 export const sampleUser: IUser = {
-  _id: "3",
+  _id: "6685367b73feada654fdc7af",
   username: "johndoe",
   firstName: "John",
   lastName: "Doe",
