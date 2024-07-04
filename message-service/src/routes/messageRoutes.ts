@@ -7,6 +7,6 @@ const router = Router();
 router.get('/:convoId', verifyUser, messageControllers.getConvoMessages)
 router.post('/:convoId', verifyUser, upload.any(), messageControllers.sendMessage)
 
-router.post('/createChat/:participantId',messageControllers.createChat)
+router.post('/createConversation/:participantId',verifyUser,messageControllers.createConversation)
 
 export default router;

@@ -1,10 +1,44 @@
+"use client";
 import { IUser } from "@/types/types";
+import userService from "@/utils/apiCalls/userService";
 import Image from "next/image";
-import React from "react";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import ProfileHeaderLoading from "./ProfileHeaderLoading";
+import messageService from "@/utils/apiCalls/messageService";
+import { useRouter } from "next/navigation";
 
-function ProfileHeader({ userData }: { userData: IUser }) {
-  const { firstName, lastName, username } = userData;
+function ProfileHeader({ currUser }: { currUser: IUser }) {
+  const currUserId = currUser._id;
+
+  const router = useRouter()
+
+  const params = useParams<{ username: string }>();
+  const paramsUsername = params.username;
+
+  const [userData, setUserData] = useState<IUser | null>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await userService.getProfileData(paramsUsername);
+        setUserData(userData);
+      } catch (error: any) {
+        alert(error.message);
+      }
+    };
+
+    if (paramsUsername) {
+      fetchUserData();
+    }
+  }, [paramsUsername]);
+
+  if (!userData) return <ProfileHeaderLoading />;
+
+  const { _id, firstName, lastName, username } = userData;
   let { dateOfBirth, bio, profilePicUrl, coverPicUrl, location } = userData;
+
+  const isOwnProfile = _id === currUserId;
 
   dateOfBirth = new Date(dateOfBirth + "");
   const dateOfBirthToDisplay = `${dateOfBirth?.getDate()}-${dateOfBirth?.getMonth()}-${dateOfBirth?.getFullYear()}`;
@@ -12,6 +46,16 @@ function ProfileHeader({ userData }: { userData: IUser }) {
   if (!bio) bio = "";
   if (!profilePicUrl) profilePicUrl = "/img/DefaultProfilePicMale.png";
   if (!coverPicUrl) coverPicUrl = "";
+
+  async function handleSendMessage() {
+    try {
+      const convoData = await messageService.createConversation(_id)
+      router.push(`/messages?convoId=${convoData._id}&username=${username}`)
+      
+    } catch (error: any) {
+      alert(error.messaage);
+    }
+  }
 
   return (
     <div className="h-96 w-full shadow-md bg-secColor">
@@ -49,14 +93,34 @@ function ProfileHeader({ userData }: { userData: IUser }) {
 
           {/* Edit / follow button */}
           <div className="w-[20%] flex items-center align-middle">
-            <a href={`/profile/${username}/edit`}>
-              <button
-                type="button"
-                className="bg-rootBg hover:bg-green-700 text-white text-xs md:text-sm font-bold p-1 rounded focus:outline-none focus-shadow-outline"
-              >
-                Edit Profile
-              </button>
-            </a>
+            {isOwnProfile ? (
+              <a href={`/profile/${username}/edit`}>
+                <button
+                  type="button"
+                  className="bg-rootBg hover:bg-green-700 text-white text-xs md:text-sm font-bold p-1 rounded focus:outline-none focus-shadow-outline"
+                >
+                  Edit Profile
+                </button>
+              </a>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="bg-rootBg hover:bg-green-700 text-white text-xs md:text-sm font-bold p-1 rounded focus:outline-none focus-shadow-outline"
+                >
+                  Follow
+                </button>
+                <div className="p-2 cursor-pointer" onClick={handleSendMessage}>
+                  <Image
+                    src="/icons/message.svg"
+                    alt="Home Logo"
+                    width={50}
+                    height={50}
+                    className="h-10 w-10"
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
         {/* Profile Details- Bottom portion :Bio, location */}

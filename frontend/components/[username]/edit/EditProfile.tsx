@@ -56,7 +56,7 @@ function EditProfile() {
         setUserData(response.data.userData);
         dispatch(saveUser({ userData: response.data.userData }));
       } catch (err: any) {
-        setError(err.response?.data?.message || "Error fetching user data");
+        setError(err.response?.data || "Error fetching user data");
       } finally {
         setLoading(false);
       }

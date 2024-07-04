@@ -5,7 +5,7 @@ import profileRepository from "../repositories/profileRepository";
 export = {
   getUserData: async (_id: string | ObjectId): Promise<IUser> => {
     try {
-      return profileRepository.getUserData(_id);
+      return await profileRepository.getUserData(_id);
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -30,5 +30,12 @@ export = {
     } catch (error: any) {
       throw new Error(error.message)
     }
-  }
+  },
+  getProfileData: async (username: string): Promise<IUser> => {
+    try {
+      return profileRepository.getProfileData(username);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

@@ -27,4 +27,12 @@ export default {
       throw new Error(error.message);
     }
   },
+  createConversation: async function (participantId: string) {
+    try {
+      const res = await apiClient.post(`/createConversation/${participantId}`);
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
 };

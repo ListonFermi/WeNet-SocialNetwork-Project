@@ -162,3 +162,9 @@ Jul 04, Thu- Early morning
 - Socket connected client and backend - just connected for test
 
 --- "Message-Service && Socket.io: Just connected" ---
+
+Jul 04, Thu
+
+- Completed one socket event
+
+--- "Completed one socket event" ---

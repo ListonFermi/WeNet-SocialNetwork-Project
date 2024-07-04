@@ -6,11 +6,25 @@ import SingleMessage from "./SingleMessage";
 import { IUser } from "@/types/types";
 import messageService from "@/utils/apiCalls/messageService";
 import AddConversation from "./AddConversation";
+import { useSocket } from "../redux/SocketProvider";
+import { ChatEventEnum } from "@/redux/constants";
+
+interface Message {
+  _id: string;
+  convoId: string;
+  sender: any;
+  message: string;
+  isAttachment: boolean;
+  attachmentUrl?: string;
+  updatedAt: string;
+}
 
 function SingleConvo({ currUser }: { currUser: IUser }) {
   const searchParams = useSearchParams();
 
-  const [messages, setMessages] = useState([]); //to store messaages in the convo
+  const socket = useSocket();
+
+  const [messages, setMessages] = useState<Message[]>([]); //to store messaages in the convo
 
   const [message, setMessage] = useState(""); //to store message in the input tag
 
@@ -37,9 +51,8 @@ function SingleConvo({ currUser }: { currUser: IUser }) {
 
       if (!convoId) return alert("select a conversation");
       const latestMessage = await messageService.sendMessage(convoId, formData);
-      setMessages(latestMessage)
-      setMessage('')
-
+      setMessages((messages) => [latestMessage, ...messages]);
+      setMessage("");
     } catch (error: any) {
       alert(error.message);
     }
@@ -49,9 +62,25 @@ function SingleConvo({ currUser }: { currUser: IUser }) {
     setMessage(e.target.value);
   }
 
+  function onMessageReceived(latestMessage: Message) {
+    console.log("wenet message from socket");
+    console.log({ message });
+    setMessages((messages) => [latestMessage, ...messages]);
+  }
+
   useEffect(() => {
     getMessages();
   }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on(ChatEventEnum.MESSAGE_RECEIVED_EVENT, onMessageReceived);
+
+    return () => {
+      socket.off(ChatEventEnum.MESSAGE_RECEIVED_EVENT, onMessageReceived);
+    };
+  }, [socket]);
 
   return (
     <div className="h-full w-full">

@@ -1,4 +1,4 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import profileService from "../services/profileService";
 import userService from "../services/userService";
 import { MQActions } from "../rabbitMq/config";
@@ -13,7 +13,7 @@ export = {
       const { _id } = req?.user;
       if (!_id) throw new Error("No user id found");
       const userData = await profileService.getUserData(_id);
-      res.status(200).json({ userData });
+      res.status(200).json(userData);
     } catch (error) {
       next(error);
     }
@@ -64,6 +64,22 @@ export = {
         imageType
       );
       next();
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  getProfileData: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { username } = req.params;
+      if (!username) throw new Error("No username found in params");
+
+      const userData = await profileService.getProfileData(username);
+      res.status(200).json(userData);
     } catch (error) {
       next(error);
     }

@@ -1,16 +1,19 @@
-import { IConversation } from "../models/conversationsCollection";
+import conversationsCollection, { IConversation } from "../models/conversationsCollection";
 import { IMessage } from "../models/messageCollection";
 import messageRepository from "../repositories/messageRepository";
 
 export = {
-  getConvoMessages: async function (convoId: string) : Promise<IMessage[]> {
+  getConvoMessages: async function (convoId: string): Promise<IMessage[]> {
     try {
-      return await messageRepository.getAllMessages(convoId); 
+      return await messageRepository.getAllMessages(convoId);
     } catch (error: any) {
       throw new Error(error.message);
     }
   },
-  createChat: async function (participantId: string, userId: string) : Promise<IConversation> {
+  createChat: async function (
+    participantId: string,
+    userId: string
+  ): Promise<IConversation> {
     try {
       const conversationData: IConversation =
         await messageRepository.createConversation(participantId, userId);
@@ -30,7 +33,7 @@ export = {
     senderId: string,
     message: string,
     imageFile: unknown | null
-  ): Promise<IMessage[]> {
+  ): Promise<IMessage> {
     try {
       let messageData;
       if (imageFile) {
@@ -45,19 +48,34 @@ export = {
 
         await messageRepository.saveLastMessage(convoId, "📎attachment");
 
-        return await messageRepository.getAllMessages(convoId);
+        return messageData;
       }
 
       //This repository method saves the message to the message collection
-      await messageRepository.saveMessage(convoId, senderId, message); 
+      messageData = await messageRepository.saveMessage(
+        convoId,
+        senderId,
+        message
+      );
 
       //This repository method saves the last message to the conversation collection
       await messageRepository.saveLastMessage(convoId, message);
-      
-      return await messageRepository.getAllMessages(convoId);
 
+      return messageData;
     } catch (error: any) {
       throw new Error(error.message);
     }
   },
+  emitSendMessageEvent: async function (
+    req: any,
+    receivedMessage: any,
+    convoId: string,
+    senderId: any
+  ): Promise<string> {
+    try {
+      return await messageRepository.emitSendMessageEvent(req,receivedMessage,convoId,senderId)
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
 };

@@ -18,10 +18,10 @@ userRoutes.post("/login/googleSignin", userController.googleSigninController);
 userRoutes.post('/forgotPassword', userController.forgotPassword)
 userRoutes.patch('/changePassword', verifyUser, userController.changePassword)
 
-
 // Profile routes
 const profileRoutes = Router();
-profileRoutes.get("/userData", verifyUser, profileController.getUser);
+profileRoutes.get('/:username', profileController.getProfileData)
+profileRoutes.get("/userData",  verifyUser, profileController.getUser);
 profileRoutes.patch("/userData", verifyUser, profileController.editUser);
 profileRoutes.post(
   "/userData/image/:imageType",

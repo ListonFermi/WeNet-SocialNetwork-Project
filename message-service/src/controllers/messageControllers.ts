@@ -10,17 +10,21 @@ export = {
     try {
       const { convoId } = req.params;
 
-      const allMessagesData = await messageServices.getConvoMessages(convoId)
-        
+      const allMessagesData = await messageServices.getConvoMessages(convoId);
+
       res.status(200).json(allMessagesData);
     } catch (error: any) {
       next(error);
     }
   },
-  createChat: async function (req: Request, res: Response, next: NextFunction) {
+  createConversation: async function (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ) {
     try {
       const { participantId } = req.params;
-      const { userId } = req.body;
+      const userId = req.user._id;
       const conversationData = await messageServices.createChat(
         participantId,
         userId
@@ -30,24 +34,33 @@ export = {
       next(error);
     }
   },
-  sendMessage: async function (
-    req: any,
-    res: Response,
-    next: NextFunction
-  ) {
+  sendMessage: async function (req: any, res: Response, next: NextFunction) {
     try {
       const { convoId } = req.params;
       const { message } = req.body;
-      const userId = req.user._id
+      const userId = req.user._id;
 
-      const allMessagesData = await messageServices.sendMessage(
+      const latestMessage = await messageServices.sendMessage(
         convoId,
         userId,
         message,
         null
       );
-        
-      res.status(200).json(allMessagesData);
+
+      //emit socket event
+      try {
+        const result = await messageServices.emitSendMessageEvent(
+          req,
+          latestMessage,
+          convoId,
+          userId
+        );
+        console.log(result);
+      } catch (error: any) {
+        console.log("Error emitting event :" + error.message);
+      }
+
+      res.status(200).json(latestMessage);
     } catch (error: any) {
       next(error);
     }

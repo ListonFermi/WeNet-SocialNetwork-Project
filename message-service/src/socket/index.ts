@@ -21,7 +21,6 @@ function initializeSocketIO(io: any) {
       if (!JWT_SECRET) throw new Error("JWT Secret not found");
       const decodedToken: any = jwt.verify(token, JWT_SECRET); // decode the token
 
-      console.log({decodedToken})
       const user = await userCollection.findById(decodedToken?.userData?._id);
       if (!user) throw new Error("User not found");
 

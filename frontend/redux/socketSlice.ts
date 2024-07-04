@@ -1,26 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { io, Socket } from 'socket.io-client';
 
 interface SocketState {
-  socket: Socket | null;
+  isConnected: boolean;
 }
 
 const initialState: SocketState = {
-  socket: null,
+  isConnected: false,
 };
 
 const socketSlice = createSlice({
   name: 'socket',
   initialState,
   reducers: {
-    setSocket: (state, action: PayloadAction<Socket | any>) => {
-        state.socket = action.payload 
+    setSocket(state) {
+      state.isConnected = true;
     },
-    disconnectSocket: (state) => {
-      if (state.socket) {
-        state.socket.disconnect();
-        state.socket = null;
-      }
+    disconnectSocket(state) {
+      state.isConnected = false;
     },
   },
 });

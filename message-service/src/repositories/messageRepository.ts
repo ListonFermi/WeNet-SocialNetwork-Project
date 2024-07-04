@@ -6,6 +6,8 @@ import { uploadToS3Bucket } from "../utils/s3bucket";
 import { IMulterFile } from "../types/types";
 import messageCollection, { IMessage } from "../models/messageCollection";
 import userCollection, { IUser } from "../models/userCollection";
+import { emitSocketEvent } from "../socket";
+import { ChatEventEnum } from "../constants";
 
 export = {
   createConversation: async function (
@@ -62,10 +64,15 @@ export = {
       const senderExists = await userCollection.exists({ _id: senderId });
       if (!senderExists) throw new Error("Sender doesn't exist");
 
-      return await messageCollection.create({
+      const newMessage = await messageCollection.create({
         convoId: new Types.ObjectId(convoId),
         sender: new Types.ObjectId(senderId),
         message,
+      });
+
+      return await newMessage.populate({
+        path: "sender",
+        select: "_id username firstName lastName profilePicUrl",
       });
     } catch (error: any) {
       throw new Error(error.message);
@@ -84,12 +91,16 @@ export = {
     imageUrl: string
   ): Promise<IMessage> {
     try {
-      return await messageCollection.create({
+      const newMessage = await messageCollection.create({
         convoId: new Types.ObjectId(convoId),
         senderId: new Types.ObjectId(senderId),
         message: "",
         isAttachment: true,
         attachmentUrl: imageUrl,
+      });
+      return newMessage.populate({
+        path: "sender",
+        select: "_id username firstName lastName profilePicUrl",
       });
     } catch (error: any) {
       throw new Error(error.message);
@@ -123,9 +134,41 @@ export = {
           path: "sender",
           select: "_id username firstName lastName profilePicUrl",
         })
-        .sort({ updatedAt: -1 }); 
+        .sort({ updatedAt: -1 });
 
       return allMessagesData;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+
+  //socket methods
+  emitSendMessageEvent: async function (
+    req: any,
+    receivedMessage: any,
+    convoId: string,
+    senderId: any
+  ): Promise<string> {
+    try {
+      const conversation = await conversationsCollection.findByIdAndUpdate(
+        convoId
+      );
+      if (!conversation) throw new Error("Error getting conversation data");
+
+      conversation.participants.forEach((participantObjectId) => {
+        if (participantObjectId.toString() === senderId.toString()) return;
+        console.log('emitted to:')
+        console.log(participantObjectId.toString())
+        // emit the receive message event to the other participants with received message as the payload
+        emitSocketEvent(
+          req,
+          participantObjectId.toString(),
+          ChatEventEnum.MESSAGE_RECEIVED_EVENT,
+          receivedMessage
+        );
+      });
+
+      return "Recieved message event emitted successfully";
     } catch (error: any) {
       throw new Error(error.message);
     }
