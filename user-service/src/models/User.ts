@@ -1,4 +1,4 @@
-import { Schema, Document, model } from "mongoose";
+import { Schema, Document, model , Types} from "mongoose";
 
 interface IProfessionalAccount {
   isProfessional: boolean;
@@ -19,8 +19,8 @@ interface IUser extends Document {
   bio?: string;
   profilePicUrl?: string;
   coverPicUrl?: string;
-  followers?: Schema.Types.ObjectId[];
-  following?: Schema.Types.ObjectId[];
+  followers?: Types.ObjectId[];
+  following?: Types.ObjectId[];
   postsCount?: number;
   likesReceivedCount?: number;
   isPrivate?: boolean;

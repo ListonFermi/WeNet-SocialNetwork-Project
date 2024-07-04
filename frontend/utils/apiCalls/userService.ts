@@ -37,8 +37,7 @@ export default {
     }
   },
 
-
-  getProfileData : async function (username: string) {
+  getProfileData: async function (username: string) {
     try {
       const url = `${userServiceUrl}/profile/${username}`;
       const res = await axios.get(url);
@@ -48,6 +47,32 @@ export default {
         error.response && error.response?.data?.length
           ? error.response.data
           : "Failed to get new password";
+      throw new Error(errorMessage);
+    }
+  },
+  isFollowing: async function ( userId: string) {
+    try {
+      const url = `${userServiceUrl}/profile/isFollowing/${userId}`;
+      const res = await axios.get(url,{withCredentials: true}); 
+      return res.data // returns isFollowing : Boolean
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response?.data?.length
+          ? error.response.data
+          : "Failed to toggle follow";
+      throw new Error(errorMessage);
+    }
+  },
+  toggleFollow: async function (userId: string) {
+    try {
+      const url = `${userServiceUrl}/profile/toggleFollow/${userId}`;
+      const res = await axios.post(url,{},{withCredentials: true}); 
+      return res.data // returns isFollowing : Boolean
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response?.data?.length
+          ? error.response.data
+          : "Failed to toggle follow";
       throw new Error(errorMessage);
     }
   },

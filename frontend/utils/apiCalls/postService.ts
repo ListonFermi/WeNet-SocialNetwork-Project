@@ -14,7 +14,20 @@ export default {
     } catch (error: any) {
       const errorMessage =
       error.response && error.response.data
-        ? error.response.data.message
+        ? error.response.data
+        : "Failed to get posts data";
+    throw new Error(errorMessage);
+    }
+  },
+  getFeed: async function () {
+    try {
+      const url = `${postServiceUrl}/feed`;
+      const res = await axios.get(url, { withCredentials: true });
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+      error.response && error.response.data
+        ? error.response.data
         : "Failed to get posts data";
     throw new Error(errorMessage);
     }
@@ -85,7 +98,7 @@ export default {
     } catch (error: any) {
       const errorMessage =
         error.response && error.response.data
-          ? error.response.data.message
+          ? error.response.data
           : `Failed to toggle ${entity} like`;
       throw new Error(errorMessage);
     }

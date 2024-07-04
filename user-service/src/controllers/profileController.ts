@@ -84,4 +84,44 @@ export = {
       next(error);
     }
   },
+
+  toggleFollow: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { userToFollow } = req.params;
+      const currentUserId = req.user._id;
+
+      const isFollowing: boolean = await profileService.toggleFollow(
+        currentUserId,
+        userToFollow
+      );
+
+      res.status(200).send(isFollowing);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  isFollowing: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { userId } = req.params;
+      const currentUserId = req.user._id;
+
+      const isFollowing: boolean = await profileService.isFollowing(
+        currentUserId,
+        userId
+      );
+
+      res.status(200).send(String(isFollowing));
+    } catch (error) {
+      next(error);
+    }
+  },
 };

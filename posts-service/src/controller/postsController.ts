@@ -172,6 +172,51 @@ export = {
       next(error);
     }
   },
+  getFeed: async function (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const topPosts = await postsServices.getTopPosts();
+
+      let topPostsData: any = topPosts.map(async (postId) => {
+        try {
+          const { userId, imageUrl, caption, likedBy, comments, updatedAt } =
+            await postsServices.getSinglePost(postId);
+
+          const { username, firstName, lastName, profilePicUrl } =
+            await userServices.getUser(userId);
+          const isLiked = await postsServices.postIsLiked(req.user._id, postId);;
+          const isBookmarked = false;
+
+          return {
+            _id: postId,
+            userId,
+            username,
+            firstName,
+            lastName,
+            profilePicUrl,
+            caption,
+            imageUrl,
+            likedBy,
+            isLiked,
+            comments,
+            updatedAt,
+            isBookmarked,
+          };
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
+      });
+
+      topPostsData = await Promise.all(topPostsData);
+      res.status(200).json({ topPostsData });
+    } catch (error) {
+      next(error);
+    }
+  },
   getBookmarkedPosts: async function (
     req: any,
     res: Response,

@@ -19,6 +19,7 @@ router.patch('/toggleLike/:entity/:entityId', verifyUser,postsController.toggleL
 router.patch('/toggleBookmark/:postId', verifyUser,postsController.toggleBookmark)
 
 router.get("/publicFeed", postsController.getPublicFeed);
+router.get("/feed",verifyUser, postsController.getFeed);
 router.get("/bookmarkedPosts", verifyUser,postsController.getBookmarkedPosts); 
 
 

@@ -7,11 +7,12 @@ import React, { useEffect, useState } from "react";
 import ProfileHeaderLoading from "./ProfileHeaderLoading";
 import messageService from "@/utils/apiCalls/messageService";
 import { useRouter } from "next/navigation";
+import FollowUnfollow from "./FollowUnfollow";
 
 function ProfileHeader({ currUser }: { currUser: IUser }) {
   const currUserId = currUser._id;
 
-  const router = useRouter()
+  const router = useRouter();
 
   const params = useParams<{ username: string }>();
   const paramsUsername = params.username;
@@ -49,9 +50,8 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
 
   async function handleSendMessage() {
     try {
-      const convoData = await messageService.createConversation(_id)
-      router.push(`/messages?convoId=${convoData._id}&username=${username}`)
-      
+      const convoData = await messageService.createConversation(_id);
+      router.push(`/messages?convoId=${convoData._id}&username=${username}`);
     } catch (error: any) {
       alert(error.messaage);
     }
@@ -92,7 +92,7 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
           </div>
 
           {/* Edit / follow button */}
-          <div className="w-[20%] flex items-center align-middle">
+          <div className="w-[20%] flex flex-col items-center align-middle">
             {isOwnProfile ? (
               <a href={`/profile/${username}/edit`}>
                 <button
@@ -104,13 +104,8 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
               </a>
             ) : (
               <>
-                <button
-                  type="button"
-                  className="bg-rootBg hover:bg-green-700 text-white text-xs md:text-sm font-bold p-1 rounded focus:outline-none focus-shadow-outline"
-                >
-                  Follow
-                </button>
-                <div className="p-2 cursor-pointer" onClick={handleSendMessage}>
+                <FollowUnfollow userId={_id} username={username} />
+                <div className="cursor-pointer" onClick={handleSendMessage}>
                   <Image
                     src="/icons/message.svg"
                     alt="Home Logo"
@@ -123,13 +118,10 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
             )}
           </div>
         </div>
-        {/* Profile Details- Bottom portion :Bio, location */}
         <div className="h-1/2">
-          {/* Bio  */}
           <div className="h-2/3 flex items-center justify-center">
             <h1 className="font-semibold text-white">{bio}</h1>
           </div>
-          {/* Dob, place  */}
           <div className="flex flex-row">
             <div className="w-1/2 flex items-center justify-center align-middle">
               <Image

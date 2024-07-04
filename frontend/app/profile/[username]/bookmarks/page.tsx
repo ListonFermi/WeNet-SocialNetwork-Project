@@ -3,7 +3,7 @@ import FeedLeftDiv from '@/components/feed/FeedLeftDiv'
 import FeedRightDiv from '@/components/feed/FeedRightDiv'
 import React from 'react'
 import UserFeed from '@/components/feed/UserFeed'
-import Feed from '@/components/page/Feed'
+import Feed from '@/components/page/PublicFeed'
 import Bookmarks from '@/components/[username]/bookmarks/Bookmarks'
 
 function page() {

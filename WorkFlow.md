@@ -168,3 +168,9 @@ Jul 04, Thu
 - Completed one socket event
 
 --- "Completed one socket event" ---
+
+Jul 05, Fri
+
+- Completed follow/unfollow operations
+
+--- "Follow/Unfollow" ---

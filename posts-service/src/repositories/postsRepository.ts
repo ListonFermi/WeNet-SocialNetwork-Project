@@ -119,24 +119,28 @@ export = {
           postId.equals(entityId)
         );
 
+        const post = await postsCollection.findOne({ _id: entityId });
+        if (!post) throw new Error("Post not found");
+
         if (postIndex !== -1) {
-          //unlike Post
+          // Unlike Post
           user.postsLiked.splice(postIndex, 1);
-          await postsCollection.updateOne(
-            { _id: entityId },
-            { $pull: { likedBy: userId } }
+          const likedByIndex = post.likedBy.findIndex(
+            (userIdItem: Types.ObjectId) => userIdItem.equals(userId)
           );
+          if (likedByIndex !== -1) {
+            post.likedBy.splice(likedByIndex, 1);
+          }
         } else {
-          //like Post
+          // Like Post
           user.postsLiked.push(entityId);
-          await postsCollection.updateOne(
-            { _id: entityId },
-            { $addToSet: { likedBy: userId } }
-          );
+          post.likedBy.push(userId);
         }
 
         await user.save();
-        return user.postsLiked.length;
+        await post.save();
+
+        return post.likedBy.length; // Returning the updated likes count
       } else if (entity === "comment") {
         const commentIndex = user.commentsLiked.findIndex(
           (commentId: Types.ObjectId) => commentId.equals(entityId)

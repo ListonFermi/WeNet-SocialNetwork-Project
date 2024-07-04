@@ -1,7 +1,7 @@
 import Navbar from '@/components/Navbar'
 import FeedLeftDiv from '@/components/feed/FeedLeftDiv'
+import Feed from '@/components/feed/UserFeed'
 import React from 'react'
-import Feed from '@/components/page/Feed'
 
 function page() {
   return (

@@ -7,7 +7,7 @@ import FeedPost from "../FeedPost";
 import FeedPostSkeleton from "../FeedPostSkeleton";
 import { IPost } from "@/types/types";
 
-function Feed() {
+function PublicFeed() {
   const [topPostsData, setTopPostsData] = useState<any>(null);
 
   useEffect(() => {
@@ -32,4 +32,4 @@ function Feed() {
   );
 }
 
-export default Feed;
+export default PublicFeed;

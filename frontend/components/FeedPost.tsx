@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import React from "react";
 import FeedPostSkeleton from "./FeedPostSkeleton";
@@ -17,10 +17,10 @@ type props = {
   currentUserId?: string;
 };
 
-function FeedPost({ postData, currentUserId='' }: props) {
+function FeedPost({ postData, currentUserId = "" }: props) {
   if (!postData) return <FeedPostSkeleton />;
 
-  const router = useRouter()
+  const router = useRouter();
 
   const {
     _id,
@@ -31,7 +31,7 @@ function FeedPost({ postData, currentUserId='' }: props) {
     imageUrl,
     isLiked,
     profilePicUrl,
-    isBookmarked
+    isBookmarked,
   } = postData;
 
   const { likedBy, comments, updatedAt } = postData;
@@ -48,13 +48,14 @@ function FeedPost({ postData, currentUserId='' }: props) {
 
   const handleLike = async () => {
     try {
-      setLiked(!liked);
+      setLiked((liked) => !liked);
       if (!liked) {
         setShowHeart(true);
         setTimeout(() => setShowHeart(false), 2500);
       }
       const likesCount = await postService.toggleLike("post", _id);
-      setLikesCount(likesCount);
+      console.log({ likesCount });
+      setLikesCount(() => likesCount);
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -72,18 +73,22 @@ function FeedPost({ postData, currentUserId='' }: props) {
         toastOptions
       );
       setLiked(!bookmarked);
-      toast(response, toastOptions)
+      toast(response, toastOptions);
     } catch (error: any) {
       toast.error(error);
     }
   };
 
+  function handleClickProfile() {
+    router.push(`/profile/${username}`);
+  }
+
   return (
     <div className="bg-secColor mb-2 mt-2 shadow-md rounded-lg">
-      <ToastContainer/>
+      <ToastContainer />
       <div className="flex justify-evenly py-2">
         <div className="flex items-center">
-          <div>
+          <div className="cursor-pointer" onClick={handleClickProfile}>
             <Image
               src={profilePicUrl}
               alt="Profile Pic"
@@ -91,11 +96,22 @@ function FeedPost({ postData, currentUserId='' }: props) {
               height={150}
               className="w-16 h-16 object-cover rounded-full"
             />
-            <p className="text-white text-sm font-semibold">@{username}</p>
+            <p
+              className="text-white text-sm font-semibold cursor-pointer"
+              onClick={handleClickProfile}
+            >
+              @{username}
+            </p>
           </div>
           <div className="px-4">
-            <h3 className="text-white text-xl font-bold">{`${firstName} ${lastName}`}</h3>
-            <div className="flex items-center cursor-pointer" onClick={()=>router.push(`/post/${_id}`)}>
+            <h3
+              className="text-white text-xl font-bold cursor-pointer"
+              onClick={handleClickProfile}
+            >{`${firstName} ${lastName}`}</h3>
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={() => router.push(`/post/${_id}`)}
+            >
               <Image
                 src="/icons/show.svg"
                 alt=""
@@ -118,13 +134,16 @@ function FeedPost({ postData, currentUserId='' }: props) {
           alt="Tokyo"
           width={1000}
           height={1000}
-          className="w-full h-[400px] object-cover  mt-4"
+          className="w-full h-[400px] object-cover  mt-4 cursor-pointer"
+          onClick={() => router.push(`/post/${_id}`)}
         />
         <HeartAnimation visible={showHeart} />
       </div>
       <div className="flex justify-between items-center p-4">
         <span
-          className={`${liked ? "text-pink-500" : "text-rootBg"} flex cursor-pointer`}
+          className={`${
+            liked ? "text-pink-500" : "text-rootBg"
+          } flex cursor-pointer`}
           onClick={handleLike}
         >
           <Image
@@ -136,7 +155,10 @@ function FeedPost({ postData, currentUserId='' }: props) {
           />
           <p className="font-bold">{likesCount}</p>
         </span>
-        <span className="text-purple-500 flex items-center">
+        <span
+          className="text-purple-500 flex items-center cursor-pointer"
+          onClick={() => router.push(`/post/${_id}`)}
+        >
           <Image
             src="/icons/chat.svg"
             width={150}
@@ -153,9 +175,8 @@ function FeedPost({ postData, currentUserId='' }: props) {
           width={150}
           height={150}
           alt=""
-          className="h-8 w-8 mb-2"
+          className="h-8 w-8 mb-2 cursor-pointer"
         />
-        
       </div>
     </div>
   );

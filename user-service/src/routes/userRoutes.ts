@@ -30,6 +30,9 @@ profileRoutes.post(
   profileController.updatePic,
   profileController.editUser
 );
+// /toggleFollow/${userId}
+profileRoutes.get("/isFollowing/:userId", verifyUser, profileController.isFollowing);
+profileRoutes.post("/toggleFollow/:userToFollow", verifyUser, profileController.toggleFollow);
 
 // Routes
 router.use("/", userRoutes);
