@@ -20,8 +20,8 @@ userRoutes.patch('/changePassword', verifyUser, userController.changePassword)
 
 // Profile routes
 const profileRoutes = Router();
-profileRoutes.get('/:username', profileController.getProfileData)
 profileRoutes.get("/userData",  verifyUser, profileController.getUser);
+profileRoutes.get('/:username', profileController.getProfileData)
 profileRoutes.patch("/userData", verifyUser, profileController.editUser);
 profileRoutes.post(
   "/userData/image/:imageType",

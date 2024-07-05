@@ -3,6 +3,8 @@ import userCollection, { IUser } from "../models/User";
 import jwt from "jsonwebtoken";
 import { uploadToS3Bucket } from "../utils/s3Bucket";
 import { IMulterFile } from "../types/types";
+import { MQINotification, publisher } from "../rabbitMq/publisher";
+import { MQActions } from "../rabbitMq/config";
 
 export = {
   getUserData: async (_id: string | Types.ObjectId): Promise<IUser> => {
@@ -66,6 +68,7 @@ export = {
   getProfileData: async (username: string): Promise<IUser> => {
     try {
       const userData = await userCollection.findOne({ username });
+      console.log("here?");
       if (!userData) throw new Error("No user found");
       return userData;
     } catch (error: any) {
@@ -82,7 +85,6 @@ export = {
 
       const user2Data = await userCollection.findOne({ _id: user2Id });
       if (!user2Data) throw new Error("User to be followed not found");
-      console.log({ user1Data, user2Data });
 
       let isFollowing = false;
       let index1, index2;
@@ -94,7 +96,6 @@ export = {
         index2 = user2Data.followers.findIndex((id: Types.ObjectId) =>
           id.equals(user1Id)
         );
-        console.log({ index1, index2 });
         isFollowing = index1 !== -1 && index2 !== -1;
       }
 
@@ -141,6 +142,32 @@ export = {
       await user2Data.save();
 
       return !isFollowing;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  sendNotificationToMQ: async (
+    userId: string | Types.ObjectId,
+    doneByUser: string | Types.ObjectId,
+    type: "follow" | "like" | "comment",
+    notificationMessage: string,
+    entityType: "posts" | "users",
+    entityId: string | Types.ObjectId,
+  ) => {
+    try {
+      //notification data to publish:
+      const notificationData: MQINotification = {
+        userId,
+        doneByUser,
+        type,
+        notificationMessage,
+        entityType,
+        entityId,
+      };
+      await publisher.publishNotificationMessage(
+        notificationData,
+        MQActions.addNotification
+      );
     } catch (error: any) {
       throw new Error(error.message);
     }

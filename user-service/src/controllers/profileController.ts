@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import profileService from "../services/profileService";
 import userService from "../services/userService";
-import { MQActions } from "../rabbitMq/config";
+import { MQActions, SERVICES } from "../rabbitMq/config";
 
 export = {
   getUser: async (
@@ -34,9 +34,11 @@ export = {
       if (!userData) throw new Error("User data not found");
 
       try {
-        await userService.sendUserDataToMQ(userData._id, MQActions.editUser);
+        SERVICES.allOtherServices.forEach(async () => {
+          await userService.sendUserDataToMQ(userData._id, MQActions.editUser);
+        });
       } catch (error: any) {
-        throw new Error(error.message);
+        console.log(error.message);
       }
 
       const token = await profileService.generateJWT(userData);

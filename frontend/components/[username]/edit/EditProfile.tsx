@@ -1,6 +1,7 @@
 "use client";
 import { saveUser } from "@/redux/userSlice";
 import { IUser } from "@/types/types";
+import userService from "@/utils/apiCalls/userService";
 import { validateDateOfBirthEdit } from "@/utils/validateDOB";
 import axios from "axios";
 import Image from "next/image";
@@ -50,11 +51,9 @@ function EditProfile() {
     const fetchUserData = async () => {
       try {
         const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
-        const response = await axios.get(`${userServiceUrl}/profile/userData`, {
-          withCredentials: true,
-        });
-        setUserData(response.data.userData);
-        dispatch(saveUser({ userData: response.data.userData }));
+        const userData = await userService.getCurrUserData()
+        setUserData(userData);
+        dispatch(saveUser({ userData }));
       } catch (err: any) {
         setError(err.response?.data || "Error fetching user data");
       } finally {

@@ -174,3 +174,12 @@ Jul 05, Fri
 - Completed follow/unfollow operations
 
 --- "Follow/Unfollow" ---
+
+Jul 05, Fri
+
+- Created notification service
+- Did message queue exchanges between user-service & notification service
+- Did message queue exchanges between posts-service & notification service
+- Did get notifications for user
+
+--- "Notification-Service: Basics" ---

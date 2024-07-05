@@ -58,7 +58,7 @@ function SingleConvo({ currUser }: { currUser: IUser }) {
     }
   }
 
-  function handleOnMessageChange(e: ChangeEvent<HTMLFormElement>) {
+  function handleOnMessageChange(e: ChangeEvent<HTMLInputElement>) {
     setMessage(e.target.value);
   }
 

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import userService from "../services/userService";
 import { IUser } from "../models/User";
-import { MQActions } from "../rabbitMq/config";
+import { MQActions, SERVICES } from "../rabbitMq/config";
 
 export = {
   signupController: async (
@@ -42,7 +42,13 @@ export = {
       const { _id, otp } = otpData;
       await userService.verifyOTP(_id, otp);
 
-      await userService.sendUserDataToMQ(_id, MQActions.addUser);
+      try {
+        SERVICES.allOtherServices.forEach(async () => {
+          await userService.sendUserDataToMQ(_id, MQActions.addUser);
+        });
+      } catch (error: any) {
+        console.log(error.message);
+      }
 
       res.status(200).send("OTP verified successfully");
     } catch (error) {
@@ -118,7 +124,7 @@ export = {
     try {
       const { email } = req.body;
 
-      const message= await userService.forgotPassword(email)
+      const message = await userService.forgotPassword(email);
 
       res.status(200).send(message);
     } catch (error) {

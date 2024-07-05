@@ -37,6 +37,20 @@ export default {
     }
   },
 
+  getCurrUserData: async function () {
+    try {
+      const url = `${userServiceUrl}/profile/userData`;
+      console.log({url})
+      const res = await axios.get(url, { withCredentials: true});
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response?.data?.length
+          ? error.response.data
+          : "Failed to get current user data";
+      throw new Error(errorMessage);
+    }
+  },
   getProfileData: async function (username: string) {
     try {
       const url = `${userServiceUrl}/profile/${username}`;

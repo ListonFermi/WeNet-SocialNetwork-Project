@@ -1,6 +1,11 @@
 export const MQActions = {
   addUser: "createUser",
   editUser: "updateUser",
+  addNotification : "createNotification",
+  addPost: "createPost",
+  editPost: "updatePost",
+  addComment: "createComment",
+  editComment: "updateComment"
 };
 
 export const MQExchangeName = "wenet_exchange";

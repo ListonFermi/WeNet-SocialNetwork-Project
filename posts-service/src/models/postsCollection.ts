@@ -3,7 +3,7 @@ import { Schema, Types, model } from "mongoose";
 interface IPost extends Document {
   _id: Types.ObjectId | string;
   userId: Types.ObjectId | string;
-  caption?: string;
+  caption: string;
   imageUrl: string;
   likedBy: Types.ObjectId[];
   comments: Types.ObjectId[];

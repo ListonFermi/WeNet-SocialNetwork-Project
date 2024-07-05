@@ -1,6 +1,5 @@
 import React from "react";
 import ProfileHeader from "./ProfileHeader";
-import ProfileHeaderBottom from "./ProfileHeaderBottom";
 import getUserData from "@/utils/getUserData";
 
 function Profile() {
@@ -16,7 +15,6 @@ function Profile() {
   return (
     <div>
       <ProfileHeader currUser={userData} />
-      <ProfileHeaderBottom />
       <div className="h-10 w-full flex bg-secColor">
         <div className="shadow-inner rounded-sm shadow-rootBg w-1/2 flex items-center justify-center">
           <h1 className="text-white font-bold cursor-pointer">Posts</h1>

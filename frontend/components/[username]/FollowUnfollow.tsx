@@ -5,11 +5,12 @@ import userService from "@/utils/apiCalls/userService";
 
 type props = {
   userId: string;
-  username: string
+  username: string;
+  setChanged: React.Dispatch<React.SetStateAction<any>>;
 };
 
 function FollowUnfollow(props: props) {
-  const { userId , username} = props;
+  const { userId, username, setChanged } = props;
 
   const [isFollowing, setIsFollowing] = useState(null);
 
@@ -17,7 +18,7 @@ function FollowUnfollow(props: props) {
     (async function (userId) {
       try {
         const isFollowing = await userService.isFollowing(userId);
-        console.log({isFollowing})
+        console.log({ isFollowing });
         setIsFollowing(isFollowing);
       } catch (error: any) {
         alert(error.messaage);
@@ -31,6 +32,7 @@ function FollowUnfollow(props: props) {
     try {
       const isFollowing = await userService.toggleFollow(userId);
       setIsFollowing(isFollowing);
+      setChanged((prev: boolean) => !prev);
     } catch (error: any) {
       alert(error.messaage);
     }
@@ -39,7 +41,10 @@ function FollowUnfollow(props: props) {
   return (
     <div className="p-2">
       {isFollowing ? (
-        <UnFollowAlert alert={`Are you sure you want to unfollow ${username} ?`} onConfirm={toggleFollow}>
+        <UnFollowAlert
+          alert={`Are you sure you want to unfollow ${username} ?`}
+          onConfirm={toggleFollow}
+        >
           <button
             type="button"
             className="bg-red-700 hover:bg-red-500 text-white text-xs md:text-sm font-bold p-2 rounded focus:outline-none focus-shadow-outline"

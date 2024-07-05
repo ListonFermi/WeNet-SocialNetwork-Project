@@ -1,4 +1,5 @@
 import { IPost } from "../models/postsCollection";
+import { MQActions, SERVICES } from "../rabbitmq/config";
 import postsRepository from "../repositories/postsRepository";
 
 export = {
@@ -14,7 +15,26 @@ export = {
     imageUrl: string
   ): Promise<IPost> {
     try {
-      return postsRepository.createPost(userId, imageUrl);
+      const postData = await postsRepository.createPost(userId, imageUrl);
+      if (!postData) throw new Error("Post data not found");
+
+      try {
+        const { _id, caption, imageUrl, isDeleted } = postData as IPost;
+        SERVICES.notification.forEach(async () => {
+          await postsRepository.sendPostDataToMQ(
+            _id,
+            userId,
+            caption,
+            imageUrl,
+            isDeleted,
+            MQActions.addPost
+          );
+        });
+      } catch (error: any) {
+        console.log(error.message);
+      }
+
+      return postData;
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -53,7 +73,27 @@ export = {
     userId: string
   ): Promise<number> {
     try {
-      return await postsRepository.toggleLike(entity, entityId, userId);
+      const post = await postsRepository.toggleLike(entity, entityId, userId);
+
+      try {
+        const userId = post._id;
+        const doneByUser = userId;
+        const postId = post._id;
+        SERVICES.notification.forEach(async () => {
+          await postsRepository.sendNotificationToMQ(
+            userId,
+            doneByUser,
+            "like",
+            `Liked your ${entity}`,
+            "posts",
+            postId
+          );
+        });
+      } catch (error: any) {
+        console.log(error.message);
+      }
+
+      return post?.likedBy?.length;
     } catch (error: any) {
       throw new Error(error.message);
     }

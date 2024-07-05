@@ -3,6 +3,9 @@ import postsCollection, { IPost } from "../models/postsCollection";
 import { IMulterFile } from "../types/types";
 import { uploadToS3Bucket } from "../utils/s3bucket";
 import userCollection from "../models/userCollection";
+import { MQINotification, MQIPost, publisher } from "../rabbitmq/publisher";
+import { MQActions } from "../rabbitmq/config";
+import commentCollection from "../models/commentCollection";
 
 export = {
   uploadImage: async function (imageFile: unknown): Promise<string> {
@@ -106,7 +109,7 @@ export = {
     entity: string,
     entityId: string | Types.ObjectId,
     userId: string | Types.ObjectId
-  ): Promise<number> {
+  ): Promise<IPost> {
     try {
       userId = new Types.ObjectId(userId);
       const user = await userCollection.findOne({ _id: userId });
@@ -140,30 +143,37 @@ export = {
         await user.save();
         await post.save();
 
-        return post.likedBy.length; // Returning the updated likes count
-      } else if (entity === "comment") {
-        const commentIndex = user.commentsLiked.findIndex(
-          (commentId: Types.ObjectId) => commentId.equals(entityId)
-        );
+        return post // Returning the updated likes count
+      } 
+      // else if (entity === "comment") {
+      //   const commentIndex = user.commentsLiked.findIndex(
+      //     (commentId: Types.ObjectId) => commentId.equals(entityId)
+      //   );
 
-        if (commentIndex !== -1) {
-          //unlike comment
-          user.commentsLiked.splice(commentIndex, 1);
-          // await postsCollection.updateOne(        change it to comment collection
-          //   { _id: entityId },
-          //   { $pull: { likedBy: userId } }
-          // );
-        } else {
-          //like comment
-          user.commentsLiked.push(entityId);
-          // await postsCollection.updateOne(           change it to comment collection
-          //   { _id: entityId },
-          //   { $addToSet: { likedBy: userId } }
-          // );
-        }
-        await user.save();
-        return user.commentsLiked.length;
-      } else {
+      //   const comment = await commentCollection.findOne({ _id: entityId });
+      //   const post = await postsCollection.findOne({ _id: entityId });
+
+      //   if (commentIndex !== -1) {
+      //     //unlike comment
+      //     user.commentsLiked.splice(commentIndex, 1);
+      //     // await postsCollection.updateOne(        change it to comment collection
+      //     //   { _id: entityId },
+      //     //   { $pull: { likedBy: userId } }
+      //     // );
+      //   } else {
+      //     //like comment
+      //     user.commentsLiked.push(entityId);
+      //     // await postsCollection.updateOne(           change it to comment collection
+      //     //   { _id: entityId },
+      //     //   { $addToSet: { likedBy: userId } }
+      //     // );
+      //   }
+      //   await user.save();
+      //   return comment
+      //   // return {df:'d'} as IPost
+      // }
+      
+      else {
         throw new Error("Invalid entity type");
       }
     } catch (error: any) {
@@ -272,6 +282,55 @@ export = {
 
       // Return the array of bookmarked post IDs
       return user.postsBookmarked.map((postId) => postId.toString());
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  sendPostDataToMQ: async (
+    postId: string | Types.ObjectId,
+    userId: string,
+    caption: string,
+    imageUrl: string,
+    isDeleted: boolean,
+    action: string
+  ) => {
+    try {
+      const postData: MQIPost = {
+        _id: postId,
+        userId,
+        caption,
+        imageUrl,
+        isDeleted,
+      };
+
+      await publisher.publishPostMessage(postData, action);
+    } catch (error: any) {
+      console.error("Error sending user data to MQ:", error.message);
+      throw new Error(error.message);
+    }
+  },
+  sendNotificationToMQ: async (
+    userId: string | Types.ObjectId,
+    doneByUser: string | Types.ObjectId,
+    type: "follow" | "like" | "comment",
+    notificationMessage: string,
+    entityType: "posts" | "users",
+    entityId: string | Types.ObjectId,
+  ) => {
+    try {
+      //notification data to publish:
+      const notificationData: MQINotification = {
+        userId,
+        doneByUser,
+        type,
+        notificationMessage,
+        entityType,
+        entityId,
+      };
+      await publisher.publishNotificationMessage(
+        notificationData,
+        MQActions.addNotification
+      );
     } catch (error: any) {
       throw new Error(error.message);
     }

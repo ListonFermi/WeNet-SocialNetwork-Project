@@ -38,16 +38,18 @@ function SideBar() {
           />
           <p className="pl-5 text-xl text-white font-bold">Home</p>
         </div>
-        <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
-          <Image
-            src="/icons/notification.svg"
-            alt="Home Logo"
-            width={50}
-            height={50}
-            className="h-10 w-10"
-          />
-          <p className="pl-5 text-xl text-white font-bold">Notifications</p>
-        </div>
+        <a href="/notifications">
+          <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
+            <Image
+              src="/icons/notification.svg"
+              alt="Home Logo"
+              width={50}
+              height={50}
+              className="h-10 w-10"
+            />
+            <p className="pl-5 text-xl text-white font-bold">Notifications</p>
+          </div>
+        </a>
         <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
           <Image
             src="/icons/message.svg"
