@@ -22,10 +22,19 @@ export = {
         profilePicUrl,
         username,
         comment,
-        updatedAt
+        updatedAt,
       };
 
       res.status(200).send(commentData);
+    } catch (error) {
+      next(error);
+    }
+  },
+  deleteComment: async function (req: any, res: Response, next: NextFunction) {
+    try {
+      const { commentId } = req.params;
+      const result = await commentsServices.deleteComment(commentId);
+      res.status(200).send(result);
     } catch (error) {
       next(error);
     }

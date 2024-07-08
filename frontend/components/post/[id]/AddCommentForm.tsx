@@ -33,6 +33,7 @@ function AddCommentForm({ userData }: { userData: IUser }) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Input>();
 
@@ -41,7 +42,7 @@ function AddCommentForm({ userData }: { userData: IUser }) {
 
   const onSubmit: SubmitHandler<Input> = async (data: Input) => {
     try {
-      const commentData: any = await await toast.promise(
+      const commentData: any = await toast.promise(
         postService.addComment(data.comment, id),
         {
           pending: "Adding your comment",
@@ -51,6 +52,7 @@ function AddCommentForm({ userData }: { userData: IUser }) {
         toastOptions
       );
       setCommentData(commentData);
+      reset();
     } catch (error: any) {
       toast.error(error.message);
     }

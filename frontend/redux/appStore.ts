@@ -11,3 +11,7 @@ export default configureStore({
     socket: socketReducer,
   },
 });
+
+// dispatch( verifyUser()  )
+
+// const h= useSelector( (s)=>store  )

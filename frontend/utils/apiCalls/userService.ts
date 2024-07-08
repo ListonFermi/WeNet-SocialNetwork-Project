@@ -40,8 +40,8 @@ export default {
   getCurrUserData: async function () {
     try {
       const url = `${userServiceUrl}/profile/userData`;
-      console.log({url})
-      const res = await axios.get(url, { withCredentials: true});
+      console.log({ url });
+      const res = await axios.get(url, { withCredentials: true });
       return res.data;
     } catch (error: any) {
       const errorMessage =
@@ -64,11 +64,11 @@ export default {
       throw new Error(errorMessage);
     }
   },
-  isFollowing: async function ( userId: string) {
+  isFollowing: async function (userId: string) {
     try {
       const url = `${userServiceUrl}/profile/isFollowing/${userId}`;
-      const res = await axios.get(url,{withCredentials: true}); 
-      return res.data // returns isFollowing : Boolean
+      const res = await axios.get(url, { withCredentials: true });
+      return res.data; // returns isFollowing : Boolean
     } catch (error: any) {
       const errorMessage =
         error.response && error.response?.data?.length
@@ -80,8 +80,38 @@ export default {
   toggleFollow: async function (userId: string) {
     try {
       const url = `${userServiceUrl}/profile/toggleFollow/${userId}`;
-      const res = await axios.post(url,{},{withCredentials: true}); 
-      return res.data // returns isFollowing : Boolean
+      const res = await axios.post(url, {}, { withCredentials: true });
+      return res.data; // returns isFollowing : Boolean
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response?.data?.length
+          ? error.response.data
+          : "Failed to toggle follow";
+      throw new Error(errorMessage);
+    }
+  },
+  searchUsers: async function (keyword: string) {
+    try {
+      const url = `${userServiceUrl}/profile/search`;
+      const res = await axios.get(url, {
+        params: { keyword },
+        withCredentials: true,
+      });
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response?.data?.length
+          ? error.response.data
+          : "Failed to toggle follow";
+      throw new Error(errorMessage);
+    }
+  },
+
+  blockUser: async function (userId: string) {
+    try {
+      const url = `${userServiceUrl}/profile/block/${userId}`;
+      const res = await axios.post(url, {}, { withCredentials: true });
+      return res.data;
     } catch (error: any) {
       const errorMessage =
         error.response && error.response?.data?.length

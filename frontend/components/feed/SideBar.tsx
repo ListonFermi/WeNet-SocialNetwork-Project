@@ -28,16 +28,18 @@ function SideBar() {
         </div>
       </a>
       <div className="h-[50%] flex flex-col">
-        <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
-          <Image
-            src="/icons/home.svg"
-            alt="Home Logo"
-            width={50}
-            height={50}
-            className="h-10 w-10"
-          />
-          <p className="pl-5 text-xl text-white font-bold">Home</p>
-        </div>
+        <a href={`/`}>
+          <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
+            <Image
+              src="/icons/home.svg"
+              alt="Home Logo"
+              width={50}
+              height={50}
+              className="h-10 w-10"
+            />
+            <p className="pl-5 text-xl text-white font-bold">Home</p>
+          </div>
+        </a>
         <a href="/notifications">
           <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
             <Image
@@ -50,16 +52,18 @@ function SideBar() {
             <p className="pl-5 text-xl text-white font-bold">Notifications</p>
           </div>
         </a>
-        <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
-          <Image
-            src="/icons/message.svg"
-            alt="Home Logo"
-            width={50}
-            height={50}
-            className="h-10 w-10"
-          />
-          <p className="pl-5 text-xl text-white font-bold">Messages</p>
-        </div>
+        <a href={`/messages`}>
+          <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
+            <Image
+              src="/icons/message.svg"
+              alt="Home Logo"
+              width={50}
+              height={50}
+              className="h-10 w-10"
+            />
+            <p className="pl-5 text-xl text-white font-bold">Messages</p>
+          </div>
+        </a>
         <a href={`/profile/${userData?.username}/bookmarks`}>
           <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
             <Image
@@ -71,6 +75,8 @@ function SideBar() {
             />
             <p className="pl-5 text-xl text-white font-bold">Bookmarks</p>
           </div>
+        </a>
+        <a href={`/search`}>
           <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
             <Image
               src="/icons/search.svg"

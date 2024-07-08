@@ -1,8 +1,7 @@
 import { Types } from "mongoose";
 import { IUser } from "../models/User";
 import profileRepository from "../repositories/profileRepository";
-import { MQActions, SERVICES } from "../rabbitMq/config";
-import userService from "./userService";
+import { SERVICES } from "../rabbitMq/config";
 
 export = {
   getUserData: async (_id: string | Types.ObjectId): Promise<IUser> => {
@@ -84,6 +83,20 @@ export = {
   ): Promise<boolean> => {
     try {
       return await profileRepository.isFollowing(currentUserId, userToFollow);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  searchUsers: async (keyword: string): Promise<IUser[]> => {
+    try {
+      return await profileRepository.searchUsers(keyword)
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  toggleBlock: async (currUser: string, userId: string): Promise<boolean> => {
+    try {
+      return await profileRepository.toggleBlock(currUser, userId)
     } catch (error: any) {
       throw new Error(error.message);
     }

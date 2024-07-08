@@ -70,7 +70,6 @@ export = {
       next(error);
     }
   },
-
   getProfileData: async (
     req: Request,
     res: Response,
@@ -86,7 +85,6 @@ export = {
       next(error);
     }
   },
-
   toggleFollow: async (
     req: any,
     res: Response,
@@ -106,7 +104,6 @@ export = {
       next(error);
     }
   },
-
   isFollowing: async (
     req: any,
     res: Response,
@@ -122,6 +119,37 @@ export = {
       );
 
       res.status(200).send(String(isFollowing));
+    } catch (error) {
+      next(error);
+    }
+  },
+  searchUsers: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { keyword } = req.query;
+
+      const usersData = await profileService.searchUsers(keyword);
+
+      res.status(200).send(usersData);
+    } catch (error) {
+      next(error);
+    }
+  },
+  blockUser: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { userId } = req.params;
+      const currUserId = req.user._id;
+
+      const isBlocked = await profileService.toggleBlock(currUserId, userId);
+
+      res.status(200).send(isBlocked);
     } catch (error) {
       next(error);
     }

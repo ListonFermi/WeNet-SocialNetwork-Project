@@ -20,9 +20,9 @@ export = {
       });
 
       await userCollection.updateOne(
-        {_id: userId},
+        { _id: userId },
         { $addToSet: { comments: commentData._id } }
-      )
+      );
 
       await postsCollection.updateOne(
         { _id: postId },
@@ -30,6 +30,24 @@ export = {
       );
 
       return commentData;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  deleteComment: async function (commentId: string): Promise<string> {
+    try {
+      await commentCollection.updateOne(
+        { _id: new Types.ObjectId(commentId) },
+        { $set: { isDeleted: true } }
+      );
+
+      await postsCollection.updateMany(
+        { comments: new Types.ObjectId(commentId) },
+        { $pull: { comments: new Types.ObjectId(commentId) } }
+      );
+
+
+      return "Comment deleted successfully";
     } catch (error: any) {
       throw new Error(error.message);
     }

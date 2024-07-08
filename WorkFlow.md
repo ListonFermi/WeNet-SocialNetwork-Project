@@ -183,3 +183,10 @@ Jul 05, Fri
 - Did get notifications for user
 
 --- "Notification-Service: Basics" ---
+
+Jul 08, Sat
+
+- Comment: Edit comment
+- Search: search completed
+
+--- "Edit comment, search completed" ---

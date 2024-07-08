@@ -39,3 +39,8 @@ export const userSlice = createSlice({
 
 export const { verifyUser, saveUser, currentProfile, loginUser, logoutUser } = userSlice.actions;
 export default userSlice.reducer;
+
+
+///   const  slice=      createSlice ({ name, initialstate, reducers })
+
+/// slice = { actions, reducer   }

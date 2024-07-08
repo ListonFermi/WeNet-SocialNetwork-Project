@@ -45,6 +45,19 @@ export default {
     throw new Error(errorMessage);
     }
   },
+  getProfileFeed: async function (username: string) {
+    try {
+      const url = `${postServiceUrl}/profileFeed/${username}`;
+      const res = await axios.get(url, { withCredentials: true });
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+      error.response && error.response.data
+        ? error.response.data
+        : "Failed to get posts data";
+    throw new Error(errorMessage);
+    }
+  },
 
 
   getSinglePostData: async function (id: string) {
@@ -129,6 +142,19 @@ export default {
         error.response && error.response.data
           ? error.response.data.message
           : "Failed to comment on the post";
+      throw new Error(errorMessage);
+    }
+  },
+  deleteComment: async function (commentId: string) {
+    try {
+      const url = `${postServiceUrl}/comment/${commentId}`;
+      const res = await axios.delete(url, { withCredentials: true });
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response.data
+          ? error.response.data.message
+          : "Failed to delete the post";
       throw new Error(errorMessage);
     }
   },

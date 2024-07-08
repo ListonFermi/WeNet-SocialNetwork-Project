@@ -335,4 +335,33 @@ export = {
       throw new Error(error.message);
     }
   },
+  getProfilePosts: async function (userId: string): Promise<string[]> {
+    try {
+      const posts = await postsCollection.aggregate([
+        {
+          $match: { userId: new Types.ObjectId(userId) ,  isDeleted: false },
+        },
+        {
+          $addFields: {
+            likesCount: { $size: "$likedBy" },
+          },
+        },
+        {
+          $sort: { likesCount: -1 },
+        },
+        {
+          $limit: 35,
+        },
+        {
+          $project: {
+            _id: 1,
+          },
+        },
+      ]);
+
+      return posts.map((post) => post._id.toString());
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

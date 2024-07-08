@@ -11,6 +11,7 @@ import FollowUnfollow from "./FollowUnfollow";
 import { useDispatch } from "react-redux";
 import { currentProfile } from "@/redux/userSlice";
 import ProfileHeaderBottom from "./ProfileHeaderBottom";
+import BlockAlert from "./BlockAlert";
 
 function ProfileHeader({ currUser }: { currUser: IUser }) {
   const currUserId = currUser._id;
@@ -21,7 +22,7 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
   const paramsUsername = params.username;
 
   const [userData, setUserData] = useState<IUser | null>(null);
-  const [changed, setChanged ] = useState(false)
+  const [changed, setChanged] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -61,6 +62,14 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
     }
   }
 
+  async function handleBlock() {
+    try {
+      // const 
+    } catch (error: any) {
+      alert(error.messaage);
+    }
+  }
+
   return (
     <>
       <div className="h-96 w-full shadow-md bg-secColor">
@@ -75,6 +84,19 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
               className="w-full h-full border-2 border-rootBg object-cover"
             />
           )}
+          <BlockAlert
+            alert="Do you really wanna block this user?"
+            onConfirm={handleBlock}
+          >
+            <div className="w-full flex flex-row-reverse cursor-pointer">
+              <Image
+                src="/icons/blockedUsers.svg"
+                alt="Cover Pic"
+                width={30}
+                height={30}
+              />
+            </div>
+          </BlockAlert>
         </div>
         {/* Profile Details */}
         <div className="flex flex-col h-1/2">
@@ -109,7 +131,11 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
                 </a>
               ) : (
                 <>
-                  <FollowUnfollow userId={_id} username={username} setChanged={setChanged} />
+                  <FollowUnfollow
+                    userId={_id}
+                    username={username}
+                    setChanged={setChanged}
+                  />
                   <div className="cursor-pointer" onClick={handleSendMessage}>
                     <Image
                       src="/icons/message.svg"
@@ -156,7 +182,7 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
           </div>
         </div>
       </div>
-      <ProfileHeaderBottom  userData={userData} />
+      <ProfileHeaderBottom userData={userData} />
     </>
   );
 }

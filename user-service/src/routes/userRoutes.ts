@@ -1,6 +1,7 @@
 import { Router } from "express";
 import userController from "../controllers/userController";
 import { verifyUser } from "../middlewares/verifyUser";
+// import { verifyUser } from '@wenet/auth'
 import profileController from "../controllers/profileController";
 import upload from "../utils/multer";
 
@@ -15,13 +16,12 @@ userRoutes.post("/login", userController.loginController);
 userRoutes.post("/login/googleSignin", userController.googleSigninController);
 
 //forgot and change password
-userRoutes.post('/forgotPassword', userController.forgotPassword)
-userRoutes.patch('/changePassword', verifyUser, userController.changePassword)
+userRoutes.post("/forgotPassword", userController.forgotPassword);
+userRoutes.patch("/changePassword", verifyUser, userController.changePassword);
 
 // Profile routes
 const profileRoutes = Router();
-profileRoutes.get("/userData",  verifyUser, profileController.getUser);
-profileRoutes.get('/:username', profileController.getProfileData)
+profileRoutes.get("/userData", verifyUser, profileController.getUser);
 profileRoutes.patch("/userData", verifyUser, profileController.editUser);
 profileRoutes.post(
   "/userData/image/:imageType",
@@ -30,10 +30,23 @@ profileRoutes.post(
   profileController.updatePic,
   profileController.editUser
 );
-// /toggleFollow/${userId}
-profileRoutes.get("/isFollowing/:userId", verifyUser, profileController.isFollowing);
-profileRoutes.post("/toggleFollow/:userToFollow", verifyUser, profileController.toggleFollow);
+profileRoutes.get("/search", verifyUser, profileController.searchUsers);
 
+// /toggleFollow/${userId}
+profileRoutes.get(
+  "/isFollowing/:userId",
+  verifyUser,
+  profileController.isFollowing
+);
+profileRoutes.post(
+  "/toggleFollow/:userToFollow",
+  verifyUser,
+  profileController.toggleFollow
+);
+
+profileRoutes.get("/block/:userId", verifyUser, profileController.toggleFollow);
+
+profileRoutes.get("/:username", profileController.getProfileData);
 // Routes
 router.use("/", userRoutes);
 router.use("/profile", profileRoutes);

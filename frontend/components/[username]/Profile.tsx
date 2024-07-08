@@ -1,15 +1,17 @@
 import React from "react";
 import ProfileHeader from "./ProfileHeader";
 import getUserData from "@/utils/getUserData";
+import FeedPost from "../FeedPost";
+import ProfileFeed from "./ProfileFeed";
 
 function Profile() {
-    let userData
+  let userData;
   try {
-    const decoded : any = getUserData()
-    userData = decoded.userData
+    const decoded: any = getUserData();
+    userData = decoded.userData;
   } catch (error: any) {
-    console.log(error.message)
-    return <div>Error getting current user's data</div>
+    console.log(error.message);
+    return <div>Error getting current user's data</div>;
   }
 
   return (
@@ -23,6 +25,7 @@ function Profile() {
           <h1 className="text-white font-bold cursor-pointer">Likes</h1>
         </div>
       </div>
+      <ProfileFeed currUserId ={ userData._id} />
     </div>
   );
 }

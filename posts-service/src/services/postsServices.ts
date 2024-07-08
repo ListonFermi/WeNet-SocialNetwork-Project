@@ -132,4 +132,11 @@ export = {
       throw new Error(error.message);
     }
   },
+  getProfilePosts: async function (userId: string): Promise<string[]> {
+    try {
+      return await postsRepository.getProfilePosts(userId);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

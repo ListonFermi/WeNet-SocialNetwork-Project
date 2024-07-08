@@ -25,8 +25,8 @@ interface IUser extends Document {
   likesReceivedCount?: number;
   isPrivate?: boolean;
   professionalAccount?: IProfessionalAccount;
-  blockedByUsers?: Schema.Types.ObjectId[];
-  blockedUsers?: Schema.Types.ObjectId[];
+  blockedByUsers?: Types.ObjectId[];
+  blockedUsers?: Types.ObjectId[];
   createdAt?: Date;
   updatedAt?: Date;
   location?: string;

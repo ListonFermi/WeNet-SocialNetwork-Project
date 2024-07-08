@@ -4,5 +4,6 @@ import commentsController from "../controller/commentsController";
 const router = Router();
 
 router.post('/:postId', verifyUser,commentsController.addComment)
+router.delete('/:commentId', verifyUser,commentsController.deleteComment)
 
 export default router;

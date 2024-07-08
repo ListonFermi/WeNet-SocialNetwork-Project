@@ -2,6 +2,7 @@ import { IComment } from "@/types/types";
 import { formatDate } from "@/utils/formatString";
 import Image from "next/image";
 import React from "react";
+import BasicPopoverComments from "./BasicPopoverComments";
 
 
 type props = {
@@ -11,6 +12,7 @@ type props = {
 
 function Comment({ commentData, currentUserId }: props) {
   const {
+    _id,
     userId='',
     profilePicUrl = "",
     username = "",
@@ -65,13 +67,7 @@ function Comment({ commentData, currentUserId }: props) {
             />
             <p className="font-bold text-sm">{likesCount}</p>
           </span> */}
-          <Image
-            src="/icons/menu.svg"
-            alt=""
-            width={150}
-            height={150}
-            className="h-6 w-6"
-          />
+          <BasicPopoverComments commentId={_id} isOwnComment={isOwnComment} />
         </div>
       </div>
     </div>

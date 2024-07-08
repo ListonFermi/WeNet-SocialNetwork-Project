@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import postsServices from "../services/postsServices";
 import userServices from "../services/userServices";
+import userCollection from "../models/userCollection";
 
 export = {
   createPost: async function (
@@ -187,7 +188,7 @@ export = {
 
           const { username, firstName, lastName, profilePicUrl } =
             await userServices.getUser(userId);
-          const isLiked = await postsServices.postIsLiked(req.user._id, postId);;
+          const isLiked = await postsServices.postIsLiked(req.user._id, postId);
           const isBookmarked = false;
 
           return {
@@ -251,6 +252,54 @@ export = {
           updatedAt,
           isBookmarked,
         };
+      });
+
+      postsData = await Promise.all(postsData);
+      res.status(200).json(postsData);
+    } catch (error) {
+      next(error);
+    }
+  },
+  getProfileFeed: async function (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { username } = req.params;
+      const user = await userCollection.findOne({username})
+      if(!user) throw new Error('user not found')
+      const posts = await postsServices.getProfilePosts(user._id.toString());
+
+      let postsData: any = posts.map(async (postId) => {
+        try {
+          const { userId, imageUrl, caption, likedBy, comments, updatedAt } =
+            await postsServices.getSinglePost(postId);
+
+          const { username, firstName, lastName, profilePicUrl } =
+            await userServices.getUser(userId);
+          const isLiked = await postsServices.postIsLiked(req.user._id, postId);
+          const isBookmarked = false;
+
+          return {
+            _id: postId,
+            userId,
+            username,
+            firstName,
+            lastName,
+            profilePicUrl,
+            caption,
+            imageUrl,
+            likedBy,
+            isLiked,
+            comments,
+            updatedAt,
+            isBookmarked,
+          };
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
       });
 
       postsData = await Promise.all(postsData);
