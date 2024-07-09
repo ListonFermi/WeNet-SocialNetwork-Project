@@ -1,7 +1,7 @@
-interface IProfessionalAccount {
+interface IAccountType {
   isProfessional: boolean;
-  category: string;
-  hasWeNetTick: boolean;
+  category?: 'celebrity' | 'company';
+  hasWeNetTick?: boolean;
 }
 
 export interface IUser {
@@ -22,7 +22,7 @@ export interface IUser {
   postsCount?: number;
   likesReceivedCount?: number;
   isPrivate?: boolean;
-  professionalAccount?: IProfessionalAccount;
+  accountType: IAccountType;
   blockedByUsers?: string[];
   blockedUsers?: string[];
   createdAt?: Date;

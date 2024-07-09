@@ -21,7 +21,7 @@ export = {
       }else{
         _id = userId
       }
-      const userData= await userCollection.findOne(_id)
+      const userData= await userCollection.findOne({_id})
       if(!userData) throw new Error('User not found')
       return userData
     } catch (error: any) {

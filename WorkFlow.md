@@ -184,9 +184,16 @@ Jul 05, Fri
 
 --- "Notification-Service: Basics" ---
 
-Jul 08, Sat
+Jul 08, Mon
 
 - Comment: Edit comment
 - Search: search completed
 
 --- "Edit comment, search completed" ---
+
+Jul 09, Tue
+
+- AccountType: UI design
+- Promote Post : UI design started
+
+--- "Account Type, Promote Post" ---

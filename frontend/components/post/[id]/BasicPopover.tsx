@@ -8,7 +8,11 @@ import { Bounce, ToastOptions, toast } from "react-toastify";
 import postService from "@/utils/apiCalls/postService";
 import "react-toastify/dist/ReactToastify.css";
 
-type prop = { postId: string; isOwnPost: boolean };
+type prop = {
+  postId: string;
+  isOwnPost: boolean;
+  isProfessionalAccount: boolean;
+};
 
 const toastOptions: ToastOptions = {
   position: "top-center",
@@ -22,7 +26,9 @@ const toastOptions: ToastOptions = {
   transition: Bounce,
 };
 
-export default function BasicPopover({ postId, isOwnPost }: prop) {
+export default function BasicPopover(props: prop) {
+  const { postId, isOwnPost, isProfessionalAccount } = props;
+
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -83,7 +89,7 @@ export default function BasicPopover({ postId, isOwnPost }: prop) {
         }}
       >
         {isOwnPost ? (
-          <div className="flex flex-col md:h-20 md:w-40 w-20 h-40 justify-center bg-black shadow-rootBg shadow-lg ">
+          <div className="flex flex-col md:h-30 md:w-40 w-20 h-30 justify-center bg-black shadow-rootBg shadow-lg ">
             <button
               className=" text-white font-bold hover:bg-secColorH p-2"
               onClick={() => router.push(`/post/edit/${postId}`)}
@@ -98,6 +104,14 @@ export default function BasicPopover({ postId, isOwnPost }: prop) {
                 Delete
               </button>
             </AlertDialog>
+            {isProfessionalAccount && (
+              <button
+                className=" text-white font-bold hover:bg-secColorH p-2"
+                onClick={() => router.push(`/post/edit/${postId}`)}
+              >
+                Promote Post
+              </button>
+            )}
           </div>
         ) : (
           <div className="flex flex-col md:h-20 md:w-40 w-20 h-40 justify-center bg-black shadow-rootBg shadow-lg ">

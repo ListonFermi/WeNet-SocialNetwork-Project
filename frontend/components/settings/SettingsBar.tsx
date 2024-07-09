@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import SettingButton from "./SettingButton";
 import Image from "next/image";
 import { deleteCookie } from "@/utils/deleteCookie";
@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import AlertDialog from "./AlertDialog";
 
 function SettingsBar() {
-  const [selected, setSelected] = useState("Change Password"); //use the 1st index of settings[[]] to set
   const settings = [
     // ["Account Privacy", "accountPrivacy"],
     ["Change Password", "changePassword"],
@@ -34,8 +33,6 @@ function SettingsBar() {
             key={`settings${index}`}
             settingName={setting[0]}
             iconName={setting[1]}
-            clickSetterFunction={setSelected}
-            selected={selected}
           />
         ))}
       </div>

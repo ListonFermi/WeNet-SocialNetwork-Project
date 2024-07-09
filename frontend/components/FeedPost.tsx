@@ -7,17 +7,17 @@ import HeartAnimation from "./post/[id]/HeartAnimation";
 import postService from "@/utils/apiCalls/postService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { IPost } from "@/types/types";
+import { IPost, IUser } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { toastOptions } from "@/utils/toastOptions";
 import { formatDate } from "@/utils/formatString";
 
 type props = {
   postData: IPost | null;
-  currentUserId?: string;
+  currUserData?: IUser;
 };
 
-function FeedPost({ postData, currentUserId = "" }: props) {
+function FeedPost({ postData, currUserData }: props) {
   if (!postData) return <FeedPostSkeleton />;
 
   const router = useRouter();
@@ -44,7 +44,7 @@ function FeedPost({ postData, currentUserId = "" }: props) {
   const [likesCount, setLikesCount] = React.useState(likedBy?.length || 0);
 
   const postId = postData._id;
-  const isOwnPost = postData.userId === currentUserId;
+  const isOwnPost = postData.userId === currUserData?._id;
 
   const handleLike = async () => {
     try {
@@ -125,7 +125,13 @@ function FeedPost({ postData, currentUserId = "" }: props) {
             </div>
           </div>
         </div>
-        <BasicPopover isOwnPost={isOwnPost} postId={postId} />
+        <BasicPopover
+          isOwnPost={isOwnPost}
+          postId={postId}
+          isProfessionalAccount={
+            currUserData?.accountType.isProfessional || false
+          }
+        />
       </div>
       <p className="font-semibold px-6 py-2 text-white">{caption}</p>
       <div className="relative" onDoubleClick={handleLike}>

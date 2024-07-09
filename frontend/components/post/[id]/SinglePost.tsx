@@ -17,7 +17,7 @@ function SinglePost() {
   return (
     <>
       <div className="">
-        <Post userId={userData?._id}/>
+        <Post currUserData={userData}/>
       </div>
       <div>
         <AddCommentForm userData={userData} />

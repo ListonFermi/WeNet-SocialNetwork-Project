@@ -1,8 +1,8 @@
-import { Schema, Document, model , Types} from "mongoose";
+import { Schema, Document, model, Types } from "mongoose";
 
-interface IProfessionalAccount {
+interface IAccountType {
   isProfessional: boolean;
-  category: string;
+  category: 'celebrity' | 'company';
   hasWeNetTick: boolean;
 }
 
@@ -13,7 +13,7 @@ interface IUser extends Document {
   lastName: string;
   password: string;
   email: string;
-  dateOfBirth?: Date | string ;
+  dateOfBirth?: Date | string;
   gender?: "male" | "female";
   isRestricted?: boolean;
   bio?: string;
@@ -24,7 +24,7 @@ interface IUser extends Document {
   postsCount?: number;
   likesReceivedCount?: number;
   isPrivate?: boolean;
-  professionalAccount?: IProfessionalAccount;
+  accountType?: IAccountType;
   blockedByUsers?: Types.ObjectId[];
   blockedUsers?: Types.ObjectId[];
   createdAt?: Date;
@@ -33,10 +33,10 @@ interface IUser extends Document {
   JWT?: string;
 }
 
-const ProfessionalAccountSchema = new Schema<IProfessionalAccount>({
+const ProfessionalAccountSchema = new Schema<IAccountType>({
   isProfessional: { type: Boolean, required: true, default: false },
-  category: { type: String, required: true },
-  hasWeNetTick: { type: Boolean, required: true, default: false },
+  category: { type: String, enum: ["celebrity", "company"] },
+  hasWeNetTick: { type: Boolean },
 });
 
 const UserSchema = new Schema<IUser>(
@@ -57,7 +57,11 @@ const UserSchema = new Schema<IUser>(
     postsCount: { type: Number, required: true, default: 0 },
     likesReceivedCount: { type: Number, required: true, default: 0 },
     isPrivate: { type: Boolean, required: true, default: false },
-    professionalAccount: { type: ProfessionalAccountSchema },
+    accountType: {
+      type: ProfessionalAccountSchema,
+      required: true,
+      default: { isProfessional: false },
+    },
     blockedByUsers: [{ type: Schema.Types.ObjectId, ref: "users" }],
     blockedUsers: [{ type: Schema.Types.ObjectId, ref: "users" }],
     location: { type: String, default: "India" },
@@ -66,4 +70,4 @@ const UserSchema = new Schema<IUser>(
 );
 
 export default model<IUser>("users", UserSchema);
-export type { IUser, IProfessionalAccount };
+export type { IUser, IAccountType };

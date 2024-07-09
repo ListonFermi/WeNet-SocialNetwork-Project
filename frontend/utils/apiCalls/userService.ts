@@ -120,4 +120,22 @@ export default {
       throw new Error(errorMessage);
     }
   },
+
+  changeAccountType: async function (accountType: string): Promise<string> {
+    try {
+      const url = `${userServiceUrl}/changeAccountType`;
+      const res = await axios.patch(
+        url,
+        { accountType },
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response?.data?.length
+          ? error.response.data
+          : "Failed to change account type";
+      throw new Error(errorMessage);
+    }
+  },
 };

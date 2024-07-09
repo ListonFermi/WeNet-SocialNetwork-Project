@@ -267,8 +267,8 @@ export = {
   ): Promise<void> {
     try {
       const { username } = req.params;
-      const user = await userCollection.findOne({username})
-      if(!user) throw new Error('user not found')
+      const user = await userCollection.findOne({ username });
+      if (!user) throw new Error("user not found");
       const posts = await postsServices.getProfilePosts(user._id.toString());
 
       let postsData: any = posts.map(async (postId) => {

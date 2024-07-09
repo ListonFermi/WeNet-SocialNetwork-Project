@@ -48,9 +48,9 @@ function ChangePassword() {
           Change Password
         </h1>
       </div>
-      <div className="h-[60%] flex flex-col justify-center">
+      <div className="h-[60%] w-full flex justify-center">
         <form
-          className="max-w-md flex-col justify-center"
+          className="w-[60%] flex-col justify-center"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="mb-4 px-8 pb-4">

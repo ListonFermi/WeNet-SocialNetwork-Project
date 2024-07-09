@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
-  fastRefresh: false,
   images: {
     domains: [
       "picsum.photos",

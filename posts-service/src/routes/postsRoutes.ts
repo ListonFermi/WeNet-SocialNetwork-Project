@@ -23,5 +23,4 @@ router.get("/feed",verifyUser, postsController.getFeed);
 router.get("/profileFeed/:username",verifyUser, postsController.getProfileFeed);
 router.get("/bookmarkedPosts", verifyUser,postsController.getBookmarkedPosts); 
 
-
 export default router;

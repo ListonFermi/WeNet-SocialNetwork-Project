@@ -1,21 +1,31 @@
 "use client";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 interface SettingButtonProps {
   settingName: string;
   iconName: string;
-  clickSetterFunction: React.Dispatch<React.SetStateAction<string>>;
-  selected: string;
 }
 
 function SettingButton(props: SettingButtonProps): JSX.Element {
-  const { settingName, iconName, clickSetterFunction, selected } = props;
+  const { settingName, iconName } = props;
+
+  const searchParams = useSearchParams();
+
+  const router = useRouter()
+
+  const settingNameQuery = searchParams.get("settingNameQuery");
+  let selected
+  if (!settingNameQuery) selected = 'changePassword'
+  else selected = settingNameQuery
+
   return (
     <button
-      onClick={() => clickSetterFunction(settingName)}
+      onClick={()=>router.push(`/settings?settingNameQuery=${iconName}`)}
       className={`flex justify-center items-center  p-2 hover:rounded-lg mb-4 ${
-        selected === settingName
+        selected === iconName
           ? "bg-rootBgH rounded-lg"
           : "hover:bg-secColorH"
       } `}

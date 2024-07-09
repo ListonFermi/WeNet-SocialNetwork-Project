@@ -1,37 +1,29 @@
-import Navbar from '@/components/Navbar'
-import React from 'react'
-import SettingsBar from '@/components/settings/SettingsBar'
-import ChangePassword from '@/components/settings/ChangePassword'
-import SideBar from '@/components/feed/SideBar'
+import React from "react";
+import SettingsBar from "@/components/settings/SettingsBar";
+import SettingSection from "@/components/settings/SettingSection";
+import getUserData from "@/utils/getUserData";
 
 function page() {
+  let currUser;
+  try {
+    const { userData } = getUserData();
+    if(!userData) throw new Error('userData Not found')
+    currUser = userData
+  } catch (error: any) {
+    return <h1 >Loading</h1>
+  }
+
   return (
-    <div className="max-h-screen flex flex-col">
-      <Navbar />
-      <div className="flex flex-1 overflow-hidden">
-        {/* MoreLeftDiv - hidden on mobile, 1/4 width on larger screens */}
-        <div className="relative hidden md:flex md:flex-1 bg-feedBg">
-          <SideBar />
-        </div>
-        
-        {/* SettingsBar - 20% width on mobile, 1/4 width on larger screens */}
-        <div className="flex-1 md:flex-1 md:w-1/4 bg-red-300 w-1/5 h-screen">
-          <SettingsBar />
-        </div>
-        
-        {/* Third Portion - 80% width on mobile, 1/4 width on larger screens */}
-        <div className="flex-1 md:flex-1 md:w-1/4 w-4/5 bg-blue-300">
-          {/* Content for the third portion */}
-          <ChangePassword/>
-        </div>
-        
-        {/* Fourth Portion - hidden on mobile, 1/4 width on larger screens */}
-        <div className="hidden md:block md:flex-1 lg:flex-1 xl:flex-1 bg-feedBg h-screen overflow-y-auto no-scrollbar">
-          <div className="bg-black h-full w-full"></div>
-        </div>
+    <div className="max-h-screen w-full bg-black flex">
+      <div className="max-h-screen w-[30%] hidden md:block">
+        <SettingsBar />
       </div>
+      <div className="h-full w-[70%] hidden md:block">
+        <SettingSection currUser={currUser}/>
+      </div>
+      {/* <MobileView currUser={currUser} /> */}
     </div>
-  )
+  );
 }
 
-export default page
+export default page;

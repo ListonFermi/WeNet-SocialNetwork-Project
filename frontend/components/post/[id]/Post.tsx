@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import postService from "@/utils/apiCalls/postService";
 import { useDispatch } from "react-redux";
 import { storePostData } from "@/redux/postSlice";
+import { IUser } from "@/types/types";
 
 const toastOptions: ToastOptions = {
   position: "top-center",
@@ -21,7 +22,7 @@ const toastOptions: ToastOptions = {
   transition: Bounce,
 };
 
-function Post({ userId }: { userId: string }) {
+function Post({ currUserData }: { currUserData: IUser }) {
   const { id } = useParams<{ id: string }>();
 
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ function Post({ userId }: { userId: string }) {
       try {
         const postData = await postService.getSinglePostData(id);
         setPostData(postData);
-        dispatch(storePostData({postData}))
+        dispatch(storePostData({ postData }));
         setLoading(false);
       } catch (error: any) {
         toast.error("error", toastOptions);
@@ -48,7 +49,7 @@ function Post({ userId }: { userId: string }) {
       {loading ? (
         <FeedPostSkeleton />
       ) : (
-        <FeedPost postData={postData} currentUserId={userId} />
+        <FeedPost postData={postData} currUserData={currUserData} />
       )}
     </>
   );
