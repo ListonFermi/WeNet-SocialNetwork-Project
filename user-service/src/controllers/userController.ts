@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import userService from "../services/userService";
 import { IUser } from "../models/User";
 import { MQActions, SERVICES } from "../rabbitMq/config";
+import profileService from "../services/profileService";
 
 export = {
   signupController: async (
@@ -127,6 +128,37 @@ export = {
       const message = await userService.forgotPassword(email);
 
       res.status(200).send(message);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
+
+  changeAccountType: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const userId = req.user._id;
+      const { accountType } = req.body;
+
+      const userData = await userService.changeAccountType(userId, accountType);
+      if (!userData) throw new Error("user data not found");
+
+      try {
+        SERVICES.allOtherServices.forEach(async () => {
+          if(!userData._id) throw new Error('user Id not found to send in MQ')
+          await userService.sendUserDataToMQ(userData._id?.toString(), MQActions.editUser);
+        });
+      } catch (error: any) {
+        console.log(error.message);
+      }
+
+      const token = await profileService.generateJWT(userData);
+      res.cookie("token", token);
+
+      res.status(200).send("Account type updated successfully");
     } catch (error) {
       console.error(error);
       next(error);

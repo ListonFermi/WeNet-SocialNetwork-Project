@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 import FeedPost from "../FeedPost";
 import postService from "@/utils/apiCalls/postService";
-import { IPost } from "@/types/types";
+import { IPost, IUser } from "@/types/types";
 import { useParams } from "next/navigation";
 
-function ProfileFeed({ currUserId }: { currUserId: string }) {
+function ProfileFeed({ currUserData }: { currUserData: IUser }) {
   const [postData, setPostData] = useState<IPost[] | null>(null);
 
   const params = useParams<{ username: string }>();
@@ -27,7 +27,7 @@ function ProfileFeed({ currUserId }: { currUserId: string }) {
     <div>
       {postData?.length &&
         postData.map((post) => (
-          <FeedPost postData={post} currentUserId={currUserId} />
+          <FeedPost key={post._id} postData={post} currUserData={currUserData} />
         ))}
     </div>
   );

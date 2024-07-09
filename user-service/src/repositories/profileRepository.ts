@@ -49,7 +49,8 @@ export = {
     try {
       const secret: string | undefined = process.env.JWT_SECRET;
       if (!secret) throw new Error("JWT Secret not found");
-      return jwt.sign({ userData }, secret, { expiresIn: "1h" });
+      const data = { userData, role: "wenet-user" };
+      return jwt.sign(data, secret, { expiresIn: "1h" });
     } catch (error: any) {
       throw new Error(error.message);
     }

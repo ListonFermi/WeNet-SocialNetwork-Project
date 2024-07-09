@@ -1,12 +1,10 @@
 import { IUser } from "@/types/types";
 import userService from "@/utils/apiCalls/userService";
-import { toastOptions } from "@/utils/toastOptions";
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   FormControlLabel,
   Radio,
@@ -96,7 +94,7 @@ function AccountType({ currUser }: { currUser: IUser }) {
             Account Type
           </h1>
         </div>
-        <div className="w-full h-[15%] flex items-center justify-center bg-red-400">
+        <div className="w-full h-[15%] flex items-center justify-center">
           <Image
             src={`/icons/${
               isProfessional
@@ -117,7 +115,7 @@ function AccountType({ currUser }: { currUser: IUser }) {
               : "Personal Account"}
           </h1>
         </div>
-        <div className="w-full h-[5%] bg-red-900 flex items-center justify-center">
+        <div className="w-full h-[5%] flex items-center justify-center">
           <button
             onClick={handleClickOpen}
             className="p-2 bg-rootBg rounded-lg text-white font-bold hover:bg-rootBgH"

@@ -25,7 +25,7 @@ function Profile() {
           <h1 className="text-white font-bold cursor-pointer">Likes</h1>
         </div>
       </div>
-      <ProfileFeed currUserId ={ userData._id} />
+      <ProfileFeed currUserData={userData} />
     </div>
   );
 }

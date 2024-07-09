@@ -197,3 +197,8 @@ Jul 09, Tue
 - Promote Post : UI design started
 
 --- "Account Type, Promote Post" ---
+
+- AccountType: UI design
+- Promote Post : UI design started
+
+--- "promote-post-ui-branch: userside promote post ui completed" ---

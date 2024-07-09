@@ -19,6 +19,9 @@ userRoutes.post("/login/googleSignin", userController.googleSigninController);
 userRoutes.post("/forgotPassword", userController.forgotPassword);
 userRoutes.patch("/changePassword", verifyUser, userController.changePassword);
 
+//account type
+userRoutes.patch("/changeAccountType", verifyUser, userController.changeAccountType);
+
 // Profile routes
 const profileRoutes = Router();
 profileRoutes.get("/userData", verifyUser, profileController.getUser);
@@ -32,7 +35,6 @@ profileRoutes.post(
 );
 profileRoutes.get("/search", verifyUser, profileController.searchUsers);
 
-// /toggleFollow/${userId}
 profileRoutes.get(
   "/isFollowing/:userId",
   verifyUser,

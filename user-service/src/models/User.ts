@@ -2,7 +2,7 @@ import { Schema, Document, model, Types } from "mongoose";
 
 interface IAccountType {
   isProfessional: boolean;
-  category: 'celebrity' | 'company';
+  category?: 'celebrity' | 'company';
   hasWeNetTick: boolean;
 }
 
@@ -35,7 +35,7 @@ interface IUser extends Document {
 
 const ProfessionalAccountSchema = new Schema<IAccountType>({
   isProfessional: { type: Boolean, required: true, default: false },
-  category: { type: String, enum: ["celebrity", "company"] },
+  category: { type: String, enum: ["celebrity", "company"], required: false },
   hasWeNetTick: { type: Boolean },
 });
 
