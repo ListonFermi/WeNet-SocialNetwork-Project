@@ -1,6 +1,7 @@
 import amqp, { Channel, Connection } from "amqplib";
 import { Types } from "mongoose";
-import { MQExchangeName, MQRoutingKey } from "./config";
+import { MQExchangeName, MQPostsAds, MQRoutingKey } from "./config";
+import { IWeNetAds } from "../models/postsCollection";
 
 export interface MQINotification {
   userId: string | Types.ObjectId;
@@ -17,6 +18,15 @@ export interface MQIPost {
   caption: string;
   imageUrl : string;
   isDeleted: boolean
+}
+
+export interface MQIPostForAds {
+  _id : string | Types.ObjectId;
+  userId:  string | Types.ObjectId;
+  caption: string;
+  imageUrl : string;
+  isDeleted: boolean;
+  WeNetAds: IWeNetAds
 }
 
 export const publisher = {
@@ -101,6 +111,37 @@ export const publisher = {
       );
 
       console.log("Message published to RabbitMQ:", notificationData);
+
+      await this.disconnectRabbitMQ(channel, connection);
+    } catch (error: any) {
+      console.error("Error publishing message to RabbitMQ:", error);
+      throw new Error(error.message);
+    }
+  },
+
+  publishPostForAdsMessage: async function (postData: MQIPostForAds, action: string) {
+    try {
+      const [channel, connection] = await this.connectRabbitMQ();
+
+      const exchangeName = MQExchangeName;
+      const routingKey = MQPostsAds.routingKey; // Specific routing key
+      await channel.assertExchange(exchangeName, "direct", { durable: true });
+
+      const messageProperties = {
+        headers: {
+          function: action,
+        },
+      };
+
+      const message = JSON.stringify(postData);
+      channel.publish(
+        exchangeName,
+        routingKey,
+        Buffer.from(message),
+        messageProperties
+      );
+
+      console.log("Message published to RabbitMQ:", postData);
 
       await this.disconnectRabbitMQ(channel, connection);
     } catch (error: any) {

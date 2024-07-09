@@ -24,13 +24,14 @@ export = {
     }
   },
   addCaption: async function (
-    req: Request,
+    req: any,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
       const { _id, caption } = req.body;
-      const postData = await postsServices.addCaption(_id, caption);
+      const userId = req.user._id
+      const postData = await postsServices.addCaption(_id, caption,userId);
       res.status(200).send(postData);
     } catch (error) {
       next(error);

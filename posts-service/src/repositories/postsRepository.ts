@@ -1,11 +1,10 @@
 import { Types } from "mongoose";
-import postsCollection, { IPost } from "../models/postsCollection";
+import postsCollection, { IPost, IWeNetAds } from "../models/postsCollection";
 import { IMulterFile } from "../types/types";
 import { uploadToS3Bucket } from "../utils/s3bucket";
 import userCollection from "../models/userCollection";
-import { MQINotification, MQIPost, publisher } from "../rabbitmq/publisher";
+import { MQINotification, MQIPost, MQIPostForAds, publisher } from "../rabbitmq/publisher";
 import { MQActions } from "../rabbitmq/config";
-import commentCollection from "../models/commentCollection";
 
 export = {
   uploadImage: async function (imageFile: unknown): Promise<string> {
@@ -361,6 +360,31 @@ export = {
 
       return posts.map((post) => post._id.toString());
     } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  sendPostDataToAdsMQ: async (
+    postId: string | Types.ObjectId,
+    userId: string,
+    caption: string,
+    imageUrl: string,
+    isDeleted: boolean,
+    WeNetAds: IWeNetAds,
+    action: string
+  ) => {
+    try {
+      const postData: MQIPostForAds = {
+        _id: postId,
+        userId,
+        caption,
+        imageUrl,
+        isDeleted,
+        WeNetAds
+      };
+
+      await publisher.publishPostForAdsMessage(postData, action);
+    } catch (error: any) {
+      console.error("Error sending user data to MQ:", error.message);
       throw new Error(error.message);
     }
   },
