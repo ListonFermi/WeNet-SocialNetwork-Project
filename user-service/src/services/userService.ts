@@ -76,11 +76,29 @@ export = {
       throw new Error(error.message);
     }
   },
-  forgotPassword: async (email: string) : Promise<string> => {
-    try {      
-      return await userRepository.forgotPassword(email)
+  forgotPassword: async (email: string): Promise<string> => {
+    try {
+      return await userRepository.forgotPassword(email);
     } catch (error: any) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
-  }
+  },
+  changeAccountType: async (
+    userId: string,
+    accountType: string
+  ): Promise<IUser> => {
+    try {
+      if (!userId) throw new Error("userId not found");
+      if (
+        accountType != "personalAccount" &&
+        accountType != "celebrity" &&
+        accountType != "company"
+      )
+        throw new Error("Enter valid account type");
+
+      return await userRepository.changeAccountType(userId, accountType);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

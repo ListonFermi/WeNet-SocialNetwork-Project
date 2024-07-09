@@ -107,7 +107,7 @@ export default function BasicPopover(props: prop) {
             {isProfessionalAccount && (
               <button
                 className=" text-white font-bold hover:bg-secColorH p-2"
-                onClick={() => router.push(`/post/edit/${postId}`)}
+                onClick={() => router.push(`/post/promote/${postId}`)}
               >
                 Promote Post
               </button>

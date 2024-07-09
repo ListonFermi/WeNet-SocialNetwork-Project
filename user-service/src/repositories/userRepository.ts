@@ -100,7 +100,6 @@ export = {
       const secret: string | undefined = process.env.JWT_SECRET;
       if (!secret) throw new Error("JWT Secret not found");
       const data = { userData, role: "wenet-user" };
-      console.log({data})
       return jwt.sign(data, secret, {
         expiresIn: "1h",
       });
@@ -204,6 +203,36 @@ export = {
       await user.save();
 
       return "New password is send to your email";
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  changeAccountType: async (
+    userId: string,
+    accountType: "personalAccount" | "celebrity" | "company"
+  ): Promise<IUser> => {
+    try {
+      const user = await userCollection.findOne({ _id: userId });
+
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      if (accountType === "personalAccount") {
+        user.accountType = {
+          isProfessional: false,
+          hasWeNetTick: false,
+        };
+      } else {
+        user.accountType = {
+          isProfessional: true,
+          category: accountType,
+          hasWeNetTick: true,
+        };
+      }
+      await user.save();
+
+      return user
     } catch (error: any) {
       throw new Error(error.message);
     }

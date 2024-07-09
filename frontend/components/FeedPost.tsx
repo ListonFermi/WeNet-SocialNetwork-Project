@@ -45,6 +45,7 @@ function FeedPost({ postData, currUserData }: props) {
 
   const postId = postData._id;
   const isOwnPost = postData.userId === currUserData?._id;
+  console.log({postData,currUserData,isOwnPost})
 
   const handleLike = async () => {
     try {
