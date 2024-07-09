@@ -202,3 +202,7 @@ Jul 09, Tue
 - Promote Post : UI design started
 
 --- "promote-post-ui-branch: userside promote post ui completed" ---
+
+- Ads-service: Did until add/update user MQs & add post MQs
+
+--- "Ads-service started" ---

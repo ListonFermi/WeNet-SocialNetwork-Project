@@ -18,6 +18,21 @@ export = {
       const postData = await postsRepository.createPost(userId, imageUrl);
       if (!postData) throw new Error("Post data not found");
 
+      return postData;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  addCaption: async function (
+    postId: string,
+    caption: string,
+    userId: string
+  ): Promise<IPost> {
+    try {
+      const postData = await postsRepository.addCaption(postId, caption);
+      if (!postData) throw new Error("Post data not found");
+
+      //To notification service
       try {
         const { _id, caption, imageUrl, isDeleted } = postData as IPost;
         SERVICES.notification.forEach(async () => {
@@ -34,14 +49,23 @@ export = {
         console.log(error.message);
       }
 
+      //To ads service
+      try {
+        const { _id, caption, imageUrl, isDeleted, WeNetAds } = postData as IPost;
+          await postsRepository.sendPostDataToAdsMQ(
+            _id,
+            userId,
+            caption,
+            imageUrl,
+            isDeleted,
+            WeNetAds,
+            MQActions.addPost
+          );
+      } catch (error: any) {
+        console.log(error.message);
+      }
+
       return postData;
-    } catch (error: any) {
-      throw new Error(error.message);
-    }
-  },
-  addCaption: async function (postId: string, caption: string): Promise<IPost> {
-    try {
-      return postsRepository.addCaption(postId, caption);
     } catch (error: any) {
       throw new Error(error.message);
     }

@@ -5,14 +5,7 @@ interface IPost extends Document {
   userId: Types.ObjectId | string;
   caption: string;
   imageUrl: string;
-  likedBy: Types.ObjectId[];
-  comments: Types.ObjectId[];
   isDeleted: boolean;
-  WeNetAds: IWeNetAds;
-  bookmarkedBy: Types.ObjectId[];
-  reports: Types.ObjectId[];
-  updatedAt?: Date;
-  createdAt?: Date;
 }
 
 interface IWeNetAds {
@@ -27,23 +20,20 @@ const WeNetAdsSchema = new Schema({
 
 const PostSchema = new Schema(
   {
+    _id :  { type: Types.ObjectId},
     userId: { type: Types.ObjectId, ref: "users" },
     caption: { type: String },
     imageUrl: { type: String, required: true },
-    likedBy: [{ type: Types.ObjectId, ref: "users" }],
-    comments: [{ type: Types.ObjectId, ref: "comments" }],
-    isDeleted: { type: Boolean, required: true, default: true },
+    isDeleted: { type: Boolean, required: true },
     WeNetAds: {
       type: WeNetAdsSchema,
       required: true,
       default: { isPromoted: false, expiresOn: new Date() },
     },
-    bookmarkedBy: [{ type: Types.ObjectId, ref: "users" }],
-    reports: [{ type: Types.ObjectId, ref: "reports" }],
   },
   { timestamps: true }
 );
 
 export default model<IPost>("posts", PostSchema);
 
-export type { IPost, IWeNetAds };
+export type {  IPost}

@@ -1,22 +1,21 @@
 export const MQActions = {
   addUser: "createUser",
   editUser: "updateUser",
-  addNotification: "createNotification",
+  addNotification : "createNotification",
   addPost: "createPost",
   editPost: "updatePost",
   addComment: "createComment",
-  editComment: "updateComment",
+  editComment: "updateComment"
 };
 
 export const MQExchangeName = "wenet_exchange";
 
 export const MQRoutingKey = [
   "wenet-user-service",
-  "wenet-notification-service",
+  "wenet-posts-ads-service"
 ];
 
-// consumer queue name
-export const MQQueueName = ["user-queue", "notification-queue"];
+export const MQQueueName = ["user-queue", "posts-ads-queue"];
 
 export const SERVICES = {
   notification: ["notification-service"],
@@ -26,13 +25,11 @@ export const SERVICES = {
     "posts-service",
     "message-service",
     "notification-service",
-    "ads-service",
   ],
 
   allOtherServices: [
     "posts-service",
     "message-service",
     "notification-service",
-    "ads-service",
   ],
 };
