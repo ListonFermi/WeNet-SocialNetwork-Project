@@ -5,17 +5,19 @@ export const MQActions = {
   addPost: "createPost",
   editPost: "updatePost",
   addComment: "createComment",
-  editComment: "updateComment"
+  editComment: "updateComment",
+  addWeNetAd : 'createWeNetAd'
 };
 
 export const MQExchangeName = "wenet_exchange";
 
 export const MQRoutingKey = [
   "wenet-user-service",
-  "wenet-posts-ads-service"
+  "wenet-posts-ads-service",
+  "wenet-ads-post-service"
 ];
 
-export const MQQueueName = ["user-queue", "posts-ads-queue"];
+export const MQQueueName = ["user-queue", "posts-ads-queue","ads-post-queue"];
 
 export const SERVICES = {
   notification: ["notification-service"],

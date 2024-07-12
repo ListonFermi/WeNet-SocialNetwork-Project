@@ -1,11 +1,11 @@
 import Navbar from "@/components/Navbar";
 import FeedLeftDiv from "@/components/feed/FeedLeftDiv";
+import PaymentCompleted from "@/components/post/promote/[id]/paymentCompleted/PaymentCompleted";
 import React from "react";
-import Profile from "@/components/[username]/Profile";
-import EditProfile from "@/components/[username]/edit/EditProfile";
+import "react-toastify/dist/ReactToastify.css";
 
-function page() {
-  
+function page( ) {
+
   return (
     <div className="max-h-screen flex flex-col">
       <Navbar />
@@ -14,10 +14,9 @@ function page() {
           <FeedLeftDiv />
         </div>
         <div className="flex-1 md:flex-2 lg:flex-3 xl:flex-4 h-screen overflow-y-auto no-scrollbar bg-feedBg">
-          <EditProfile/>
+            <PaymentCompleted/>
         </div>
-        <div className="relative flex-1 hidden md:block bg-feedBg">
-        </div>
+        <div className="relative flex-1 hidden md:block bg-feedBg"></div>
       </div>
     </div>
   );

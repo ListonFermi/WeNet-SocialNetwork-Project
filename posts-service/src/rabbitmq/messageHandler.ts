@@ -23,9 +23,14 @@ export const MessageHandler: IMessageHandler = {
           response = await createUser(data);
           break;
         }
-        case `${MQActions.editUser}`:
+        case `${MQActions.editUser}`: {
           response = await updateUser(data);
           break;
+        }
+        case `${MQActions.addWeNetAd}`: {
+          response = await createWeNetAd(data);
+          break;
+        }
         default:
           throw new Error(`Unknown operation: ${operation}`);
       }
@@ -61,3 +66,11 @@ async function updateUser(data: IUser) {
   }
 }
 
+async function createWeNetAd(data: any) {
+  try {
+    console.log('cool bud, it reached the posts service')
+    console.log(data)
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { verifyUser } from "../middlewares/verifyUser";
+import adsControllers from "../controllers/adsControllers";
 const router = Router();
 
-// router.get("/", verifyUser, notificationController.getNotifications );
-router.get('/',(req,res)=>res.send('hello'))
+router.post('/addTransaction', verifyUser,  adsControllers.addTransaction  )
 
 export default router;

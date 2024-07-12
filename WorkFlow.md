@@ -206,3 +206,10 @@ Jul 09, Tue
 - Ads-service: Did until add/update user MQs & add post MQs
 
 --- "Ads-service started" ---
+
+Jul 12, Thu
+
+- Payment Integration- halfway done
+- Ads service- backend halfway done
+
+--- "Payment Integration and Ads service" ---

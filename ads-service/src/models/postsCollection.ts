@@ -5,6 +5,7 @@ interface IPost extends Document {
   userId: Types.ObjectId | string;
   caption: string;
   imageUrl: string;
+  WeNetAds: IWeNetAds
   isDeleted: boolean;
 }
 
