@@ -106,8 +106,9 @@ export = {
       PG_TYPE,
       field4,
       name_on_card,
+      userId,
     } = req.body;
-    
+
     try {
       const newOrder = new PayUOrderCollection({
         country: country,
@@ -152,6 +153,7 @@ export = {
         PG_TYPE: PG_TYPE,
         field4: field4,
         name_on_card: name_on_card,
+        userId: userId,
       });
 
       const PayUOrder = await newOrder.save();

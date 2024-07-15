@@ -89,6 +89,7 @@ const PayUOrderSchema: Schema = new Schema(
     PG_TYPE: { type: String },
     field4: { type: String },
     name_on_card: { type: String },
+    userId: { type: String },
   },
   { timestamps: true }
 );

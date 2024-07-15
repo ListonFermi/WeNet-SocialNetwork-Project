@@ -13,14 +13,15 @@ export async function POST(req: any, res: NextApiResponse) {
   formData.forEach((value: any, key: string) => {
     data[key] = value;
   });
+  console.log(data)
 
   try {
     const PayUOrderId = await PayUApiCalls.saveData(data);
-    await adsService.addTransaction(PayUOrderId, "success");
+    await adsService.addTransaction(PayUOrderId, data.email, "success");
   } catch (error: any) {
     console.log(error.message);
   }
   redirect(
-    `/post/promote/paymentCompleted/?status=${data.status}&txnid=${data.txnid}`
+    `/post/promote/paymentCompleted/?status=${data.status}&mihpayid=${data.mihpayid}`
   );
 }

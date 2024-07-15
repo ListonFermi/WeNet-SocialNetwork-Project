@@ -13,10 +13,10 @@ const PayUComponent = ({ currUserData, postId }: props) => {
   const [hash, setHash] = useState(null);
 
   const { firstName, lastName, email } = currUserData;
+  console.log({currUserData})
 
   const txnidRef = useRef(generateTxnId(8));
   const txnid = txnidRef.current;
-  console.log({txnid})
   const amount = parseFloat("1000").toFixed(2); // Ensure correct format
   const productinfo = postId;
   const firstname = firstName;

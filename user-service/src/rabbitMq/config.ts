@@ -35,4 +35,10 @@ export const SERVICES = {
     "notification-service",
     "ads-service",
   ],
+
+  servicesToPublishAddUser: [
+    "posts-service",
+    "message-service",
+    "notification-service",
+  ],
 };

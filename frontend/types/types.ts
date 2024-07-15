@@ -46,6 +46,7 @@ export interface IPost {
   likedBy: string[];
   comments: string[];
   updatedAt: string;
+  createdAt: string;
   isLiked: boolean;
   isBookmarked: boolean;
 }
@@ -58,5 +59,6 @@ export interface IComment {
   comment: string;
   likedBy?: string[];
   updatedAt: string;
+  createdAt: string;
   isLiked?: boolean;
 }

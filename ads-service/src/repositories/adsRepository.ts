@@ -17,8 +17,8 @@ export = {
   ): Promise<ITransaction> {
     try {
       const transaction = await transactionCollection.create({
-        userId,
-        PayUOrderId,
+        userId : new Types.ObjectId(userId),
+        PayUOrderId : new Types.ObjectId(PayUOrderId) ,
         transactionStatus: status,
         transactionAmount,
       });

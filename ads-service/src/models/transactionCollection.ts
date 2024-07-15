@@ -10,7 +10,7 @@ interface ITransaction extends Document {
 const TransactionSchema = new Schema(
   {
     userId: { type: Types.ObjectId, required: true, ref: "users" },
-    PayUOrdersId: { type: Types.ObjectId, required: true, ref: "payuorders" },
+    PayUOrderId: { type: Types.ObjectId, required: true, ref: "payuorders" },
     transactionStatus: {
       type: String,
       required: true,

@@ -23,7 +23,7 @@ function Comment({ commentData, currentUserId }: props) {
     likedBy = [],
     updatedAt
   } = commentData;
-  const likesCount = likedBy.length;
+  // const likesCount = likedBy.length;
 
   const timestamp = formatDate(updatedAt);
 

@@ -25,4 +25,11 @@ export = {
       throw new Error(error.message);
     }
   },
+  getUserDataByEmail: async function (email: string ): Promise<IUser> {
+    try {
+      return await userRepository.getUserDataByEmail(email);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

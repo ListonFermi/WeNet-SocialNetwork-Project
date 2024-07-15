@@ -1,28 +1,17 @@
 "use client";
-import {  IUser } from "@/types/types";
+import { IUser } from "@/types/types";
 import postService from "@/utils/apiCalls/postService";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Comment from "./Comment";
+import { toastOptions } from "@/utils/toastOptions";
 
 type Input = {
   comment: string;
-};
-
-const toastOptions: ToastOptions = {
-  position: "top-center",
-  autoClose: 1500,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "dark",
-  transition: Bounce,
 };
 
 function AddCommentForm({ userData }: { userData: IUser }) {
@@ -51,6 +40,7 @@ function AddCommentForm({ userData }: { userData: IUser }) {
         },
         toastOptions
       );
+      console.log("Returned commentData:", commentData);
       setCommentData(commentData);
       reset();
     } catch (error: any) {

@@ -6,7 +6,7 @@ const PaymentCompleted = () => {
 
   const router = useRouter();
 
-  const txnid = searchParams.get("txnid");
+  const mihpayid = searchParams.get("mihpayid");
   const status = searchParams.get("status");
 
   return (
@@ -18,7 +18,7 @@ const PaymentCompleted = () => {
               Payment Successful!
             </h1>
             <p className="text-lg text-gray-700">
-              Transaction ID: <span className="font-semibold">{txnid}</span>
+              Transaction ID: <span className="font-semibold">{mihpayid}</span>
             </p>
           </div>
           <div className="pt-5">
@@ -37,7 +37,7 @@ const PaymentCompleted = () => {
               Payment Failed
             </h1>
             <p className="text-lg text-gray-700">
-              Transaction ID: <span className="font-semibold">{txnid}</span>
+              Transaction ID: <span className="font-semibold">{mihpayid}</span>
             </p>
           </div>
           <div className="pt-5">

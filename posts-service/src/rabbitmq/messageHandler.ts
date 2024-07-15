@@ -2,6 +2,7 @@ import { Channel } from "amqplib";
 import userServices from "../services/userServices";
 import { IUser } from "../models/userCollection";
 import { MQActions } from "./config";
+import postsServices from "../services/postsServices";
 
 interface IMessageHandler {
   handle: (
@@ -68,8 +69,10 @@ async function updateUser(data: IUser) {
 
 async function createWeNetAd(data: any) {
   try {
-    console.log('cool bud, it reached the posts service')
-    console.log(data)
+    const { postId, WeNetAds } = data;
+    console.log(data);
+   const message = await postsServices.createWeNetAd(postId, WeNetAds);
+   console.log(message);
   } catch (error: any) {
     throw new Error(error.message);
   }

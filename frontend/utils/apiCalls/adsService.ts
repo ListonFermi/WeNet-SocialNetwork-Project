@@ -7,9 +7,9 @@ const apiClient = axios.create({
 });
 
 export default {
-  addTransaction: async function (PayUOrderId: string, status: 'success'| 'failed') {
+  addTransaction: async function (PayUOrderId: string, email: string, status: 'success'| 'failed') {
     try {
-      const res = await apiClient.post("/addTransaction", { PayUOrderId, status }, {withCredentials: true});
+      const res = await apiClient.post("/addTransaction", { PayUOrderId,email, status });
       return res.data;
     } catch (error: any) {
       throw new Error(error.message);

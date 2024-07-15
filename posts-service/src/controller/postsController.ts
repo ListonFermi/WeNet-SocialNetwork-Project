@@ -30,8 +30,8 @@ export = {
   ): Promise<void> {
     try {
       const { _id, caption } = req.body;
-      const userId = req.user._id
-      const postData = await postsServices.addCaption(_id, caption,userId);
+      const userId = req.user._id;
+      const postData = await postsServices.addCaption(_id, caption, userId);
       res.status(200).send(postData);
     } catch (error) {
       next(error);
@@ -44,8 +44,15 @@ export = {
   ): Promise<void> {
     try {
       const { postId } = req.params;
-      const { userId, imageUrl, caption, likedBy, comments, updatedAt } =
-        await postsServices.getSinglePost(postId);
+      const {
+        userId,
+        imageUrl,
+        caption,
+        likedBy,
+        comments,
+        updatedAt,
+        createdAt,
+      } = await postsServices.getSinglePost(postId);
 
       const { username, firstName, lastName, profilePicUrl } =
         await userServices.getUser(userId);
@@ -66,6 +73,7 @@ export = {
         isLiked,
         comments,
         updatedAt,
+        createdAt,
       };
 
       res.status(200).json(postData);
@@ -139,7 +147,7 @@ export = {
 
       let topPostsData: any = topPosts.map(async (postId) => {
         try {
-          const { userId, imageUrl, caption, likedBy, comments, updatedAt } =
+          const { userId, imageUrl, caption, likedBy, comments, updatedAt, createdAt } =
             await postsServices.getSinglePost(postId);
 
           const { username, firstName, lastName, profilePicUrl } =
@@ -160,6 +168,7 @@ export = {
             isLiked,
             comments,
             updatedAt,
+            createdAt,
             isBookmarked,
           };
         } catch (error) {
@@ -184,7 +193,7 @@ export = {
 
       let topPostsData: any = topPosts.map(async (postId) => {
         try {
-          const { userId, imageUrl, caption, likedBy, comments, updatedAt } =
+          const { userId, imageUrl, caption, likedBy, comments, updatedAt, createdAt } =
             await postsServices.getSinglePost(postId);
 
           const { username, firstName, lastName, profilePicUrl } =
@@ -205,6 +214,7 @@ export = {
             isLiked,
             comments,
             updatedAt,
+            createdAt,
             isBookmarked,
           };
         } catch (error) {
@@ -274,7 +284,7 @@ export = {
 
       let postsData: any = posts.map(async (postId) => {
         try {
-          const { userId, imageUrl, caption, likedBy, comments, updatedAt } =
+          const { userId, imageUrl, caption, likedBy, comments, updatedAt, createdAt } =
             await postsServices.getSinglePost(postId);
 
           const { username, firstName, lastName, profilePicUrl } =
@@ -295,6 +305,7 @@ export = {
             isLiked,
             comments,
             updatedAt,
+            createdAt,
             isBookmarked,
           };
         } catch (error) {

@@ -17,7 +17,7 @@ export const MQRoutingKey = [
   "wenet-ads-post-service"
 ];
 
-export const MQQueueName = ["user-queue", "posts-ads-queue","ads-post-queue"];
+export const MQQueueName = ["user-queue", "posts-ads-queue"];
 
 export const SERVICES = {
   notification: ["notification-service"],
@@ -34,4 +34,5 @@ export const SERVICES = {
     "message-service",
     "notification-service",
   ],
+
 };

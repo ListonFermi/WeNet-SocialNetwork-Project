@@ -10,6 +10,15 @@ export type MQUserData = {
   profilePicUrl: string;
 };
 
+export type MQUserDataToAds = {
+  _id: string | ObjectId;
+  username: string;
+  firstName: string;
+  lastName: string;
+  profilePicUrl: string;
+  email: string;
+};
+
 export interface MQINotification {
   userId: string | Types.ObjectId;
   doneByUser: string | Types.ObjectId;
@@ -45,6 +54,37 @@ export const publisher = {
   },
 
   publishUserMessage: async function (userData: MQUserData, action: string) {
+    try {
+      const [channel, connection] = await this.connectRabbitMQ();
+
+      const exchangeName = MQExchangeName;
+      const routingKey = MQRoutingKey[0]; // Specific routing key
+      await channel.assertExchange(exchangeName, "direct", { durable: true });
+
+      const messageProperties = {
+        headers: {
+          function: action,
+        },
+      };
+
+      const message = JSON.stringify(userData);
+      channel.publish(
+        exchangeName,
+        routingKey,
+        Buffer.from(message),
+        messageProperties
+      );
+
+      console.log("Message published to RabbitMQ:", userData);
+
+      await this.disconnectRabbitMQ(channel, connection);
+    } catch (error: any) {
+      console.error("Error publishing message to RabbitMQ:", error);
+      throw new Error(error.message);
+    }
+  },
+
+  publishUserMessageToAds: async function (userData: MQUserDataToAds, action: string) {
     try {
       const [channel, connection] = await this.connectRabbitMQ();
 

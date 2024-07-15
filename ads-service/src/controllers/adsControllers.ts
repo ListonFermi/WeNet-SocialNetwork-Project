@@ -2,13 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import adsService from "../services/adsService";
 
 export = {
-  addTransaction: async function (req: any, res: Response, next: NextFunction) {
+  addTransaction: async function (req: Request, res: Response, next: NextFunction) {
     try {
-      const userId = req.user._id;
-      const { PayUOrderId, status } = req.body;
+      const { PayUOrderId, email, status } = req.body;
+      console.log({ PayUOrderId, email, status } )
 
       const transactionId = await adsService.addTransaction(
-        userId,
+        email,
         PayUOrderId,
         status
       );
