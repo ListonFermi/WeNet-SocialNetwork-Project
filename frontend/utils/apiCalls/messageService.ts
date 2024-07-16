@@ -34,5 +34,13 @@ export default {
     } catch (error: any) {
       throw new Error(error.message);
     }
-  }
+  },
+  getConvoList: async function () {
+    try {
+      const res = await apiClient.get(`/convoList`);
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

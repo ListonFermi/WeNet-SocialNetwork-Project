@@ -1,4 +1,6 @@
-import conversationsCollection, { IConversation } from "../models/conversationsCollection";
+import conversationsCollection, {
+  IConversation,
+} from "../models/conversationsCollection";
 import { IMessage } from "../models/messageCollection";
 import messageRepository from "../repositories/messageRepository";
 
@@ -73,9 +75,46 @@ export = {
     senderId: any
   ): Promise<string> {
     try {
-      return await messageRepository.emitSendMessageEvent(req,receivedMessage,convoId,senderId)
+      return await messageRepository.emitSendMessageEvent(
+        req,
+        receivedMessage,
+        convoId,
+        senderId
+      );
     } catch (error: any) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
-  }
+  },
+  getConvoList: async function (userId: string) {
+    try {
+      const convoListData = await messageRepository.getConvoList(userId);
+
+      const responseFormat =
+        convoListData.length > 0
+          ? convoListData.map((data) => {
+              const { _id, participants, lastMessage, updatedAt } = data;
+
+              const otherParticipant = participants.filter(
+                (participant) => participant._id.toString() != userId
+              )[0];
+
+              const { username, firstName, lastName, profilePicUrl } =
+                otherParticipant as any;
+
+              return {
+                convoId: _id,
+                username,
+                firstName,
+                lastName,
+                profilePicUrl,
+                timestamp: updatedAt,
+                lastMessage,
+              };
+            })
+          : [];
+      return responseFormat;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };
