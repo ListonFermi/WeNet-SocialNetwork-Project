@@ -61,6 +61,13 @@ export = {
       throw new Error(error.message);
     }
   },
+  sendUserDataToAdsMQ: async (_id: string, action: string): Promise<void> => {
+    try {
+      await userRepository.sendUserDataToAdsMQ(_id, action);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
   changePassword: async (
     userId: string,
     currentPassword: string,

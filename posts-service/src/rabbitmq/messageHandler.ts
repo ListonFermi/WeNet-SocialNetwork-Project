@@ -2,6 +2,7 @@ import { Channel } from "amqplib";
 import userServices from "../services/userServices";
 import { IUser } from "../models/userCollection";
 import { MQActions } from "./config";
+import postsServices from "../services/postsServices";
 
 interface IMessageHandler {
   handle: (
@@ -23,9 +24,14 @@ export const MessageHandler: IMessageHandler = {
           response = await createUser(data);
           break;
         }
-        case `${MQActions.editUser}`:
+        case `${MQActions.editUser}`: {
           response = await updateUser(data);
           break;
+        }
+        case `${MQActions.addWeNetAd}`: {
+          response = await createWeNetAd(data);
+          break;
+        }
         default:
           throw new Error(`Unknown operation: ${operation}`);
       }
@@ -61,3 +67,13 @@ async function updateUser(data: IUser) {
   }
 }
 
+async function createWeNetAd(data: any) {
+  try {
+    const { postId, WeNetAds } = data;
+    console.log(data);
+   const message = await postsServices.createWeNetAd(postId, WeNetAds);
+   console.log(message);
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

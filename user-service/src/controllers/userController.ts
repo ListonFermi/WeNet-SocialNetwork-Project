@@ -44,9 +44,13 @@ export = {
       await userService.verifyOTP(_id, otp);
 
       try {
-        SERVICES.allOtherServices.forEach(async () => {
+        SERVICES.servicesToPublishAddUser.forEach(async () => {
           await userService.sendUserDataToMQ(_id, MQActions.addUser);
         });
+
+        //userData with email, to ads Service
+        await userService.sendUserDataToAdsMQ(_id, MQActions.addUser);
+
       } catch (error: any) {
         console.log(error.message);
       }
@@ -74,7 +78,6 @@ export = {
       res.cookie("token", token);
       res.status(200).json({ userData, message: "Logged in successfully" });
     } catch (error) {
-      console.error(error);
       next(error);
     }
   },
@@ -133,7 +136,6 @@ export = {
       next(error);
     }
   },
-
   changeAccountType: async (
     req: any,
     res: Response,

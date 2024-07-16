@@ -206,3 +206,25 @@ Jul 09, Tue
 - Ads-service: Did until add/update user MQs & add post MQs
 
 --- "Ads-service started" ---
+
+Jul 12, Thu
+
+- Payment Integration- halfway done
+- Ads service- backend halfway done
+
+--- "Payment Integration and Ads service" ---
+
+Jul 15, Mon
+
+- Bug fix: Allowing user login with unverified otp bug
+- Bug fix: Profile feed sort by latest
+- Public feed: Sorting by latest
+- Protected all routes in frontend
+
+--- "Bug fixes && frontend route protection" ---
+
+Jul 16, Tue
+
+- Admin Side: Ads Management- started
+
+--- "Admin Side: Ads Management- started" ---

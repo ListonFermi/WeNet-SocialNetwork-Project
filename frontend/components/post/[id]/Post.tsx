@@ -2,25 +2,14 @@
 import React, { useEffect, useState } from "react";
 import FeedPostSkeleton from "../../FeedPostSkeleton";
 import FeedPost from "../../FeedPost";
-import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "next/navigation";
 import postService from "@/utils/apiCalls/postService";
 import { useDispatch } from "react-redux";
 import { storePostData } from "@/redux/postSlice";
 import { IUser } from "@/types/types";
-
-const toastOptions: ToastOptions = {
-  position: "top-center",
-  autoClose: 1500,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "dark",
-  transition: Bounce,
-};
+import { toastOptions } from "@/utils/toastOptions";
 
 function Post({ currUserData }: { currUserData: IUser }) {
   const { id } = useParams<{ id: string }>();

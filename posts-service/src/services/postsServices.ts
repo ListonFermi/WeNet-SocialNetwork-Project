@@ -1,4 +1,4 @@
-import { IPost } from "../models/postsCollection";
+import { IPost, IWeNetAds } from "../models/postsCollection";
 import { MQActions, SERVICES } from "../rabbitmq/config";
 import postsRepository from "../repositories/postsRepository";
 
@@ -51,16 +51,17 @@ export = {
 
       //To ads service
       try {
-        const { _id, caption, imageUrl, isDeleted, WeNetAds } = postData as IPost;
-          await postsRepository.sendPostDataToAdsMQ(
-            _id,
-            userId,
-            caption,
-            imageUrl,
-            isDeleted,
-            WeNetAds,
-            MQActions.addPost
-          );
+        const { _id, caption, imageUrl, isDeleted, WeNetAds } =
+          postData as IPost;
+        await postsRepository.sendPostDataToAdsMQ(
+          _id,
+          userId,
+          caption,
+          imageUrl,
+          isDeleted,
+          WeNetAds,
+          MQActions.addPost
+        );
       } catch (error: any) {
         console.log(error.message);
       }
@@ -159,6 +160,19 @@ export = {
   getProfilePosts: async function (userId: string): Promise<string[]> {
     try {
       return await postsRepository.getProfilePosts(userId);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  createWeNetAd: async function (
+    postId: string,
+    WeNetAds: IWeNetAds
+  ): Promise<string> {
+    try {
+      const postData = await postsRepository.createWeNetAd(postId, WeNetAds);
+      if (!postData) throw new Error("Post data not found");
+
+      return 'Ad data added to post data'
     } catch (error: any) {
       throw new Error(error.message);
     }

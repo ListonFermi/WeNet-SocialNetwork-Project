@@ -14,12 +14,15 @@ export default async () => {
     console.log('Declaring exchange and queue...');
     await channel.assertExchange(exchangeName, 'direct', { durable: true });
     await channel.assertQueue(queueName[0], { durable: true, exclusive : false});
+    await channel.assertQueue(queueName[3], { durable: true, exclusive : false});
 
     console.log('Binding queue to exchange...');
     await channel.bindQueue(queueName[0], exchangeName, routingKey[0]);
+    await channel.bindQueue(queueName[3], exchangeName, routingKey[3]);
 
     console.log('Starting to consume messages...');
     await consumeMessages(channel, queueName[0]);
+    await consumeMessages(channel, queueName[3]);
 
     console.log('Consumer is up and running.');
   } catch (error) {

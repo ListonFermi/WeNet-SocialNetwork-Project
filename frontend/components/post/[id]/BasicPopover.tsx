@@ -7,11 +7,11 @@ import AlertDialog from "@/components/settings/AlertDialog";
 import { Bounce, ToastOptions, toast } from "react-toastify";
 import postService from "@/utils/apiCalls/postService";
 import "react-toastify/dist/ReactToastify.css";
+import { IPost, IUser } from "@/types/types";
 
 type prop = {
-  postId: string;
-  isOwnPost: boolean;
-  isProfessionalAccount: boolean;
+  postData: IPost;
+  currUserData?: IUser;
 };
 
 const toastOptions: ToastOptions = {
@@ -27,13 +27,19 @@ const toastOptions: ToastOptions = {
 };
 
 export default function BasicPopover(props: prop) {
-  const { postId, isOwnPost, isProfessionalAccount } = props;
+  const { postData, currUserData } = props;
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
 
   const router = useRouter();
+
+  const postId = postData._id;
+  const isOwnPost = postData.userId === currUserData?._id;
+
+  const isProfessionalAccount =
+    currUserData?.accountType.isProfessional || false;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

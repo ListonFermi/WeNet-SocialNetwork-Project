@@ -22,6 +22,9 @@ function FeedPost({ postData, currUserData }: props) {
 
   const router = useRouter();
 
+  let isPublicFeed = false;
+  if (!currUserData) isPublicFeed = true;
+
   const {
     _id,
     username,
@@ -34,20 +37,18 @@ function FeedPost({ postData, currUserData }: props) {
     isBookmarked,
   } = postData;
 
-  const { likedBy, comments, updatedAt } = postData;
+  const { likedBy, comments, createdAt } = postData;
   const commentsCount = comments?.length;
-  const timestamp = formatDate(updatedAt);
+  const timestamp = formatDate(createdAt);
 
   const [showHeart, setShowHeart] = React.useState(false);
   const [liked, setLiked] = React.useState(isLiked);
   const [bookmarked, setBookmarked] = React.useState(isBookmarked);
   const [likesCount, setLikesCount] = React.useState(likedBy?.length || 0);
 
-  const postId = postData._id;
-  const isOwnPost = postData.userId === currUserData?._id;
-  console.log({postData,currUserData,isOwnPost})
-
   const handleLike = async () => {
+    if (isPublicFeed) return;
+
     try {
       setLiked((liked) => !liked);
       if (!liked) {
@@ -62,10 +63,12 @@ function FeedPost({ postData, currUserData }: props) {
     }
   };
 
-  const handleBookmarkPost = async () => {
+  const handleBookmarkPost = async (event: any) => {
+    if (isPublicFeed) return;
+
     try {
       let response: any = await toast.promise(
-        postService.toggleBookmark(postId),
+        postService.toggleBookmark(_id),
         {
           pending: "Toggling bookmark",
           success: "Toggle bookmark done",
@@ -84,8 +87,13 @@ function FeedPost({ postData, currUserData }: props) {
     router.push(`/profile/${username}`);
   }
 
+  // function handlePostClickOnPublicFeed(event) {}
+
   return (
-    <div className="bg-secColor mb-2 mt-2 shadow-md rounded-lg">
+    <div
+      className="bg-secColor mb-2 mt-2 shadow-md rounded-lg"
+      // onClick={handlePostClickOnPublicFeed}
+    >
       <ToastContainer />
       <div className="flex justify-evenly py-2">
         <div className="flex items-center">
@@ -126,13 +134,7 @@ function FeedPost({ postData, currUserData }: props) {
             </div>
           </div>
         </div>
-        <BasicPopover
-          isOwnPost={isOwnPost}
-          postId={postId}
-          isProfessionalAccount={
-            currUserData?.accountType.isProfessional || false
-          }
-        />
+       { !isPublicFeed  && <BasicPopover postData={postData} currUserData={currUserData} />}
       </div>
       <p className="font-semibold px-6 py-2 text-white">{caption}</p>
       <div className="relative" onDoubleClick={handleLike}>

@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React from "react";
 import SingleComment from "./SingleComment";
 import Post from "./Post";
 import getUserData from "@/utils/getUserData";

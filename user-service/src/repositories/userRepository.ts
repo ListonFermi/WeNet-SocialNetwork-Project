@@ -10,7 +10,7 @@ import { IGoogleCredentialRes } from "../types/types";
 import "core-js/stable/atob";
 import mongoose from "mongoose";
 import { generateStrongPassword } from "../utils/generateStrongPassword";
-import { MQUserData, publisher } from "../rabbitMq/publisher";
+import { MQUserData, MQUserDataToAds, publisher } from "../rabbitMq/publisher";
 
 dotenv.config();
 
@@ -26,6 +26,7 @@ export = {
         isHalfwayUser.password = hash.hashString(password);
         return await isHalfwayUser.save();
       }
+      userData.isRestricted = true;
       const user = new userCollection(userData);
       return await user.save();
     } catch (error: any) {
@@ -76,8 +77,17 @@ export = {
       if (!isWithinLimit) throw new Error("Time limit exceeded");
 
       const isVerified = hash.compareHash(otp, otpFromDb.otp);
-      if (isVerified) return "Successfully verified OTP";
-      else throw new Error("Invalid OTP");
+      if (isVerified) {
+
+        const user = await userCollection.findOne({ _id });
+        if (!user) throw new Error("user not found");
+        user.isRestricted = false;
+        await user?.save();
+
+        return "Successfully verified OTP";
+      } else {
+        throw new Error("Invalid OTP");
+      }
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -86,6 +96,8 @@ export = {
     try {
       const user = await userCollection.findOne({ username });
       if (!user) throw new Error("Please enter valid credentials");
+
+      if(user.isRestricted) throw new Error("Sorry this user is restricted")
 
       const passwordMatches = hash.compareHash(password, user.password);
       if (!passwordMatches) throw new Error("Please enter valid credentials");
@@ -170,6 +182,31 @@ export = {
       throw new Error(error.message);
     }
   },
+  sendUserDataToAdsMQ: async (_id: string, action: string) => {
+    try {
+      const objectId = new mongoose.Types.ObjectId(_id);
+      const user = await userCollection.findOne({ _id: objectId });
+
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      //user data to publish:
+      const { username, firstName, lastName, profilePicUrl, email } = user;
+      const userData: MQUserDataToAds = {
+        _id: user._id,
+        username,
+        firstName,
+        lastName,
+        profilePicUrl: profilePicUrl ? profilePicUrl : "",
+        email,
+      };
+      await publisher.publishUserMessageToAds(userData, action);
+    } catch (error: any) {
+      console.error("Error sending user data to MQ:", error.message);
+      throw new Error(error.message);
+    }
+  },
   changePassword: async (
     userId: string,
     currentPassword: string,
@@ -232,7 +269,7 @@ export = {
       }
       await user.save();
 
-      return user
+      return user;
     } catch (error: any) {
       throw new Error(error.message);
     }

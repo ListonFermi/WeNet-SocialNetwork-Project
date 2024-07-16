@@ -3,7 +3,12 @@ import postsCollection, { IPost, IWeNetAds } from "../models/postsCollection";
 import { IMulterFile } from "../types/types";
 import { uploadToS3Bucket } from "../utils/s3bucket";
 import userCollection from "../models/userCollection";
-import { MQINotification, MQIPost, MQIPostForAds, publisher } from "../rabbitmq/publisher";
+import {
+  MQINotification,
+  MQIPost,
+  MQIPostForAds,
+  publisher,
+} from "../rabbitmq/publisher";
 import { MQActions } from "../rabbitmq/config";
 
 export = {
@@ -142,8 +147,8 @@ export = {
         await user.save();
         await post.save();
 
-        return post // Returning the updated likes count
-      } 
+        return post; // Returning the updated likes count
+      }
       // else if (entity === "comment") {
       //   const commentIndex = user.commentsLiked.findIndex(
       //     (commentId: Types.ObjectId) => commentId.equals(entityId)
@@ -171,7 +176,6 @@ export = {
       //   return comment
       //   // return {df:'d'} as IPost
       // }
-      
       else {
         throw new Error("Invalid entity type");
       }
@@ -254,6 +258,9 @@ export = {
           $sort: { likesCount: -1 },
         },
         {
+          $sort: { createdAt: -1 },
+        },
+        {
           $limit: 35,
         },
         {
@@ -314,7 +321,7 @@ export = {
     type: "follow" | "like" | "comment",
     notificationMessage: string,
     entityType: "posts" | "users",
-    entityId: string | Types.ObjectId,
+    entityId: string | Types.ObjectId
   ) => {
     try {
       //notification data to publish:
@@ -338,7 +345,7 @@ export = {
     try {
       const posts = await postsCollection.aggregate([
         {
-          $match: { userId: new Types.ObjectId(userId) ,  isDeleted: false },
+          $match: { userId: new Types.ObjectId(userId), isDeleted: false },
         },
         {
           $addFields: {
@@ -346,7 +353,7 @@ export = {
           },
         },
         {
-          $sort: { likesCount: -1 },
+          $sort: { createdAt : -1 },
         },
         {
           $limit: 35,
@@ -379,12 +386,29 @@ export = {
         caption,
         imageUrl,
         isDeleted,
-        WeNetAds
+        WeNetAds,
       };
 
       await publisher.publishPostForAdsMessage(postData, action);
     } catch (error: any) {
       console.error("Error sending user data to MQ:", error.message);
+      throw new Error(error.message);
+    }
+  },
+  createWeNetAd: async function (
+    postId: string,
+    WeNetAds: IWeNetAds
+  ): Promise<IPost> {
+    try {
+      const post = await postsCollection.findOne({
+        _id: new Types.ObjectId(postId),
+      });
+      if (!post) throw new Error("Post not found");
+
+      post.WeNetAds = WeNetAds;
+      post.save();
+      return post;
+    } catch (error: any) {
       throw new Error(error.message);
     }
   },

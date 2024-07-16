@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
-
-const protectedRoutes = ["/feed"]; //removed settings route
-const toBeRedirectedRoutes = ["/", "/login", "/signup"];
-const profileRoutePattern = /^\/profile\/[^/]+\/?.*$/;
+import { isProtectedRoute, toBeRedirectedRoutes } from "./utils/routes";
 
 const adminRoutes = /^\/admin\/.+/;
 
@@ -25,18 +22,17 @@ export async function middleware(req: NextRequest) {
   const tokenVerified = await verifyToken("token", req);
 
   // Protected Routes logic - redirect to home if it doesn't have token in cookies
-  const isProtectedRoute =
-    protectedRoutes.includes(pathname) || profileRoutePattern.test(pathname);
+  const isProtected = isProtectedRoute(pathname)
 
-  if (isProtectedRoute && !tokenVerified) {
+  if (isProtected && !tokenVerified) {
     const loginUrl = new URL("/", req.url);
     return NextResponse.redirect(loginUrl);
   }
 
   // ToBeRedirected Routes logic - redirect to feed if it has token in cookies
-  const isToBeRedirectedRoute = toBeRedirectedRoutes.includes(pathname);
+  const toBeRedirected = toBeRedirectedRoutes(pathname)
 
-  if (isToBeRedirectedRoute && tokenVerified) {
+  if (toBeRedirected && tokenVerified) {
     const feedUrl = new URL("/feed", req.url);
     return NextResponse.redirect(feedUrl);
   }

@@ -3,6 +3,8 @@ import postService from "@/utils/apiCalls/postService";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import PayUComponent from "./PayUComponent";
+import { IUser } from "@/types/types";
 
 interface post {
   _id: string;
@@ -10,7 +12,7 @@ interface post {
   caption: string;
 }
 
-function Promote() {
+function Promote({currUserData}:{currUserData: IUser}) {
   const { id } = useParams<{ id: string }>();
   const [postData, setPostData] = useState<null | post>(null);
 
@@ -63,7 +65,7 @@ function Promote() {
           />
         </div>
         <div className="w-full h-[25%] flex items-center justify-center">
-          
+          <PayUComponent currUserData={currUserData} postId={id}/>
         </div>
         <div className="w-full h-[25%] flex items-center justify-center">
           <p className="font-semibold text-white w-[80%] text-justify">
