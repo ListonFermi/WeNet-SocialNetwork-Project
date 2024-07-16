@@ -4,9 +4,7 @@ import userCollection, { IUser } from "../models/userCollection";
 export = {
   addUser: async function (userData: IUser): Promise<string> {
     try {
-      if (typeof userData._id === "string") {
-        userData._id = new Types.ObjectId(userData._id);
-      }
+      userData._id = new Types.ObjectId(userData._id);
       await userCollection.create(userData);
       return "User data added successfully";
     } catch (error: any) {
@@ -52,7 +50,7 @@ export = {
       const userData = await userCollection.findOne({ email });
       if (!userData) throw new Error("User data not found");
 
-      return userData
+      return userData;
     } catch (error: any) {
       throw new Error(error.message);
     }

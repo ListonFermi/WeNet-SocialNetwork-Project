@@ -21,6 +21,7 @@ export = {
       const transaction = await adsRepository.addTransaction(
         userId,
         PayUOrderId,
+        PayUOrderData.mihpayid,
         status,
         PayUOrderData.amount
       );

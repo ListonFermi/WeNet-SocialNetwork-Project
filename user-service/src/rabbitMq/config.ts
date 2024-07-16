@@ -13,6 +13,7 @@ export const MQExchangeName = "wenet_exchange";
 export const MQRoutingKey = [
   "wenet-user-service",
   "wenet-notification-service",
+  "wenet-posts-ads-service"
 ];
 
 // consumer queue name

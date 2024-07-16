@@ -63,16 +63,18 @@ function AdminSideBar() {
             WeNet Tick Management
           </p>
         </div>
-        <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
-          <Image
-            src="/icons/admin/AdsManagement.png"
-            alt="Home Logo"
-            width={50}
-            height={50}
-            className="h-10 w-10"
-          />
-          <p className="pl-5 text-xl text-white font-bold">Ads Management</p>
-        </div>
+        <a href={"/admin/adsManagement"}>
+          <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
+            <Image
+              src="/icons/admin/AdsManagement.png"
+              alt="Home Logo"
+              width={50}
+              height={50}
+              className="h-10 w-10"
+            />
+            <p className="pl-5 text-xl text-white font-bold">Ads Management</p>
+          </div>
+        </a>
       </div>
       <div className="h-[30%]"></div>
       <div className="h-[20%] flex justify-center items-center">

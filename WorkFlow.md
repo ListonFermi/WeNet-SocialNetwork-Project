@@ -222,3 +222,9 @@ Jul 15, Mon
 - Protected all routes in frontend
 
 --- "Bug fixes && frontend route protection" ---
+
+Jul 16, Tue
+
+- Admin Side: Ads Management- started
+
+--- "Admin Side: Ads Management- started" ---

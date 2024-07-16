@@ -12,6 +12,7 @@ export = {
   addTransaction: async function (
     userId: string,
     PayUOrderId: string,
+    PayUTransactionId: string,
     status: "success" | "failed",
     transactionAmount : string
   ): Promise<ITransaction> {
@@ -19,6 +20,7 @@ export = {
       const transaction = await transactionCollection.create({
         userId : new Types.ObjectId(userId),
         PayUOrderId : new Types.ObjectId(PayUOrderId) ,
+        PayUTransactionId,
         transactionStatus: status,
         transactionAmount,
       });

@@ -127,9 +127,6 @@ export default function ReportManagementTable() {
   return (
     <div>
       <ToastContainer />
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl">Auctions</h1>
-      </div>
       <TableContainer component={Card}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

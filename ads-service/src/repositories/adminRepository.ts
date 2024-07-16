@@ -1,0 +1,46 @@
+import WeNetAdsCollection from "../models/WeNetAdsCollection";
+
+export = {
+  getAdsManagementData: async function (skip: number, limit: number) {
+    try {
+      return await WeNetAdsCollection.aggregate([
+        { $sort: { createdAt: 1 } },
+        { $skip: skip },
+        { $limit: limit },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "userData",
+          },
+        },
+        {
+          $lookup: {
+            from: "posts",
+            localField: "postId",
+            foreignField: "_id",
+            as: "postData",
+          },
+        },
+        {
+          $lookup: {
+            from: "transactions",
+            localField: "transactionId",
+            foreignField: "_id",
+            as: "transactionData",
+          },
+        },
+      ]);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getAdsManagementDocumentCount: async function () {
+    try {
+      return await WeNetAdsCollection.countDocuments();
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+};

@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import adsRoutes from "./routes/adsRoutes";
+import adminRoutes from "./routes/adminRoutes";
 import PayURoutes from "./routes/PayURoutes";
 import { errorHandler } from "./middlewares/errorHandler";
 import startConsumer from "./rabbitMQ/startConsumer";
@@ -28,6 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/ads-service/", adsRoutes);
+app.use("/api/ads-service/admin", adminRoutes);
 app.use("/api/ads-service/PayU", PayURoutes);
 
 app.use(errorHandler);
