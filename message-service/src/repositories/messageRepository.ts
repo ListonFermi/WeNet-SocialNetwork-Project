@@ -142,6 +142,20 @@ export = {
     }
   },
 
+  getConvoList: async function (userId: string): Promise<IConversation[]> {
+    try {
+      return await conversationsCollection
+        .find({ participants: new Types.ObjectId(userId) })
+        .populate({
+          path: "participants",
+          select: "_id username firstName lastName profilePicUrl",
+        })
+        .sort({ updatedAt: -1 });
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+
   //socket methods
   emitSendMessageEvent: async function (
     req: any,
@@ -157,8 +171,8 @@ export = {
 
       conversation.participants.forEach((participantObjectId) => {
         if (participantObjectId.toString() === senderId.toString()) return;
-        console.log('emitted to:')
-        console.log(participantObjectId.toString())
+        console.log("emitted to:");
+        console.log(participantObjectId.toString());
         // emit the receive message event to the other participants with received message as the payload
         emitSocketEvent(
           req,

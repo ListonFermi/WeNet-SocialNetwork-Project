@@ -4,6 +4,8 @@ interface IConversation extends Document {
   _id: Types.ObjectId;
   participants: Types.ObjectId[];
   lastMessage: string;
+  createdAt: string;
+  updatedAt: string
 }
 
 const ConversationSchema = new Schema<IConversation>(

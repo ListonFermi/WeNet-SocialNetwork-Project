@@ -4,9 +4,19 @@ import upload from "../utils/multer";
 import { verifyUser } from "../middlewares/verifyUser";
 const router = Router();
 
-router.get('/:convoId', verifyUser, messageControllers.getConvoMessages)
-router.post('/:convoId', verifyUser, upload.any(), messageControllers.sendMessage)
+router.post(
+  "/createConversation/:participantId",
+  verifyUser,
+  messageControllers.createConversation
+);
+router.get("/convoList", verifyUser, messageControllers.getConvoList);
 
-router.post('/createConversation/:participantId',verifyUser,messageControllers.createConversation)
+router.get("/:convoId", verifyUser, messageControllers.getConvoMessages);
+router.post(
+  "/:convoId",
+  verifyUser,
+  upload.any(),
+  messageControllers.sendMessage
+);
 
 export default router;

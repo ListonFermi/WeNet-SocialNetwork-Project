@@ -1,23 +1,21 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import ConvoListSingle from "./ConvoListSingle";
-import sampleConversations from "./temp";
+import messageService from "@/utils/apiCalls/messageService";
 
 function ConvoList() {
-  /* 
-    
-        get an array of all convos
-        [
-         { convoId: ,
-           username:,
-           profilePicUrl:,
-           time:   
-         }
-        ]
-    
-    */
+  const [convoList, setConvoList] = useState([]);
 
-  //return from an api :
-  const convoList = sampleConversations;
+  useEffect(() => {
+    (async function () {
+      try {
+        const convoList = await messageService.getConvoList();
+        setConvoList(convoList);
+      } catch (error: any) {
+        alert(error.message);
+      }
+    })();
+  }, []);
 
   return (
     <>
@@ -27,30 +25,36 @@ function ConvoList() {
         </h1>
       </div>
       <div className="h-full overflow-y-auto no-scrollbar bg-black">
-        {convoList.map((convo) => {
-          const {
-            convoId,
-            username,
-            firstName,
-            lastName,
-            profilePicUrl,
-            timestamp,
-            lastMessage,
-          } = convo;
+        {convoList.length > 0 ? (
+          convoList.map((convo) => {
+            const {
+              convoId,
+              username,
+              firstName,
+              lastName,
+              profilePicUrl,
+              timestamp,
+              lastMessage,
+            } = convo;
 
-          return (
-            <ConvoListSingle
-              key={convoId}
-              convoId={convoId}
-              username={username}
-              firstName={firstName}
-              lastName={lastName}
-              profilePicUrl={profilePicUrl}
-              lastMessage={lastMessage}
-              timestamp={timestamp}
-            />
-          );
-        })}
+            return (
+              <ConvoListSingle
+                key={convoId}
+                convoId={convoId}
+                username={username}
+                firstName={firstName}
+                lastName={lastName}
+                profilePicUrl={profilePicUrl}
+                lastMessage={lastMessage}
+                timestamp={timestamp}
+              />
+            );
+          })
+        ) : (
+          <div>
+            <h1>No Conversations</h1>
+          </div>
+        )}
       </div>
     </>
   );

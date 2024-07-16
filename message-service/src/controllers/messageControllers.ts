@@ -65,4 +65,19 @@ export = {
       next(error);
     }
   },
+  getConvoList: async function (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const userId = req.user._id 
+
+      const convoListData = await messageServices.getConvoList(userId)
+
+      res.status(200).json(convoListData);
+    } catch (error: any) {
+      next(error);
+    }
+  },
 };
