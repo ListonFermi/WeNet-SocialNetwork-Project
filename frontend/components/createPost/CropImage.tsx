@@ -10,6 +10,7 @@ import "cropperjs/dist/cropper.css";
 import axios from "axios";
 import Image from "next/image";
 import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type ReactCropperElement = HTMLDivElement & {
   cropper: Cropper;

@@ -18,4 +18,16 @@ export default {
       throw new Error(error.message);
     }
   },
+  toggleStatus: async function (postId: string) {
+    try {
+      const res = await apiClient.patch(`/toggleStatus/${postId}`)
+      return res.data
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response?.data?.length
+          ? error.response.data
+          : "Failed to toggle status";
+      throw new Error(errorMessage);
+    }
+  },
 };

@@ -1,13 +1,15 @@
-import conversationsCollection, {
-  IConversation,
-} from "../models/conversationsCollection";
+import { IConversation } from "../models/conversationsCollection";
 import { IMessage } from "../models/messageCollection";
 import messageRepository from "../repositories/messageRepository";
 
 export = {
-  getConvoMessages: async function (convoId: string): Promise<IMessage[]> {
+  getConvoMessages: async function (convoId: string,userId: string): Promise<IMessage[]> {
     try {
-      return await messageRepository.getAllMessages(convoId);
+      const messageData= await messageRepository.getAllMessages(convoId);
+
+      await messageRepository.markAsRead(convoId,userId)
+
+      return messageData
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -48,7 +50,17 @@ export = {
 
         if (!messageData) throw new Error("Failed to get message data");
 
-        await messageRepository.saveLastMessage(convoId, "📎attachment");
+        const convoData = await messageRepository.getConvoData(convoId);
+        const { participants } = convoData;
+        const unreadByUser = participants.filter(
+          (participant) => participant._id.toString() != senderId
+        )[0];
+        await messageRepository.saveLastMessage(
+          convoId,
+          "📎attachment",
+          messageData._id,
+          unreadByUser
+        );
 
         return messageData;
       }
@@ -61,7 +73,17 @@ export = {
       );
 
       //This repository method saves the last message to the conversation collection
-      await messageRepository.saveLastMessage(convoId, message);
+      const convoData = await messageRepository.getConvoData(convoId);
+      const { participants } = convoData;
+      const unreadByUser = participants.filter(
+        (participant) => participant._id.toString() != senderId
+      )[0];
+      await messageRepository.saveLastMessage(
+        convoId,
+        message,
+        messageData._id,
+        unreadByUser
+      );
 
       return messageData;
     } catch (error: any) {
@@ -92,7 +114,8 @@ export = {
       const responseFormat =
         convoListData.length > 0
           ? convoListData.map((data) => {
-              const { _id, participants, lastMessage, updatedAt } = data;
+              const { _id, participants, lastMessage, unread, updatedAt } =
+                data;
 
               const otherParticipant = participants.filter(
                 (participant) => participant._id.toString() != userId
@@ -100,6 +123,8 @@ export = {
 
               const { username, firstName, lastName, profilePicUrl } =
                 otherParticipant as any;
+
+              const unreadCount = unread.filter((data: any)=>data[1].toString()==userId).length
 
               return {
                 convoId: _id,
@@ -109,6 +134,7 @@ export = {
                 profilePicUrl,
                 timestamp: updatedAt,
                 lastMessage,
+                unreadCount,
               };
             })
           : [];

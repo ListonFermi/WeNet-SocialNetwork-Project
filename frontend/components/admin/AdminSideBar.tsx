@@ -3,7 +3,6 @@ import Image from "next/image";
 import AlertDialog from "../settings/AlertDialog";
 import { useRouter } from "next/navigation";
 import { deleteCookie } from "@/utils/deleteCookie";
-import Link from "next/link";
 
 function AdminSideBar() {
   const router = useRouter();
@@ -15,16 +14,18 @@ function AdminSideBar() {
   return (
     <div className="w-[100%] h-full max-w-full overflow-hidden bg-secColor">
       <div className="h-[50%] flex flex-col">
-        <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
-          <Image
-            src="/icons/home.svg"
-            alt="Home Logo"
-            width={50}
-            height={50}
-            className="h-10 w-10"
-          />
-          <p className="pl-5 text-xl text-white font-bold">WeNet Dashboard</p>
-        </div>
+        <a href={"/admin/dashboard"}>
+          <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
+            <Image
+              src="/icons/home.svg"
+              alt="Home Logo"
+              width={50}
+              height={50}
+              className="h-10 w-10"
+            />
+            <p className="pl-5 text-xl text-white font-bold">WeNet Dashboard</p>
+          </div>
+        </a>
         <a href={"/admin/userManagement"}>
           <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
             <Image
@@ -51,18 +52,20 @@ function AdminSideBar() {
             </p>
           </div>
         </a>
-        <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
-          <Image
-            src="/icons/admin/WeNetTickManagement.png"
-            alt="Home Logo"
-            width={50}
-            height={50}
-            className="h-10 w-10"
-          />
-          <p className="pl-5 text-xl text-white font-bold">
-            WeNet Tick Management
-          </p>
-        </div>
+        <a href={"/admin/WeNetTickManagement"}>
+          <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
+            <Image
+              src="/icons/admin/WeNetTickManagement.png"
+              alt="Home Logo"
+              width={50}
+              height={50}
+              className="h-10 w-10"
+            />
+            <p className="pl-5 text-xl text-white font-bold">
+              WeNet Tick Management
+            </p>
+          </div>
+        </a>
         <a href={"/admin/adsManagement"}>
           <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
             <Image

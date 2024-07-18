@@ -13,13 +13,15 @@ type props = {
   profilePicUrl: string;
   lastMessage: string;
   timestamp: string;
+  unreadCount: number;
 };
 
 function ConvoListSingle(props: props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const { convoId, username, firstName, lastName, profilePicUrl } = props;
+  const { convoId, username, firstName, lastName, profilePicUrl, unreadCount } =
+    props;
   let { timestamp, lastMessage } = props;
   timestamp = formatDate(timestamp);
   lastMessage = formatLastMessage(lastMessage);
@@ -74,8 +76,17 @@ function ConvoListSingle(props: props) {
             </p>
           </div>
         </div>
-        <div className="h-1/2 w-full flex justify-between">
+        <div className="h-[50%] w-full flex justify-between">
           <p className="text-white font-semibold">{lastMessage}</p>
+          {unreadCount > 0 ? (
+            <div className="relative mr-2">
+              <div className="absolute top-0 right-0 h-6 w-6 bg-blue-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                {unreadCount}
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>

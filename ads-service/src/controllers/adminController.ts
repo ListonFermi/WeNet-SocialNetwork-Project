@@ -18,4 +18,17 @@ export = {
       next(error);
     }
   },
+  toggleStatus: async function (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const {postId} = req.params
+      const message = await adminService.toggleStatus(postId)
+      res.status(200).send(message)
+    } catch (error: any) {
+      next(error);
+    }
+  },
 };
