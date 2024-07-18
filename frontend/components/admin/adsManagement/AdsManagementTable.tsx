@@ -53,7 +53,7 @@ function AdsManagementTable() {
         {
           pending: {
             render(){
-              return "I'm loading"
+              return "Loading"
             },
             icon: false,
           },

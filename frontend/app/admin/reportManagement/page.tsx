@@ -11,7 +11,7 @@ function page() {
         <div className="relative hidden md:block bg-gray-800 w-96">
           <AdminSideBar />
         </div>
-        <div className="flex-1 p-4 h-screen overflow-y-auto no-scrollbar bg-feedBg">
+        <div className="flex-1 p-4 h-screen overflow-y-auto no-scrollbar  bg-white">
           <div className="w-full h-full flex flex-col">
             <ReportManagement />
           </div>

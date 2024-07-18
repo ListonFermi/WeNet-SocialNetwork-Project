@@ -184,9 +184,9 @@ export default {
   },
 
   //reports- admin
-  getReportManagementData: async function () {
+  getReportManagementData: async function (pageNo: number, rowsPerPage: number) {
     try {
-      const url = `${postServiceAdminUrl}/reports`;
+      const url = `${postServiceAdminUrl}/reports?pageNo=${pageNo}&rowsPerPage=${rowsPerPage}`;
       const res = await axios.get(url, { withCredentials: true });
       return res.data;
     } catch (error: any) {

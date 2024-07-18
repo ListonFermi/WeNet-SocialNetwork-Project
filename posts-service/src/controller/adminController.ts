@@ -8,7 +8,9 @@ export = {
     next: NextFunction
   ): Promise<void> {
     try {
-      const reportsData = await adminServices.getReportsData();
+      const { pageNo, rowsPerPage } = req.query;
+      const reportsData = await adminServices.getReportsData( Number(pageNo),
+      Number(rowsPerPage));
       res.status(200).send(reportsData);
     } catch (error) {
       next(error);

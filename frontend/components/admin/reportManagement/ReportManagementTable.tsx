@@ -10,7 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
-import { Card } from "@mui/material";
+import { Card, Pagination, Stack } from "@mui/material";
 import postService from "@/utils/apiCalls/postService";
 import AlertDialog from "@/components/settings/AlertDialog";
 import { toastOptions } from "@/utils/toastOptions";
@@ -23,7 +23,7 @@ type Report = {
   reportedBy: string;
   entityType: "posts" | "comments" | "users";
   entity: { entityId: string; imageUrl?: string };
-  entityId : string;
+  entityId: string;
   entityImage: string;
   type: string;
   description: string;
@@ -33,26 +33,15 @@ type Report = {
 export default function ReportManagementTable() {
   const [reports, setReports] = React.useState<Report[]>();
   const [changed, setChanged] = React.useState(false);
-  const router = useRouter();
-
-  const handleChangeStatus = async (id: string) => {
-    try {
-      // const { data } = await axiosInstance.put(
-      //   `/api/auction/auction-status/${id}`
-      // );
-      // if (data.success) {
-      //   toast.success("status changed successfully");
-      //   setDataChange(!dataChange);
-      // }
-    } catch (error) {
-      toast.error("failed to change status");
-    }
-  };
+  const [documentCount, setdocumentCount] = React.useState(0);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [rowsPerPage] = React.useState(5);
 
   React.useEffect(() => {
-    (async function () {
+    (async function (currentPage: number, rowsPerPage: number) {
       try {
-        let reports = await postService.getReportManagementData();
+        let [reports, documentCount] =
+          await postService.getReportManagementData(currentPage, rowsPerPage);
         reports = reports.map((report: any) => {
           const {
             _id,
@@ -78,11 +67,16 @@ export default function ReportManagementTable() {
           };
         });
         setReports(reports);
+        setdocumentCount(documentCount);
       } catch (error: any) {
         toast.error(error);
       }
-    })();
-  }, [changed]);
+    })(currentPage, rowsPerPage);
+  }, [currentPage, changed]);
+
+  function handlePageChange(event: any, value: any) {
+    setCurrentPage(value);
+  }
 
   async function handleDelete(
     reportId: string,
@@ -125,89 +119,100 @@ export default function ReportManagementTable() {
   }
 
   return (
-    <div>
-      <ToastContainer />
-      <TableContainer component={Card}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">Date & Time</TableCell>
-              <TableCell align="center">Reported By</TableCell>
-              <TableCell align="center">Entity Type</TableCell>
-              <TableCell align="center">Entity</TableCell>
-              <TableCell align="center">Report Type</TableCell>
-              <TableCell align="left">Description</TableCell>
-              <TableCell align="center">Action</TableCell>
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {reports?.map((report) => (
-              <TableRow key={report._id}>
-                <TableCell align="center">{report.date}</TableCell>
-                <TableCell align="center">@{report.reportedBy}</TableCell>
-                <TableCell align="center">
-                  {report.entityType === "posts" && "Post"}
-                  {report.entityType === "comments" && "Comment"}
-                  {report.entityType === "users" && "User"}
-                </TableCell>
-                <TableCell align="center">
-                  {report.entityType == "posts" && report.entityImage && (
-                    <Image
-                      src={report.entityImage}
-                      alt={"Post Image"}
-                      width={50}
-                      height={50}
-                    />
-                  )}
-                </TableCell>
-                <TableCell align="center"> {report.type} </TableCell>
-                <TableCell align="left">
-                  {" "}
-                  <p className="text-xs">{report.description}</p>{" "}
-                </TableCell>
-                <TableCell align="left">
-                  {report.isResolved ? (
-                    <Image
-                      src={"/icons/admin/reportsManagementResolved.png"}
-                      alt="Resolved"
-                      width={60}
-                      height={50}
-                    />
-                  ) : report.entityType === "users" ? (
-                    <></>
-                  ) : (
-                    <div className="flex flex-col">
-                      <AlertDialog
-                        onConfirm={() =>
-                          handleDelete(
-                            report._id,
-                            report.entityType,
-                            report.entity.entityId
-                          )
-                        }
-                        alert="Do you really want to delete the post?"
-                      >
-                        <button className="bg-red-400 p-1 text-xs font-semibold rounded-lg">
-                          Delete Post
-                        </button>
-                      </AlertDialog>
-                      <AlertDialog
-                        onConfirm={() => handleCloseReport(report._id)}
-                        alert="Do you really wanna close this report ?"
-                      >
-                        <button className="bg-blue-500 p-1 mt-1 text-xs font-semibold rounded-lg">
-                          Close Report
-                        </button>
-                      </AlertDialog>
-                    </div>
-                  )}
-                </TableCell>
+    <>
+      {" "}
+      <div>
+        <ToastContainer />
+        <TableContainer component={Card}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Date & Time</TableCell>
+                <TableCell align="center">Reported By</TableCell>
+                <TableCell align="center">Entity Type</TableCell>
+                <TableCell align="center">Entity</TableCell>
+                <TableCell align="center">Report Type</TableCell>
+                <TableCell align="left">Description</TableCell>
+                <TableCell align="center">Action</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+            </TableHead>
+
+            <TableBody>
+              {reports?.map((report) => (
+                <TableRow key={report._id}>
+                  <TableCell align="center">{report.date}</TableCell>
+                  <TableCell align="center">@{report.reportedBy}</TableCell>
+                  <TableCell align="center">
+                    {report.entityType === "posts" && "Post"}
+                    {report.entityType === "comments" && "Comment"}
+                    {report.entityType === "users" && "User"}
+                  </TableCell>
+                  <TableCell align="center">
+                    {report.entityType == "posts" && report.entityImage && (
+                      <Image
+                        src={report.entityImage}
+                        alt={"Post Image"}
+                        width={50}
+                        height={50}
+                      />
+                    )}
+                  </TableCell>
+                  <TableCell align="center"> {report.type} </TableCell>
+                  <TableCell align="left">
+                    {" "}
+                    <p className="text-xs">{report.description}</p>{" "}
+                  </TableCell>
+                  <TableCell align="left">
+                    {report.isResolved ? (
+                      <Image
+                        src={"/icons/admin/reportsManagementResolved.png"}
+                        alt="Resolved"
+                        width={60}
+                        height={50}
+                      />
+                    ) : report.entityType === "users" ? (
+                      <></>
+                    ) : (
+                      <div className="flex flex-col">
+                        <AlertDialog
+                          onConfirm={() =>
+                            handleDelete(
+                              report._id,
+                              report.entityType,
+                              report.entity.entityId
+                            )
+                          }
+                          alert="Do you really want to delete the post?"
+                        >
+                          <button className="bg-red-400 p-1 text-xs font-semibold rounded-lg">
+                            Delete Post
+                          </button>
+                        </AlertDialog>
+                        <AlertDialog
+                          onConfirm={() => handleCloseReport(report._id)}
+                          alert="Do you really wanna close this report ?"
+                        >
+                          <button className="bg-blue-500 p-1 mt-1 text-xs font-semibold rounded-lg">
+                            Close Report
+                          </button>
+                        </AlertDialog>
+                      </div>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+      <Stack spacing={2} alignItems="center" marginTop={2}>
+        <Pagination
+          count={Math.ceil(documentCount / rowsPerPage)}
+          page={currentPage}
+          onChange={handlePageChange}
+          size="large"
+        />
+      </Stack>
+    </>
   );
 }

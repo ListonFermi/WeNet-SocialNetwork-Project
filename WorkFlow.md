@@ -240,3 +240,7 @@ Jul 19, Tue
 - Admin side: Ads management completed
 
 --- "Admin: dashboard && adsManagement completed"
+
+- Added pagination in reports management
+
+--- "Admin: pagination in reports management" ---

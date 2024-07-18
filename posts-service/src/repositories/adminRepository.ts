@@ -3,10 +3,12 @@ import reportsCollection, { IReport } from "../models/reportsCollection";
 import postsCollection from "../models/postsCollection";
 
 export = {
-  getReportsData: async function (): Promise<IReport> {
+  getReportsData: async function (skip: number, limit: number): Promise<IReport[]> {
     try {
       const reportsData: any = await reportsCollection
         .find()
+        .skip(skip)
+        .limit(limit)
         .populate("reportedBy") // Populate 'reportedBy' field with 'username' from 'users' collection
         .populate("entityId") // Populate 'entityId' dynamically based on 'entityType'
         .exec();
@@ -33,6 +35,13 @@ export = {
       const totalPosts = await postsCollection.countDocuments()
       const totalReports = await reportsCollection.countDocuments()
       return  [totalPosts, totalReports]
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getReportsDocumentCount: async function () {
+    try {
+      return await reportsCollection.countDocuments()
     } catch (error: any) {
       throw new Error(error.message);
     }
