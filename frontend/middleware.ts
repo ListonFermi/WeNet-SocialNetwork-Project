@@ -1,9 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
-import { isProtectedRoute, toBeRedirectedRoutes } from "./utils/routes";
+import {
+  isProtectedAdminRoute,
+  isProtectedRoute,
+  toBeRedirectedAdminRoutes,
+  toBeRedirectedRoutes,
+} from "./utils/routes";
 
-const adminRoutes = /^\/admin\/.+/;
+const adminRoutes = /^\/admin(\/.*)?$/;
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -15,23 +20,31 @@ export async function middleware(req: NextRequest) {
 
   if (adminRoutes.test(pathname)) {
     const tokenVerified = await verifyToken("adminToken", req);
-    if (tokenVerified) return NextResponse.next();
-    else return NextResponse.redirect(new URL("/admin", req.url));
+
+    const isProtected = isProtectedAdminRoute(pathname);
+    if (isProtected && !tokenVerified) {
+      const loginUrl = new URL("/admin", req.url);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    const toBeRedirected = toBeRedirectedAdminRoutes(pathname);
+    if (toBeRedirected && tokenVerified) {
+      const feedUrl = new URL("/admin/dashboard", req.url);
+      return NextResponse.redirect(feedUrl);
+    }
   }
 
   const tokenVerified = await verifyToken("token", req);
 
   // Protected Routes logic - redirect to home if it doesn't have token in cookies
-  const isProtected = isProtectedRoute(pathname)
-
+  const isProtected = isProtectedRoute(pathname);
   if (isProtected && !tokenVerified) {
     const loginUrl = new URL("/", req.url);
     return NextResponse.redirect(loginUrl);
   }
 
   // ToBeRedirected Routes logic - redirect to feed if it has token in cookies
-  const toBeRedirected = toBeRedirectedRoutes(pathname)
-
+  const toBeRedirected = toBeRedirectedRoutes(pathname);
   if (toBeRedirected && tokenVerified) {
     const feedUrl = new URL("/feed", req.url);
     return NextResponse.redirect(feedUrl);
@@ -65,13 +78,9 @@ async function verifyToken(
       new TextEncoder().encode(secret)
     );
 
-    
-    if(payload){
-
-    }else{
-
+    if (payload) {
+    } else {
     }
-
 
     return Boolean(payload);
   } catch (err: any) {

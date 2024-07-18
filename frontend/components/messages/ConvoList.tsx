@@ -35,6 +35,7 @@ function ConvoList() {
               profilePicUrl,
               timestamp,
               lastMessage,
+              unreadCount
             } = convo;
 
             return (
@@ -47,6 +48,7 @@ function ConvoList() {
                 profilePicUrl={profilePicUrl}
                 lastMessage={lastMessage}
                 timestamp={timestamp}
+                unreadCount={unreadCount}
               />
             );
           })

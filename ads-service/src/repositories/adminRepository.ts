@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+import postsCollection from "../models/postsCollection";
 import WeNetAdsCollection from "../models/WeNetAdsCollection";
 
 export = {
@@ -43,4 +45,16 @@ export = {
       throw new Error(error.message);
     }
   },
+  toggleStatus: async function(postId: string){
+    try {
+      const post = await postsCollection.findOne({_id: new Types.ObjectId(postId)})
+      if(!post) throw new Error('post not found')
+
+      post.WeNetAds.isPromoted = !post.WeNetAds.isPromoted
+      await post.save()
+      return post
+    } catch (error:any) {
+      throw new Error(error.message)
+    }
+  }
 };

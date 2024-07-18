@@ -15,5 +15,13 @@ export = {
         } catch (error: any) {
             throw new Error(error.message)
         }
+    },
+    getDashboardCardData: async function (): Promise<number[]>{
+        try {
+            const [totalPosts, totalReports] = await adminRepository.getDashboardCardData()
+            return  [totalPosts, totalReports]
+        } catch (error: any) {
+            throw new Error(error.message)
+        }
     }
 }

@@ -24,3 +24,14 @@ export function isProtectedRoute(pathname: string): boolean {
 export function toBeRedirectedRoutes(pathname: string): boolean {
   return changeToFeedRoutes.has(pathname);
 }
+
+const adminRoutes = /^\/admin(\/.*)?$/;
+const changeToAdminDashboardRoutes = new Set(["/admin"]);
+
+export function isProtectedAdminRoute(pathname: string): boolean {
+  return !changeToAdminDashboardRoutes.has(pathname);
+}
+
+export function toBeRedirectedAdminRoutes(pathname: string): boolean {
+  return changeToAdminDashboardRoutes.has(pathname);
+}

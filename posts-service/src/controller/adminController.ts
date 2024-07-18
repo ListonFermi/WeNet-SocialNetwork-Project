@@ -1,4 +1,4 @@
-import {Request, NextFunction, Response } from "express";
+import { Request, NextFunction, Response } from "express";
 import adminServices from "../services/adminServices";
 
 export = {
@@ -6,7 +6,7 @@ export = {
     req: Request,
     res: Response,
     next: NextFunction
-  ) : Promise<void> {
+  ): Promise<void> {
     try {
       const reportsData = await adminServices.getReportsData();
       res.status(200).send(reportsData);
@@ -14,13 +14,30 @@ export = {
       next(error);
     }
   },
-  resolveReport: async function (req: Request, res: Response, next: NextFunction) {
+  resolveReport: async function (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
     try {
-      const {reportId} = req.params
-      const message = await adminServices.resolveReport(reportId)
-      res.status(200).send(message)
+      const { reportId } = req.params;
+      const message = await adminServices.resolveReport(reportId);
+      res.status(200).send(message);
     } catch (error) {
-      next(error)
+      next(error);
     }
-  }
+  },
+  getDashboardCardData: async function (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const [totalPosts, totalReports] =
+        await adminServices.getDashboardCardData();
+      res.status(200).send([totalPosts, totalReports]);
+    } catch (error) {
+      next(error);
+    }
+  },
 };

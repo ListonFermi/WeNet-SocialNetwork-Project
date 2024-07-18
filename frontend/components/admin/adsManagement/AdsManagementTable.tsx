@@ -17,13 +17,17 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import AlertDialog from "./AlertDialog";
+import { toastOptions } from "@/utils/toastOptions";
+import "react-toastify/dist/ReactToastify.css";
 
 function AdsManagementTable() {
   const [adsData, setAdsData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [documentCount, setdocumentCount] = useState(0);
   const [rowsPerPage] = useState(5);
-
+  const [changed, setChanged]= useState(false)
 
   useEffect(() => {
     (async function (currentPage: number, rowsPerPage: number) {
@@ -36,27 +40,76 @@ function AdsManagementTable() {
         alert(error.message);
       }
     })(currentPage, rowsPerPage);
-  }, []);
+  }, [currentPage,changed]);
 
   function handlePageChange(event: any, value: any) {
     setCurrentPage(value);
   }
 
+  async function toggleStatus(postId: string) {
+    try {
+      await toast.promise(
+        adsService.toggleStatus(postId),
+        {
+          pending: {
+            render(){
+              return "I'm loading"
+            },
+            icon: false,
+          },
+          success: {
+            render({data}){
+              return `${data}`
+            },
+          },
+          error: {
+            render({data}){
+              return 'Error Toggling status'
+            }
+          }
+        },
+        toastOptions
+      );
+      setChanged((changed)=>!changed)
+    } catch (error: any) {
+      toast.error(error.message, toastOptions);
+    }
+  }
+
   return (
     <>
+    <ToastContainer />
       <TableContainer component={Card}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center" className="font-bold">S No</TableCell>
-              <TableCell align="center" className="font-bold">Advertisement Id</TableCell>
-              <TableCell align="center" className="font-bold">Username</TableCell>
-              <TableCell align="center" className="font-bold">Post</TableCell>
-              <TableCell align="center" className="font-bold">PayU Transaction Id</TableCell>
-              <TableCell align="center" className="font-bold">Transaction Amount</TableCell>
-              <TableCell align="center" className="font-bold">Transaction Date</TableCell>
-              <TableCell align="center" className="font-bold">Ad Expires On</TableCell>
-              <TableCell align="center" className="font-bold">Active/Inactive</TableCell>
+              <TableCell align="center" className="font-bold">
+                S No
+              </TableCell>
+              <TableCell align="center" className="font-bold">
+                Advertisement Id
+              </TableCell>
+              <TableCell align="center" className="font-bold">
+                Username
+              </TableCell>
+              <TableCell align="center" className="font-bold">
+                Post
+              </TableCell>
+              <TableCell align="center" className="font-bold">
+                PayU Transaction Id
+              </TableCell>
+              <TableCell align="center" className="font-bold">
+                Transaction Amount
+              </TableCell>
+              <TableCell align="center" className="font-bold">
+                Transaction Date
+              </TableCell>
+              <TableCell align="center" className="font-bold">
+                Ad Expires On
+              </TableCell>
+              <TableCell align="center" className="font-bold">
+                Active/Inactive
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -104,18 +157,25 @@ function AdsManagementTable() {
                     </a>
                   </TableCell>
                   <TableCell align="center">₹{transactionAmount}</TableCell>
-                  <TableCell align="center">{formatDate(transactionDate)}</TableCell>
+                  <TableCell align="center">
+                    {formatDate(transactionDate)}
+                  </TableCell>
                   <TableCell align="center">{formatDate(expiresOn)}</TableCell>
                   <TableCell align="center">
-                    {isActive ? (
-                      <button className="bg-green-400 p-2 text-md text-white font-semibold rounded-lg">
-                        Active
+                    <AlertDialog
+                      onConfirm={()=>toggleStatus(postId)}
+                      alert="Are you sure you want to change the status of this ad?"
+                    >
+                      <button
+                        className={`${
+                          isActive ? "bg-rootBg" : "bg-red-500"
+                        } hover:${
+                          isActive ? "bg-rootBgH" : "bg-red-400"
+                        } p-2 text-md text-white font-semibold rounded-lg`}
+                      >
+                        {isActive ? "Active" : "Inactive"}
                       </button>
-                    ) : (
-                      <button className="bg-red-400 p-1 text-xs font-semibold rounded-lg">
-                        Inactive
-                      </button>
-                    )}
+                    </AlertDialog>
                   </TableCell>
                 </TableRow>
               );

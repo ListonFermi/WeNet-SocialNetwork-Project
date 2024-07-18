@@ -1,5 +1,6 @@
 import { Types } from "mongoose";
 import reportsCollection, { IReport } from "../models/reportsCollection";
+import postsCollection from "../models/postsCollection";
 
 export = {
   getReportsData: async function (): Promise<IReport> {
@@ -27,4 +28,13 @@ export = {
       throw new Error(error.message);
     }
   },
+  getDashboardCardData: async function (): Promise<number[]> {
+    try {
+      const totalPosts = await postsCollection.countDocuments()
+      const totalReports = await reportsCollection.countDocuments()
+      return  [totalPosts, totalReports]
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
 };

@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import userCollection from "../models/User";
 
 export = {
   verifyLogin: async (username: string, password: string): Promise<string> => {
@@ -6,7 +7,7 @@ export = {
       const adminUsername = process.env.ADMIN_USERNAME;
       const adminPassword = process.env.ADMIN_PASSWORD;
       if (!adminUsername || !adminPassword) throw new Error("ENV issues");
-        console.log({adminUsername,adminPassword,username,password})
+      console.log({ adminUsername, adminPassword, username, password });
       const isMatching =
         username === adminUsername && password === adminPassword;
       if (!isMatching) throw new Error("Credentials doesn't match");
@@ -19,7 +20,74 @@ export = {
     try {
       const secret: string | undefined = process.env.JWT_SECRET;
       if (!secret) throw new Error("JWT Secret not found");
-      return jwt.sign({ adminUsername, role: 'wenet-admin' }, secret, { expiresIn: "1h" });
+      return jwt.sign({ adminUsername, role: "wenet-admin" }, secret, {
+        expiresIn: "1h",
+      });
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  dashboardCardData: async (): Promise<number[]> => {
+    try {
+      const totalUsers = await userCollection.countDocuments();
+      const totalVerifiedAccounts = await userCollection.countDocuments({
+        accountType: { hasWeNetTick: true },
+      });
+      return [totalUsers, totalVerifiedAccounts];
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  dashboardChartData: async (startDate: Date) => {
+    try {
+      startDate.setDate(startDate.getDate() - 14);
+      startDate.setHours(0, 0, 0, 0);
+
+      return await userCollection.aggregate([
+        {
+          $match: {
+            createdAt: { $gte: startDate },
+          },
+        },
+        {
+          $group: {
+            _id: {
+              $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+            },
+            count: { $sum: 1 },
+          },
+        },
+        {
+          $sort: { _id: 1 },
+        },
+      ]);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  personalAccountCount: async () => {
+    try {
+      return await userCollection.countDocuments({
+        "accountType.isProfessional": false,
+      });
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  celebrityAccountCount: async () => {
+    try {
+      return await userCollection.countDocuments({
+        "accountType.category": "celebrity",
+      });
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  companyAccountCount: async () => {
+    try {
+      return await userCollection.countDocuments({
+        "accountType.category": "company",
+      });
     } catch (error: any) {
       throw new Error(error.message);
     }

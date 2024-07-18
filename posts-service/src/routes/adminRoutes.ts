@@ -9,4 +9,6 @@ router.patch("/reports/:reportId", verifyAdmin, adminController.resolveReport);
 
 router.delete("/deletePost/:postId", verifyAdmin, postsController.deletePost)
 
+router.get("/getDashboardCardData", verifyAdmin, adminController.getDashboardCardData);
+
 export default router;

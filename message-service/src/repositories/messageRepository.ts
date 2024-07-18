@@ -108,17 +108,20 @@ export = {
   },
   saveLastMessage: async function (
     convoId: string,
-    lastMessage: string
+    lastMessage: string,
+    messageId: Types.ObjectId,
+    unreadByUser: Types.ObjectId
   ): Promise<IConversation> {
     try {
       const convoData = await conversationsCollection.findByIdAndUpdate(
         convoId,
         {
           $set: { lastMessage },
+          $addToSet: { unread: [messageId, unreadByUser] },
         },
         { new: true }
       );
-
+      console.log({ convoData });
       if (!convoData) throw new Error("Conversation not found");
 
       return convoData;
@@ -141,6 +144,23 @@ export = {
       throw new Error(error.message);
     }
   },
+  markAsRead: async function (convoId: string, userId: string) {
+    try {
+      console.log({ convoId, userId });
+      const convoData = await conversationsCollection.findById(convoId);
+
+      if (!convoData) throw new Error("Conversation not found");
+
+      // Filter out the arrays where the second element matches the userId
+      convoData.unread = convoData.unread.filter(
+        (unreadItem: any) => unreadItem[1].toString() !== userId
+      );
+
+      await convoData.save();
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 
   getConvoList: async function (userId: string): Promise<IConversation[]> {
     try {
@@ -151,6 +171,22 @@ export = {
           select: "_id username firstName lastName profilePicUrl",
         })
         .sort({ updatedAt: -1 });
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getConvoData: async function (convoId: string): Promise<IConversation> {
+    try {
+      const convoData = await conversationsCollection
+        .findOne({ _id: new Types.ObjectId(convoId) })
+        .populate({
+          path: "participants",
+          select: "_id username firstName lastName profilePicUrl",
+        })
+        .sort({ updatedAt: -1 });
+      if (!convoData) throw new Error("No convo data found");
+
+      return convoData;
     } catch (error: any) {
       throw new Error(error.message);
     }

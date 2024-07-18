@@ -232,3 +232,11 @@ Jul 16, Tue
 - Conversation List- shown
 
 --- "Conversation List- shown" ---
+
+Jul 19, Tue
+
+- Admin Side: Dashboard completed
+
+- Admin side: Ads management completed
+
+--- "Admin: dashboard && adsManagement completed"

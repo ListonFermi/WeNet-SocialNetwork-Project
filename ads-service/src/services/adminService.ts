@@ -1,4 +1,5 @@
 import adminRepository from "../repositories/adminRepository";
+import adsRepository from "../repositories/adsRepository";
 
 export = {
   getAdsManagementData: async function (pageNo: number, rowsPerPage: number) {
@@ -15,8 +16,8 @@ export = {
         let { userData, postData, transactionData } = data;
 
         (userData = userData[0]),
-        (postData = postData[0]),
-        (transactionData = transactionData[0]);
+          (postData = postData[0]),
+          (transactionData = transactionData[0]);
 
         const sNo = skip + (index + 1);
 
@@ -54,6 +55,21 @@ export = {
         await adminRepository.getAdsManagementDocumentCount();
 
       return [responseFormat, documentCount];
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  toggleStatus: async function (postId: string) {
+    try {
+      const post = await adminRepository.toggleStatus(postId);
+
+      try {
+        await adsRepository.sendPostAdDataToMQ(postId, post.WeNetAds);
+      } catch (error: any) {
+        console.log("Failed to send data to MQ, Error:" + error.message);
+      }
+
+      return "Ad status toggled successfully";
     } catch (error: any) {
       throw new Error(error.message);
     }
