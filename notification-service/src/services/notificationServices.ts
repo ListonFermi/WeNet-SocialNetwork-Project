@@ -20,9 +20,13 @@ export = {
       throw new Error(error.message);
     }
   },
-  getNotifications : async function (userId: string) {
+  getNotifications: async function (userId: string) {
     try {
-      return await notificationRepository.getNotifications(userId)
+      const notificationData = await notificationRepository.getNotifications(
+        userId
+      );
+      await notificationRepository.markAsRead(userId)
+      return notificationData;
     } catch (error: any) {
       throw new Error(error.message);
     }

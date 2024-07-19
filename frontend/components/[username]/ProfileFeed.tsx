@@ -15,7 +15,7 @@ function ProfileFeed({ currUserData }: { currUserData: IUser }) {
     (async function (paramsUsername: string) {
       try {
         const postData = await postService.getProfileFeed(paramsUsername);
-        console.log({postData})
+        console.log({ postData });
         setPostData(postData);
       } catch (error: any) {
         alert(error.message);
@@ -23,11 +23,30 @@ function ProfileFeed({ currUserData }: { currUserData: IUser }) {
     })(paramsUsername);
   }, []);
 
+  if (postData?.length === 0) {
+    return (
+      <div className="h-96 w-full flex flex-col items-center justify-center">
+        <h1 className="text-white font-bold">You haven't made any posts yet</h1>
+        <div className="p-2">
+          <a href="/createPost">
+            <button className="bg-rootBg p-2 text-white font-bold rounded-lg">
+              Create a post
+            </button>
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       {postData?.length &&
         postData.map((post) => (
-          <FeedPost key={post._id} postData={post} currUserData={currUserData} />
+          <FeedPost
+            key={post._id}
+            postData={post}
+            currUserData={currUserData}
+          />
         ))}
     </div>
   );

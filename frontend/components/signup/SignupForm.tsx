@@ -57,7 +57,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ setIsVerifyForm }) => {
       dispatch(verifyUser({ _id: response.data._id }));
       setIsVerifyForm(true);
     } catch (error: any) {
-      console.error(error)
+      console.error(error);
       const errorMessage = error?.response?.data?.length
         ? error.response.data
         : "Internal server error";
@@ -86,11 +86,10 @@ const SignupForm: React.FC<SignupFormProps> = ({ setIsVerifyForm }) => {
               {...register("username", {
                 required: "Username is required",
                 pattern: {
-                  value: /^[A-Za-z]+$/i,
+                  value: /^(?=.{1,15}$)[A-Za-z][A-Za-z0-9._]*$/,
                   message:
-                    "Please use valid characters only. [Alphabets A to Z, a to z ]",
+                    "Username can only contain letters, numbers, periods, and underscores. It must start with a letter.",
                 },
-                minLength: { value: 5, message: "Enter at least 5 characters" },
               })}
               className="bg-black shadow appearance-none  rounded w-full py-2 px-3 text-white text-lg font-semibold leading-tight focus:outline-none focus:shadow-outline"
             />

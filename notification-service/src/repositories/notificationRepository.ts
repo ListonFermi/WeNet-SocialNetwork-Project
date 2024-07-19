@@ -31,10 +31,20 @@ export = {
     try {
       return await notificationCollection
         .find({
-          userId : new Types.ObjectId(userId),
+          userId: new Types.ObjectId(userId),
         })
         .populate("doneByUser")
         .populate("entityId");
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  markAsRead: async function (userId: string) {
+    try {
+      await notificationCollection.updateMany(
+        { _id: new Types.ObjectId(userId), isRead: false },
+        { $set: { isRead: true } }
+      );
     } catch (error: any) {
       throw new Error(error.message);
     }

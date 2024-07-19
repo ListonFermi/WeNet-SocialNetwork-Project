@@ -89,7 +89,7 @@ export const publisher = {
       const [channel, connection] = await this.connectRabbitMQ();
 
       const exchangeName = MQExchangeName;
-      const routingKey = MQRoutingKey[2]; // Specific routing key
+      const routingKey = MQRoutingKey[3]; // Specific routing key
       await channel.assertExchange(exchangeName, "direct", { durable: true });
 
       const messageProperties = {

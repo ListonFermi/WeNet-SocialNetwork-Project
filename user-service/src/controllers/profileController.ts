@@ -34,7 +34,14 @@ export = {
       if (!userData) throw new Error("User data not found");
 
       try {
-        SERVICES.allOtherServices.forEach(async () => {
+        SERVICES.allOtherServices.forEach(async (serviceName) => {
+          if (serviceName === "ads-service") {
+            return await userService.sendUserDataToAdsMQ(
+              userData._id,
+              MQActions.editUser
+            );
+          }
+
           await userService.sendUserDataToMQ(userData._id, MQActions.editUser);
         });
       } catch (error: any) {
@@ -179,10 +186,11 @@ export = {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const userId = req.user._id
-      const {pageNo, rowsPerPage} = req.query
-      const [responseFormat, documentCount] = await profileService.getBlockedUsers(pageNo, rowsPerPage, userId)
-      res.status(200).send([responseFormat, documentCount])
+      const userId = req.user._id;
+      const { pageNo, rowsPerPage } = req.query;
+      const [responseFormat, documentCount] =
+        await profileService.getBlockedUsers(pageNo, rowsPerPage, userId);
+      res.status(200).send([responseFormat, documentCount]);
     } catch (error) {
       next(error);
     }

@@ -256,3 +256,7 @@ Jul 19, Tue
 - Added .env.samples
 
 --- "Added .env.samples" ---
+
+- Fixed the bug in updating user data to Ads service.
+
+--- "BugFix: MQ to Ads-service" ---

@@ -95,14 +95,14 @@ export = {
   toggleLike: async function (
     entity: string,
     entityId: string,
-    userId: string
+    currUserId: string
   ): Promise<number> {
     try {
-      const post = await postsRepository.toggleLike(entity, entityId, userId);
+      const post = await postsRepository.toggleLike(entity, entityId, currUserId);
 
       try {
-        const userId = post._id;
-        const doneByUser = userId;
+        const userId = post.userId;
+        const doneByUser = currUserId;
         const postId = post._id;
         SERVICES.notification.forEach(async () => {
           await postsRepository.sendNotificationToMQ(

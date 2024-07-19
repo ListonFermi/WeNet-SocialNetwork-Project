@@ -9,10 +9,9 @@ export = {
   ) {
     try {
       const userId = req.user._id;
-
+      
       const notification = await notificationServices.getNotifications(userId);
       res.status(200).json(notification);
-
     } catch (error: any) {
       next(error);
     }

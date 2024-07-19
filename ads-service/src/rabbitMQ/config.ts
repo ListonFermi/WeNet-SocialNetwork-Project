@@ -12,12 +12,12 @@ export const MQActions = {
 export const MQExchangeName = "wenet_exchange";
 
 export const MQRoutingKey = [
-  "wenet-user-service",
+  "wenet-user-ads-service",
   "wenet-posts-ads-service",
   "wenet-ads-post-service"
 ];
 
-export const MQQueueName = ["user-queue", "posts-ads-queue"];
+export const MQQueueName = ["user-ads-queue", "posts-ads-queue"];
 
 export const SERVICES = {
   notification: ["notification-service"],

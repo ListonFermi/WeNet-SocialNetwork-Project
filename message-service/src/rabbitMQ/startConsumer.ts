@@ -18,6 +18,10 @@ export default async () => {
     console.log('Binding queue to exchange...');
     await channel.bindQueue(queueName, exchangeName, routingKey);
 
+    // Set prefetch count
+    const prefetchCount = 1; 
+    await channel.prefetch(prefetchCount);
+
     console.log('Starting to consume messages...');
     await consumeMessages(channel, queueName);
 
