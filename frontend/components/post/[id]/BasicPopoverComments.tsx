@@ -7,8 +7,14 @@ import AlertDialog from "@/components/settings/AlertDialog";
 import { Bounce, ToastOptions, toast } from "react-toastify";
 import postService from "@/utils/apiCalls/postService";
 import "react-toastify/dist/ReactToastify.css";
+import EditComment from "./EditComment";
 
-type prop = { commentId: string; isOwnComment: boolean };
+type prop = {
+  commentId: string;
+  isOwnComment: boolean;
+  currComment: string;
+  setComment: React.Dispatch<React.SetStateAction<string>>;
+};
 
 const toastOptions: ToastOptions = {
   position: "top-center",
@@ -22,7 +28,12 @@ const toastOptions: ToastOptions = {
   transition: Bounce,
 };
 
-export default function BasicPopoverComments({ commentId, isOwnComment }: prop) {
+export default function BasicPopoverComments({
+  commentId,
+  isOwnComment,
+  currComment,
+  setComment,
+}: prop) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -83,12 +94,12 @@ export default function BasicPopoverComments({ commentId, isOwnComment }: prop) 
       >
         {isOwnComment ? (
           <div className="flex flex-col md:h-20 md:w-40 w-20 h-40 justify-center bg-black shadow-rootBg shadow-lg ">
-            <button
-              className=" text-white font-bold hover:bg-secColorH p-2"
-              onClick={() => router.push(`/post/edit/comment/${commentId}`)}
-            >
-              Edit
-            </button>
+            <EditComment
+              commentId={commentId}
+              currComment={currComment}
+              setComment={setComment}
+              setAnchorEl={setAnchorEl}
+            />
             <AlertDialog
               onConfirm={handleDelete}
               alert="Do you really wanna delete this comment ?"
@@ -105,7 +116,7 @@ export default function BasicPopoverComments({ commentId, isOwnComment }: prop) 
             </button>
             <button
               className=" text-white font-bold hover:bg-secColorH p-2"
-            //   onClick={() => router.push(`/post/report/${postId}`)}
+              //   onClick={() => router.push(`/post/report/${postId}`)}
             >
               Report
             </button>

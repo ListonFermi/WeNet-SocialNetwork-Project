@@ -178,7 +178,7 @@ function FeedPost({ postData, currUserData }: props) {
           <p className="font-bold">{commentsCount}</p>
         </span>
         <Image
-          onClick={handleBookmarkPost}
+          onClick={()=>handleBookmarkPost}
           // src="/icons/bookmark.svg"
           src="/icons/bookmarked.png"
           width={150}

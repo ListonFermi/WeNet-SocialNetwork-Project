@@ -34,6 +34,23 @@ export = {
       throw new Error(error.message);
     }
   },
+  editComment: async function (
+    commentId: string,
+    comment: string
+  ): Promise<IComment> {
+    try {
+      const commentData = await commentCollection.findOne({
+        _id: new Types.ObjectId(commentId),
+      });
+      if (!commentData) throw new Error("Comment not found");
+      commentData.comment = comment;
+      await commentData.save();
+      
+      return commentData;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
   deleteComment: async function (commentId: string): Promise<string> {
     try {
       await commentCollection.updateOne(
@@ -45,7 +62,6 @@ export = {
         { comments: new Types.ObjectId(commentId) },
         { $pull: { comments: new Types.ObjectId(commentId) } }
       );
-
 
       return "Comment deleted successfully";
     } catch (error: any) {

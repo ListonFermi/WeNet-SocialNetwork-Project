@@ -145,6 +145,19 @@ export default {
       throw new Error(errorMessage);
     }
   },
+  editComment:  async function (commentId: string, comment: string) {
+    try {
+      const url = `${postServiceUrl}/comment/${commentId}`;
+      const res = await axios.patch(url, { comment }, { withCredentials: true });
+      return res.data;
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response.data
+          ? error.response.data.message
+          : "Failed to comment on the post";
+      throw new Error(errorMessage);
+    }
+  },
   deleteComment: async function (commentId: string) {
     try {
       const url = `${postServiceUrl}/comment/${commentId}`;

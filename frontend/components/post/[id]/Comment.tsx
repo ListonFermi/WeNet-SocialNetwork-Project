@@ -1,7 +1,7 @@
 import { IComment } from "@/types/types";
 import { formatDate } from "@/utils/formatString";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import BasicPopoverComments from "./BasicPopoverComments";
 
 
@@ -13,17 +13,14 @@ type props = {
 function Comment({ commentData, currentUserId }: props) {
   const {
     _id,
-    userId='',
-    profilePicUrl = "",
-    username = "",
-    comment = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim.`,
-    isLiked = false,
-    likedBy = [],
+    userId,
+    profilePicUrl,
+    username,
     updatedAt
   } = commentData;
   // const likesCount = likedBy.length;
+
+  const [comment, setComment] = useState(commentData.comment)
 
   const timestamp = formatDate(updatedAt);
 
@@ -67,7 +64,7 @@ function Comment({ commentData, currentUserId }: props) {
             />
             <p className="font-bold text-sm">{likesCount}</p>
           </span> */}
-          <BasicPopoverComments commentId={_id} isOwnComment={isOwnComment} />
+          <BasicPopoverComments commentId={_id} isOwnComment={isOwnComment} currComment={comment} setComment={setComment} />
         </div>
       </div>
     </div>

@@ -12,7 +12,10 @@ function page() {
           <AdminSideBar />
         </div>
         <div className="flex-1 p-4 h-screen overflow-y-auto no-scrollbar  bg-white">
-          <div className="w-full h-full flex flex-col">
+          <div className="flex h-[10%] w-full justify-center items-center">
+            <h1 className="text-2xl font-bold">WeNet Reports Management</h1>
+          </div>
+          <div className="w-full h-[90%] flex flex-col">
             <ReportManagement />
           </div>
         </div>
