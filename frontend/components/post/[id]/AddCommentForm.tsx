@@ -1,5 +1,5 @@
 "use client";
-import { IUser } from "@/types/types";
+import { IComment, IUser } from "@/types/types";
 import postService from "@/utils/apiCalls/postService";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Comment from "./Comment";
 import { toastOptions } from "@/utils/toastOptions";
+import { useRouter } from "next/navigation";
 
 type Input = {
   comment: string;
@@ -17,7 +18,9 @@ type Input = {
 function AddCommentForm({ userData }: { userData: IUser }) {
   const { id } = useParams<{ id: string }>();
 
-  const [commentData, setCommentData] = useState(null);
+  const [commentData, setCommentData] = useState<IComment[]>([]);
+
+  const router= useRouter()
 
   const {
     register,
@@ -41,8 +44,11 @@ function AddCommentForm({ userData }: { userData: IUser }) {
         toastOptions
       );
       console.log("Returned commentData:", commentData);
-      setCommentData(commentData);
+      
+      setCommentData((comments: IComment[]) => [commentData, ...comments]);
+      window.location.reload()
       reset();
+      router.refresh();
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -91,9 +97,11 @@ function AddCommentForm({ userData }: { userData: IUser }) {
           </form>
         </div>
       </div>
-      {commentData && userData._id && (
-        <Comment commentData={commentData} currentUserId={userData._id} />
-      )}
+      {commentData.length &&
+        userData._id &&
+        commentData.map((comment) => (
+          <Comment commentData={comment} currentUserId={userData._id} />
+        ))}
     </>
   );
 }

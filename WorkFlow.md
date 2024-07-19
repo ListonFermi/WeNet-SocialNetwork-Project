@@ -244,3 +244,7 @@ Jul 19, Tue
 - Added pagination in reports management
 
 --- "Admin: pagination in reports management" ---
+
+- Edit comment completed
+
+--- "Edit comment completed" ---

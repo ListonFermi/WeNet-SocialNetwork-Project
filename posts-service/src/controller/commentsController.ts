@@ -39,4 +39,16 @@ export = {
       next(error);
     }
   },
+  editComment:async function (req: any, res: Response, next: NextFunction) {
+    try {
+      const { commentId } = req.params;
+      const { comment } = req.body;
+
+      const commentRes= await commentsServices.editComment(commentId,comment)
+
+      res.status(200).send(commentRes);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
