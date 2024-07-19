@@ -30,6 +30,7 @@ function Comment({ commentData, currentUserId }: props) {
   return (
     <div className="w-full h-32 bg-secColor flex rounded-lg overflow-hidden mt-2">
       <div className="h-full w-[25%] flex flex-col items-center justify-center">
+        <a href={`/profile/${username}`}>
         <Image
           src={profilePicUrl}
           alt="Profile Pic"
@@ -37,6 +38,7 @@ function Comment({ commentData, currentUserId }: props) {
           height={500}
           className="w-20 h-20 object-cover rounded-full cursor-pointer hover:border-2"
         />
+        </a>
         <h1 className="text-white font-semibold">@{username}</h1>
       </div>
       <div className="h-full w-[75%]">

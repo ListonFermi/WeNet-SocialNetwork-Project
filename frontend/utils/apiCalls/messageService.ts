@@ -43,4 +43,12 @@ export default {
       throw new Error(error.message);
     }
   },
+  getUnreadCount: async function () {
+    try {
+      const res = await apiClient.get("/unreadCount");
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

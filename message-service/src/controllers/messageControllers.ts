@@ -80,4 +80,19 @@ export = {
       next(error);
     }
   },
+  unreadCount: async function (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const userId = req.user._id 
+
+      const unreadCount = await messageServices.unreadCount(userId)
+
+      res.status(200).json(unreadCount);
+    } catch (error: any) {
+      next(error);
+    }
+  },
 };

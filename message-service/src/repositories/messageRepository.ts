@@ -151,7 +151,6 @@ export = {
 
       if (!convoData) throw new Error("Conversation not found");
 
-      // Filter out the arrays where the second element matches the userId
       convoData.unread = convoData.unread.filter(
         (unreadItem: any) => unreadItem[1].toString() !== userId
       );
