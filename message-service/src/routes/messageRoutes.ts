@@ -10,6 +10,7 @@ router.post(
   messageControllers.createConversation
 );
 router.get("/convoList", verifyUser, messageControllers.getConvoList);
+router.get("/unreadCount", verifyUser, messageControllers.unreadCount);
 
 router.get("/:convoId", verifyUser, messageControllers.getConvoMessages);
 router.post(

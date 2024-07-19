@@ -233,7 +233,7 @@ Jul 16, Tue
 
 --- "Conversation List- shown" ---
 
-Jul 19, Tue
+Jul 19, Fri
 
 - Admin Side: Dashboard completed
 
@@ -257,6 +257,13 @@ Jul 19, Tue
 
 --- "Added .env.samples" ---
 
+Jul 20, Sat
+
 - Fixed the bug in updating user data to Ads service.
 
 --- "BugFix: MQ to Ads-service" ---
+
+- Notifications with rest apis
+- Chat notifications with rest apis
+
+--- "Chat & Notifications with rest apis" ---

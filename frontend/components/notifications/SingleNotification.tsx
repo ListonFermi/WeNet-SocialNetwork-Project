@@ -33,8 +33,8 @@ function SingleNotification(props: props) {
   }
 
   return (
-    <a href={entityType === "posts"? `${entityId._id}`: `/profile/${username}`}>
-      <div className="h-28 w-full flex bg-secColor rounded-xl">
+    <a href={entityType === "posts"? `/post/${entityId._id}`: `/profile/${username}`} >
+      <div className="h-28 w-full flex bg-secColor rounded-xl mt-4">
         <div className="h-full w-[20%] flex flex-col-reverse mr-2">
           <div className="h-full w-full flex items-center">
             <Image

@@ -34,7 +34,8 @@ export = {
           userId: new Types.ObjectId(userId),
         })
         .populate("doneByUser")
-        .populate("entityId");
+        .populate("entityId")
+        .sort({ createdAt: -1 });
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -42,7 +43,7 @@ export = {
   markAsRead: async function (userId: string) {
     try {
       await notificationCollection.updateMany(
-        { _id: new Types.ObjectId(userId), isRead: false },
+        { userId: new Types.ObjectId(userId), isRead: false },
         { $set: { isRead: true } }
       );
     } catch (error: any) {

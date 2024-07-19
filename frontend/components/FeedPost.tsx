@@ -101,8 +101,8 @@ function FeedPost({ postData, currUserData }: props) {
             <Image
               src={profilePicUrl}
               alt="Profile Pic"
-              width={150}
-              height={150}
+              width={300}
+              height={300}
               className="w-16 h-16 object-cover rounded-full"
             />
             <p
@@ -143,7 +143,7 @@ function FeedPost({ postData, currUserData }: props) {
           alt="Tokyo"
           width={1000}
           height={1000}
-          className="w-full h-[400px] object-cover  mt-4 cursor-pointer"
+          className="w-full h-[400px] object-contain mt-4 cursor-pointer"
           onClick={() => router.push(`/post/${_id}`)}
         />
         <HeartAnimation visible={showHeart} />

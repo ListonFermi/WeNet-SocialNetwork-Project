@@ -45,7 +45,7 @@ export = {
       if (!commentData) throw new Error("Comment not found");
       commentData.comment = comment;
       await commentData.save();
-      
+
       return commentData;
     } catch (error: any) {
       throw new Error(error.message);
@@ -64,6 +64,17 @@ export = {
       );
 
       return "Comment deleted successfully";
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getPostData: async function (postId: string | Types.ObjectId) {
+    try {
+      const post = await postsCollection.findOne({
+        _id: new Types.ObjectId(postId),
+      });
+      if (!post) throw new Error("Post not found");
+      return post;
     } catch (error: any) {
       throw new Error(error.message);
     }

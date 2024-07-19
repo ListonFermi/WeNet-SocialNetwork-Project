@@ -26,13 +26,21 @@ function ProfileFeed({ currUserData }: { currUserData: IUser }) {
   if (postData?.length === 0) {
     return (
       <div className="h-96 w-full flex flex-col items-center justify-center">
-        <h1 className="text-white font-bold">You haven't made any posts yet</h1>
+        <h1 className="text-white font-bold">No posts made yet!</h1>
         <div className="p-2">
-          <a href="/createPost">
-            <button className="bg-rootBg p-2 text-white font-bold rounded-lg">
-              Create a post
-            </button>
-          </a>
+          {currUserData.username == paramsUsername ? (
+            <a href="/createPost">
+              <button className="bg-rootBg p-2 text-white font-bold rounded-lg">
+                Create a post
+              </button>
+            </a>
+          ) : (
+            <a href="/">
+              <button className="bg-rootBg p-2 text-white font-bold rounded-lg">
+                Go to feed
+              </button>
+            </a>
+          )}
         </div>
       </div>
     );

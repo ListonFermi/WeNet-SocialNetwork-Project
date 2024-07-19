@@ -81,10 +81,10 @@ function LoginForm() {
               {...register("username", {
                 required: "Username is required",
                 pattern: {
-                  value: /^[a-zA-Z0-9_]{3,16}$/,
-                  message: "Username must be 3-16 characters long and can only contain letters, numbers, and underscores",
+                  value: /^(?=.{1,15}$)[A-Za-z][A-Za-z0-9._]*$/,
+                  message:
+                    "Username can only contain letters, numbers, periods, and underscores. It must start with a letter.",
                 },
-                minLength: { value: 5, message: "Enter atleast 5 characters" },
               })}
               className="bg-black shadow appearance-none  rounded w-full py-2 px-3 text-white text-lg font-semibold leading-tight focus:outline-none focus:shadow-outline"
             />

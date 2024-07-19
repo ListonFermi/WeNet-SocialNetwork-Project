@@ -98,22 +98,31 @@ export = {
     currUserId: string
   ): Promise<number> {
     try {
-      const post = await postsRepository.toggleLike(entity, entityId, currUserId);
+      const post = await postsRepository.toggleLike(
+        entity,
+        entityId,
+        currUserId
+      );
 
       try {
-        const userId = post.userId;
+        const userId = post.userId.toString();
         const doneByUser = currUserId;
-        const postId = post._id;
-        SERVICES.notification.forEach(async () => {
-          await postsRepository.sendNotificationToMQ(
-            userId,
-            doneByUser,
-            "like",
-            `Liked your ${entity}`,
-            "posts",
-            postId
-          );
-        });
+        const postId = post._id.toString();
+
+        const postIsLiked = await postsRepository.postIsLiked(doneByUser,postId)
+
+        if (userId !== doneByUser && postIsLiked == true ) {
+          SERVICES.notification.forEach(async () => {
+            await postsRepository.sendNotificationToMQ(
+              userId,
+              doneByUser,
+              "like",
+              `Liked your ${entity}`,
+              "posts",
+              postId
+            );
+          });
+        }
       } catch (error: any) {
         console.log(error.message);
       }
@@ -172,7 +181,7 @@ export = {
       const postData = await postsRepository.createWeNetAd(postId, WeNetAds);
       if (!postData) throw new Error("Post data not found");
 
-      return 'Ad data added to post data'
+      return "Ad data added to post data";
     } catch (error: any) {
       throw new Error(error.message);
     }

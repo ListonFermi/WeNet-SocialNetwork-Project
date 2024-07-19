@@ -3,13 +3,16 @@ import { IMessage } from "../models/messageCollection";
 import messageRepository from "../repositories/messageRepository";
 
 export = {
-  getConvoMessages: async function (convoId: string,userId: string): Promise<IMessage[]> {
+  getConvoMessages: async function (
+    convoId: string,
+    userId: string
+  ): Promise<IMessage[]> {
     try {
-      const messageData= await messageRepository.getAllMessages(convoId);
+      const messageData = await messageRepository.getAllMessages(convoId);
 
-      await messageRepository.markAsRead(convoId,userId)
+      await messageRepository.markAsRead(convoId, userId);
 
-      return messageData
+      return messageData;
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -124,7 +127,9 @@ export = {
               const { username, firstName, lastName, profilePicUrl } =
                 otherParticipant as any;
 
-              const unreadCount = unread.filter((data: any)=>data[1].toString()==userId).length
+              const unreadCount = unread.filter(
+                (data: any) => data[1].toString() == userId
+              ).length;
 
               return {
                 convoId: _id,
@@ -139,6 +144,23 @@ export = {
             })
           : [];
       return responseFormat;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  unreadCount: async function (userId: string) {
+    try {
+      const convoListData = await messageRepository.getConvoList(userId);
+
+      let unreadCount = 0;
+      convoListData.forEach((data) => {
+        const { unread } = data;
+        unreadCount += unread.filter(
+          (data: any) => data[1].toString() == userId
+        ).length;
+      });
+
+      return unreadCount;
     } catch (error: any) {
       throw new Error(error.message);
     }

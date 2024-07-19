@@ -1,6 +1,7 @@
 import getUserData from "@/utils/getUserData";
 import Image from "next/image";
 import NotificationBadge from "./NotificationBadge";
+import MessagesBadge from "./MessagesBadge";
 
 function SideBar() {
   let userData;
@@ -42,7 +43,7 @@ function SideBar() {
         </a>{" "}
         <a href="/notifications">
           <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
-            <NotificationBadge userData={userData}>
+            <NotificationBadge>
               <Image
                 src="/icons/notification.svg"
                 alt="Home Logo"
@@ -56,13 +57,16 @@ function SideBar() {
         </a>
         <a href={`/messages`}>
           <div className="flex items-center mt-[3%] mx-[10%] rounded-lg  cursor-pointer hover:bg-secColorH">
-            <Image
-              src="/icons/message.svg"
-              alt="Home Logo"
-              width={50}
-              height={50}
-              className="h-10 w-10"
-            />
+            <MessagesBadge>
+              <Image
+                src="/icons/message.svg"
+                alt="Home Logo"
+                width={50}
+                height={50}
+                className="h-10 w-10"
+              />
+            </MessagesBadge>
+
             <p className="pl-5 text-xl text-white font-bold">Messages</p>
           </div>
         </a>
