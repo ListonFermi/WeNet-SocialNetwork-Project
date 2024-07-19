@@ -20,7 +20,11 @@ userRoutes.post("/forgotPassword", userController.forgotPassword);
 userRoutes.patch("/changePassword", verifyUser, userController.changePassword);
 
 //account type
-userRoutes.patch("/changeAccountType", verifyUser, userController.changeAccountType);
+userRoutes.patch(
+  "/changeAccountType",
+  verifyUser,
+  userController.changeAccountType
+);
 
 // Profile routes
 const profileRoutes = Router();
@@ -46,7 +50,21 @@ profileRoutes.post(
   profileController.toggleFollow
 );
 
-profileRoutes.get("/block/:userId", verifyUser, profileController.toggleFollow);
+profileRoutes.get(
+  "/isBlocked/:userId",
+  verifyUser,
+  profileController.isBlocked
+);
+profileRoutes.post(
+  "/toggleBlock/:userId",
+  verifyUser,
+  profileController.toggleBlockUser
+);
+profileRoutes.get(
+  '/getBlockedUsers',
+  verifyUser,
+  profileController.getBlockedUsers
+)
 
 profileRoutes.get("/:username", profileController.getProfileData);
 // Routes

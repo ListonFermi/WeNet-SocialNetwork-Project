@@ -248,3 +248,7 @@ Jul 19, Tue
 - Edit comment completed
 
 --- "Edit comment completed" ---
+
+- Block/Unblock user completed- Except in feed
+
+--- "Block/Unblock- Except in feed" ---

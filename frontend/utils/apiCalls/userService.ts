@@ -109,7 +109,7 @@ export default {
 
   blockUser: async function (userId: string) {
     try {
-      const url = `${userServiceUrl}/profile/block/${userId}`;
+      const url = `${userServiceUrl}/profile/toggleBlock/${userId}`;
       const res = await axios.post(url, {}, { withCredentials: true });
       return res.data;
     } catch (error: any) {
@@ -117,6 +117,19 @@ export default {
         error.response && error.response?.data?.length
           ? error.response.data
           : "Failed to toggle follow";
+      throw new Error(errorMessage);
+    }
+  },
+  isBlocked: async function (userId: string) {
+    try {
+      const url = `${userServiceUrl}/profile/isBlocked/${userId}`;
+      const res = await axios.get(url, { withCredentials: true });
+      return res.data; // returns isBlocked : Boolean
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response?.data?.length
+          ? error.response.data
+          : "Failed to get isBlocked data";
       throw new Error(errorMessage);
     }
   },
@@ -138,4 +151,16 @@ export default {
       throw new Error(errorMessage);
     }
   },
+
+  getBlockedUsers: async function (pageNo: number, rowsPerPage: number) {
+    try {
+      const url = `${userServiceUrl}/profile/getBlockedUsers/?pageNo=${pageNo}&rowsPerPage=${rowsPerPage}`;
+      const res = await axios.get(url, { withCredentials: true });
+      const [responseFormat, documentCount] = res.data;
+      return [responseFormat, documentCount];
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+
 };

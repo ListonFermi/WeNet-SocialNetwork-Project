@@ -138,7 +138,7 @@ export = {
       next(error);
     }
   },
-  blockUser: async (
+  toggleBlockUser: async (
     req: any,
     res: Response,
     next: NextFunction
@@ -150,6 +150,39 @@ export = {
       const isBlocked = await profileService.toggleBlock(currUserId, userId);
 
       res.status(200).send(isBlocked);
+    } catch (error) {
+      next(error);
+    }
+  },
+  isBlocked: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { userId } = req.params;
+      const currentUserId = req.user._id;
+
+      const isBlocked: boolean = await profileService.isBlocked(
+        currentUserId,
+        userId
+      );
+
+      res.status(200).send(isBlocked);
+    } catch (error) {
+      next(error);
+    }
+  },
+  getBlockedUsers: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const userId = req.user._id
+      const {pageNo, rowsPerPage} = req.query
+      const [responseFormat, documentCount] = await profileService.getBlockedUsers(pageNo, rowsPerPage, userId)
+      res.status(200).send([responseFormat, documentCount])
     } catch (error) {
       next(error);
     }

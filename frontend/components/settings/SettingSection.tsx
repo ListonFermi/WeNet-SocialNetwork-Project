@@ -4,6 +4,7 @@ import React from "react";
 import ChangePassword from "./ChangePassword";
 import AccountType from "./AccountType";
 import { IUser } from "@/types/types";
+import BlockedUsers from "./BlockedUsers";
 
 function SettingSection({ currUser }: { currUser: IUser }) {
   const searchParams = useSearchParams();
@@ -14,7 +15,7 @@ function SettingSection({ currUser }: { currUser: IUser }) {
   else selected = settingNameQuery;
 
   if(selected === 'changePassword') return <ChangePassword/>
-  else if(selected === 'blockedUsers') return;
+  else if(selected === 'blockedUsers') return <BlockedUsers/>;
   else if(selected === 'accountType') return <AccountType currUser={currUser}  />;
 }
 

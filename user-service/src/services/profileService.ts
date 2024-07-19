@@ -89,14 +89,62 @@ export = {
   },
   searchUsers: async (keyword: string): Promise<IUser[]> => {
     try {
-      return await profileRepository.searchUsers(keyword)
+      return await profileRepository.searchUsers(keyword);
     } catch (error: any) {
       throw new Error(error.message);
     }
   },
   toggleBlock: async (currUser: string, userId: string): Promise<boolean> => {
     try {
-      return await profileRepository.toggleBlock(currUser, userId)
+      const isBlocked = await profileRepository.toggleBlock(currUser, userId);
+
+      if (isBlocked) {
+        const isFollowing = await profileRepository.isFollowing(
+          currUser,
+          userId
+        );
+        if (isFollowing) await profileRepository.toggleFollow(currUser, userId);
+      }
+
+      return isBlocked;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  isBlocked: async (
+    currentUserId: string,
+    otherUser: string
+  ): Promise<boolean> => {
+    try {
+      return await profileRepository.isBlocked(currentUserId, otherUser);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getBlockedUsers: async (
+    pageNo: number,
+    rowsPerPage: number,
+    userId: string
+  ) => {
+    try {
+      const skip = rowsPerPage * (pageNo - 1);
+      const limit = rowsPerPage;
+
+      let blockedUsers = await profileRepository.getBlockedUsers(userId);
+      if (!blockedUsers) throw Error("Blocked users not found");
+
+      const documentCount = blockedUsers.length;
+      blockedUsers = blockedUsers.slice(skip, skip + limit);
+
+      const responseFormat = blockedUsers.map((user: any, i) => {
+        const { _id, username, profilePicUrl } = user;
+
+        const sNo = skip + (i + 1);
+
+        return { sNo, _id, username, profilePicUrl };
+      });
+
+      return [responseFormat, documentCount];
     } catch (error: any) {
       throw new Error(error.message);
     }

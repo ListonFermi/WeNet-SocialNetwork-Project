@@ -214,11 +214,11 @@ export = {
       }
 
       if (isBlocked) {
-        //unfollow operation
+        //unblock operation
         if (index1 != undefined) user1Data.blockedUsers?.splice(index1, 1);
         if (index2 != undefined) user2Data.blockedByUsers?.splice(index2, 1);
       } else {
-        //follow operation
+        //block operation
         user1Data.blockedUsers?.push(user2Id);
         user2Data.blockedByUsers?.push(user1Id);
       }
@@ -227,6 +227,48 @@ export = {
       await user2Data.save();
 
       return !isBlocked;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  isBlocked: async (user1: string, user2: string): Promise<boolean> => {
+    try {
+      const user1Id = new Types.ObjectId(user1);
+      const user2Id = new Types.ObjectId(user2);
+
+      const user1Data = await userCollection.findOne({ _id: user1Id });
+      if (!user1Data) throw new Error("Current user not found");
+
+      const user2Data = await userCollection.findOne({ _id: user2Id });
+      if (!user2Data) throw new Error("User to be blocked not found");
+
+      let isBlocked = false;
+      let index1, index2;
+
+      if (user1Data.blockedUsers && user2Data.blockedByUsers) {
+        index1 = user1Data.blockedUsers.findIndex((id: Types.ObjectId) =>
+          id.equals(user2Id)
+        );
+        index2 = user2Data.blockedByUsers.findIndex((id: Types.ObjectId) =>
+          id.equals(user1Id)
+        );
+        isBlocked = index1 !== -1 && index2 !== -1;
+      }
+
+      return isBlocked;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getBlockedUsers: async (userId: string) => {
+    try {
+      const user = await userCollection
+        .findOne({ _id: new Types.ObjectId(userId) })
+        .populate("blockedUsers");
+        
+      if (!user) throw new Error("User not found");
+
+      return user.blockedUsers;
     } catch (error: any) {
       throw new Error(error.message);
     }

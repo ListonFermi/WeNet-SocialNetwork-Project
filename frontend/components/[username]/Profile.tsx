@@ -1,7 +1,6 @@
 import React from "react";
 import ProfileHeader from "./ProfileHeader";
 import getUserData from "@/utils/getUserData";
-import FeedPost from "../FeedPost";
 import ProfileFeed from "./ProfileFeed";
 
 function Profile() {
@@ -15,7 +14,7 @@ function Profile() {
   }
 
   return (
-    <div>
+    <>
       <ProfileHeader currUser={userData} />
       <div className="h-10 w-full flex bg-secColor">
         <div className="shadow-inner rounded-sm shadow-rootBg w-1/2 flex items-center justify-center">
@@ -26,7 +25,7 @@ function Profile() {
         </div>
       </div>
       <ProfileFeed currUserData={userData} />
-    </div>
+    </>
   );
 }
 
