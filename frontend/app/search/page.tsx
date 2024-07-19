@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import BottomNav from "@/components/feed/BottomNav";
 import FeedLeftDiv from "@/components/feed/FeedLeftDiv";
 import Search from "@/components/search/Search";
 import React from "react";
@@ -15,10 +16,11 @@ function page() {
           <div className="h-[10%] w-full flex items-center justify-center p-2">
             <h1 className="text-white font-bold text-xl">Search</h1>
           </div>
-          <Search/>
+          <Search />
         </div>
         <div className="relative flex-1 hidden md:block bg-feedBg"></div>
       </div>
+      <BottomNav />
     </div>
   );
 }

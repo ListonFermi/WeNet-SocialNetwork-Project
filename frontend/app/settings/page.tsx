@@ -2,6 +2,7 @@ import React from "react";
 import SettingsBar from "@/components/settings/SettingsBar";
 import SettingSection from "@/components/settings/SettingSection";
 import getUserData from "@/utils/getUserData";
+import BottomNav from "@/components/feed/BottomNav";
 
 function page() {
   let currUser;
@@ -22,6 +23,7 @@ function page() {
         <SettingSection currUser={currUser}/>
       </div>
       {/* <MobileView currUser={currUser} /> */}
+      <BottomNav/>
     </div>
   );
 }

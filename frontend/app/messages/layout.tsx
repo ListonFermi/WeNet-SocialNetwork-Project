@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import BottomNav from "@/components/feed/BottomNav";
 import SideBar from "@/components/feed/SideBar";
 import React from "react";
 
@@ -16,6 +17,7 @@ export default function MessagesLayout({ children }: prop) {
         </div>
         {children}
       </div>
+      <BottomNav />
     </div>
   );
 }

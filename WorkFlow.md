@@ -267,3 +267,7 @@ Jul 20, Sat
 - Chat notifications with rest apis
 
 --- "Chat & Notifications with rest apis" ---
+
+- Added bottom navigation bar in responsive view
+
+--- "Bottom navigation in responsive view" ---

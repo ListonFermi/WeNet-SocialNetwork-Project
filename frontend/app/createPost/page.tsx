@@ -3,6 +3,7 @@ import FeedLeftDiv from "@/components/feed/FeedLeftDiv";
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import CenterDiv from "@/components/createPost/CenterDiv";
+import BottomNav from "@/components/feed/BottomNav";
 
 function page() {
   return (
@@ -18,6 +19,7 @@ function page() {
         <div className="relative flex-1 hidden md:block bg-feedBg">
         </div>
       </div>
+      <BottomNav/>
     </div>
   );
 }

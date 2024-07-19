@@ -3,6 +3,7 @@ import FeedLeftDiv from "@/components/feed/FeedLeftDiv";
 import React from "react";
 import Profile from "@/components/[username]/Profile";
 import EditProfile from "@/components/[username]/edit/EditProfile";
+import BottomNav from "@/components/feed/BottomNav";
 
 function page() {
   
@@ -19,6 +20,7 @@ function page() {
         <div className="relative flex-1 hidden md:block bg-feedBg">
         </div>
       </div>
+      <BottomNav/>
     </div>
   );
 }

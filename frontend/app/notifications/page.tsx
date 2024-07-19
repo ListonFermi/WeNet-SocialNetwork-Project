@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import BottomNav from "@/components/feed/BottomNav";
 import FeedLeftDiv from "@/components/feed/FeedLeftDiv";
 import Feed from "@/components/feed/UserFeed";
 import NotificationBar from "@/components/notifications/NotificationBar";
@@ -20,6 +21,7 @@ function page() {
         </div>
         <div className="relative flex-1 hidden md:block bg-feedBg"></div>
       </div>
+      <BottomNav/>
     </div>
   );
 }
