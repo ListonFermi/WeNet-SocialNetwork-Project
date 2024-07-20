@@ -34,6 +34,7 @@ function AccountType({ currUser }: { currUser: IUser }) {
   const [accountType, setAccountType] = useState(
     currUser.accountType.isProfessional ? currUser.accountType.category : "personalAccount"
   );
+  const [accountTypeValue, setAccountTypeValue] = useState<any>(null)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -44,14 +45,14 @@ function AccountType({ currUser }: { currUser: IUser }) {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAccountType(event.target.value);
+    setAccountTypeValue(event.target.value);
   };
 
   const handleChangeAccountType = async () => {
     try {
-      if (!accountType) return;
+      if (!accountTypeValue) return;
       await toast.promise(
-        userService.changeAccountType(accountType),
+        userService.changeAccountType(accountTypeValue),
         {
           pending: "Changing account type",
           success: {
@@ -67,6 +68,7 @@ function AccountType({ currUser }: { currUser: IUser }) {
           },
         }
       );
+      setAccountType(accountTypeValue)
     } catch (error: any) {
       toast.error(`Error: ${error.message}`);
     }
