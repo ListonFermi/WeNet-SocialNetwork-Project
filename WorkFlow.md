@@ -279,3 +279,7 @@ Jul 20, Sat
 - post-preference: sample 
 
 --- "post-preference: sample" ---
+
+- Few minor changes in ui
+
+--- "UI: minor change" ---
