@@ -283,3 +283,7 @@ Jul 20, Sat
 - Few minor changes in ui
 
 --- "UI: minor change" ---
+
+- WeNet tick request- user side request done
+
+--- "WeNet-Tick: user request done" ---

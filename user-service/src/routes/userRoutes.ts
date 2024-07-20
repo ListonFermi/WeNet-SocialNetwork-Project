@@ -26,6 +26,15 @@ userRoutes.patch(
   userController.changeAccountType
 );
 
+//WeNet-tick routes
+userRoutes.post(
+  "/requestWenetTick",
+  verifyUser,
+  upload.single("image"),
+  profileController.uploadWeNetTickRequestPic,
+  userController.requestWenetTick
+);
+
 // Profile routes
 const profileRoutes = Router();
 profileRoutes.get("/userData", verifyUser, profileController.getUser);
@@ -61,16 +70,15 @@ profileRoutes.post(
   profileController.toggleBlockUser
 );
 profileRoutes.get(
-  '/getBlockedUsers',
+  "/getBlockedUsers",
   verifyUser,
   profileController.getBlockedUsers
 ),
-profileRoutes.get(
-  '/getFollowing',
-  verifyUser,
-  profileController.getFollowingUsers
-)
-
+  profileRoutes.get(
+    "/getFollowing",
+    verifyUser,
+    profileController.getFollowingUsers
+  );
 
 profileRoutes.get("/:username", profileController.getProfileData);
 // Routes

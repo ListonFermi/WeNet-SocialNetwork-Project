@@ -13,9 +13,10 @@ import {
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import AlertDialog from "./AlertDialog";
+import RequestWeNetTick from "./RequestWeNetTick/RequestWeNetTick";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -39,10 +40,6 @@ function AccountType({ currUser }: { currUser: IUser }) {
   const [selectedValue, setSelectedValue] = useState(
     isProfessional ? currUser.accountType.category : "personalAccount"
   );
-
-  //   useEffect(() => {
-
-  //   },);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -86,15 +83,15 @@ function AccountType({ currUser }: { currUser: IUser }) {
   };
 
   return (
-    <>
+    <div className=" overflow-y-auto no-scrollbar w-full">
       <ToastContainer />
-      <div className="bg-secColor h-full w-full">
+      <div className="bg-secColor h-72 w-full">
         <div className="h-[20%] flex items-center justify-center">
           <h1 className="text-white font-bold text-2xl hidden md:block">
             Account Type
           </h1>
         </div>
-        <div className="w-full h-[15%] flex items-center justify-center">
+        <div className="w-full h-[50%] flex items-center justify-center">
           <Image
             src={`/icons/${
               isProfessional
@@ -123,6 +120,9 @@ function AccountType({ currUser }: { currUser: IUser }) {
             Change account Type
           </button>
         </div>
+      </div>
+      <div className="bg-secColor h-48 w-full mt-2">
+        <RequestWeNetTick />
       </div>
       <Dialog
         open={open}
@@ -161,7 +161,7 @@ function AccountType({ currUser }: { currUser: IUser }) {
           </AlertDialog>
         </DialogActions>
       </Dialog>
-    </>
+    </div>
   );
 }
 

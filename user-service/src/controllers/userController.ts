@@ -166,4 +166,21 @@ export = {
       next(error);
     }
   },
+  requestWenetTick: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { imageUrl, description } = req.body
+      const userId = req.user._id
+
+      const wenetRequestData = await userService.requestWenetTick(userId,imageUrl, description)
+
+      res.status(200).send(wenetRequestData);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
 };

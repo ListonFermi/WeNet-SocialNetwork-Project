@@ -108,4 +108,11 @@ export = {
       throw new Error(error.message);
     }
   },
+  requestWenetTick: async (userId: string, imageUrl: string, description: string) => {
+    try {
+      return await userRepository.requestWenetTick(userId,imageUrl, description)
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };
