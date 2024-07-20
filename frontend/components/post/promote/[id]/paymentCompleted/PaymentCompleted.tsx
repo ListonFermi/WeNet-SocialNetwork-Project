@@ -12,7 +12,7 @@ const PaymentCompleted = () => {
   return (
     <div className="h-full w-full bg-secColor flex items-center justify-center">
       {status === "success" ? (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-400 to-blue-500 p-6">
+        <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gradient-to-r from-green-400 to-blue-500 p-6">
           <div className="bg-white shadow-lg rounded-lg p-8">
             <h1 className="text-2xl font-bold text-green-600 mb-4">
               Payment Successful!

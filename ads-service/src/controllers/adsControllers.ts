@@ -18,4 +18,12 @@ export = {
       next(error);
     }
   },
+  getPosts:  async function (req: Request, res: Response, next: NextFunction) {
+    try {
+      const data= await adsService.getPosts()
+      res.status(200).send(data)
+    } catch (error) {
+      next(error)
+    }
+  }
 };

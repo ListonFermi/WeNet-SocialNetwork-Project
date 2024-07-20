@@ -11,6 +11,7 @@ import { IPost, IUser } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { toastOptions } from "@/utils/toastOptions";
 import { formatDate } from "@/utils/formatString";
+import PromotedPost from "./PromotedPost";
 
 type props = {
   postData: IPost | null;
@@ -24,6 +25,8 @@ function FeedPost({ postData, currUserData }: props) {
 
   let isPublicFeed = false;
   if (!currUserData) isPublicFeed = true;
+
+  if(postData?.fromAdsService) return <PromotedPost postData={postData}/>
 
   const {
     _id,

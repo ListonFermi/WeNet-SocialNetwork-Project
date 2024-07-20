@@ -49,6 +49,7 @@ export interface IPost {
   createdAt: string;
   isLiked: boolean;
   isBookmarked: boolean;
+  fromAdsService?: boolean
 }
 
 export interface IComment {
