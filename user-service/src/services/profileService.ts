@@ -149,4 +149,20 @@ export = {
       throw new Error(error.message);
     }
   },
+  getFollowingUsers: async (currentUserId: string): Promise<any> => {
+    try {
+      const following = await profileRepository.getFollowingUsers(
+        currentUserId
+      );
+      if(following?.length==0) return []
+
+      const responseFormat = following?.map((user) => {
+        return user._id.toString();
+      });
+
+      return responseFormat;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

@@ -271,3 +271,7 @@ Jul 20, Sat
 - Added bottom navigation bar in responsive view
 
 --- "Bottom navigation in responsive view" ---
+
+- Search & normal feed of a user done
+
+--- "Search debouncing && feed of a user" ---

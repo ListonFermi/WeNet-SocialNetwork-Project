@@ -195,4 +195,17 @@ export = {
       next(error);
     }
   },
+  getFollowingUsers: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const userId = req.user._id;
+      const data=  await profileService.getFollowingUsers(userId);
+      res.status(200).send(data);
+    } catch (error) {
+      next(error);
+    }
+  },
 };

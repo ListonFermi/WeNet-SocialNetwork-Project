@@ -1,28 +1,40 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import UserSearch from "./UserSearch";
-import PostsSearch from "./PostsSearch";
 import userService from "@/utils/apiCalls/userService";
+import PostsSearch from "./PostsSearch";
 
 function Search() {
   const [isUserSearch, setIsUserSearch] = useState(true);
-
   const [keyword, setKeyword] = useState("");
+  const [results, setResults] = useState([]);
+  const debounceTimeoutRef: any = useRef(null);
 
-  const [results, setResults] = useState();
-  
+  useEffect(() => {
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
+    }
+
+    debounceTimeoutRef.current = setTimeout(() => {
+      if (keyword.trim()) {
+        handleSearch();
+      } else {
+        setResults([]); 
+      }
+    }, 300); 
+
+    return () => {
+      clearTimeout(debounceTimeoutRef.current);
+    };
+  }, [keyword]);
 
   async function handleSearch() {
     try {
       if (isUserSearch) {
         const results = await userService.searchUsers(keyword);
-        setKeyword("");
         setResults(results);
         console.log({ results });
-      } else {
-        const results = await userService.searchUsers(keyword);
-        setKeyword("");
       }
     } catch (error: any) {
       alert(error.message);
@@ -34,7 +46,7 @@ function Search() {
   }
 
   return (
-    <div className=" h-full w-full">
+    <div className="h-full w-full">
       <div className="h-[10%] w-full flex items-center justify-center">
         <input
           type="text"
@@ -42,40 +54,13 @@ function Search() {
           value={keyword}
           onChange={(event) => setKeyword(event.target.value)}
         />
-        <button onClick={handleSearch}>
-          <Image
-            src="/icons/search.svg"
-            alt="Home Logo"
-            width={50}
-            height={50}
-            className="h-10 w-10"
-          />
-        </button>
       </div>
       <div>
-        {/* <div className="h-10 w-full flex bg-secColor">
-          <div
-            className={`shadow-inner rounded-sm ${
-              isUserSearch && "shadow-rootBg"
-            }  w-1/2 flex items-center justify-center cursor-pointer`}
-            onClick={handleSearchChange}
-          >
-            <h1 className="text-white font-bold cursor-pointer">Users</h1>
-          </div>
-          <div
-            className={`shadow-inner rounded-sm ${
-              !isUserSearch && "shadow-rootBg"
-            }  w-1/2 flex items-center justify-center cursor-pointer`}
-            onClick={handleSearchChange}
-          >
-            <h1 className="text-white font-bold cursor-pointer">Posts</h1>
-          </div>
-        </div> */}
         <div className="w-full flex flex-col items-center justify-center">
-          {isUserSearch && results ? (
+          {isUserSearch && results.length > 0 ? (
             <UserSearch results={results} />
           ) : (
-            results &&   <PostsSearch />
+            results.length > 0 && <PostsSearch />
           )}
         </div>
       </div>

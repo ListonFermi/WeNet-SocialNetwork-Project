@@ -64,7 +64,13 @@ profileRoutes.get(
   '/getBlockedUsers',
   verifyUser,
   profileController.getBlockedUsers
+),
+profileRoutes.get(
+  '/getFollowing',
+  verifyUser,
+  profileController.getFollowingUsers
 )
+
 
 profileRoutes.get("/:username", profileController.getProfileData);
 // Routes

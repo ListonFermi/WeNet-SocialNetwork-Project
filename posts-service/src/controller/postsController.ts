@@ -189,6 +189,7 @@ export = {
     next: NextFunction
   ): Promise<void> {
     try {
+      const currUserId = req.user._id
       const topPosts = await postsServices.getTopPosts();
 
       let topPostsData: any = topPosts.map(async (postId) => {

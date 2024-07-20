@@ -273,4 +273,17 @@ export = {
       throw new Error(error.message);
     }
   },
+  getFollowingUsers: async (userId: string) => {
+    try {
+      const user = await userCollection
+        .findOne({ _id: new Types.ObjectId(userId) })
+        .populate("following");
+        
+      if (!user) throw new Error("User not found");
+
+      return user.following;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }, 
 };

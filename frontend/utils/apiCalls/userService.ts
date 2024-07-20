@@ -77,6 +77,19 @@ export default {
       throw new Error(errorMessage);
     }
   },
+  getFollowingUsers: async function () {
+    try {
+      const url = `${userServiceUrl}/profile/getFollowing`;
+      const res = await axios.get(url, { withCredentials: true });
+      return res.data; 
+    } catch (error: any) {
+      const errorMessage =
+        error.response && error.response?.data?.length
+          ? error.response.data
+          : "Failed to get following users";
+      throw new Error(errorMessage);
+    }
+  },
   toggleFollow: async function (userId: string) {
     try {
       const url = `${userServiceUrl}/profile/toggleFollow/${userId}`;
