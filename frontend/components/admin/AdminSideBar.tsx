@@ -52,7 +52,7 @@ function AdminSideBar() {
             </p>
           </div>
         </a>
-        {/* <a href={"/admin/WeNetTickManagement"}>
+        <a href={"/admin/weNetTickManagement"}>
           <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
             <Image
               src="/icons/admin/WeNetTickManagement.png"
@@ -65,7 +65,7 @@ function AdminSideBar() {
               WeNet Tick Management
             </p>
           </div>
-        </a> */}
+        </a>
         <a href={"/admin/adsManagement"}>
           <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
             <Image

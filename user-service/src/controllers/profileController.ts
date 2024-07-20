@@ -202,8 +202,26 @@ export = {
   ): Promise<void> => {
     try {
       const userId = req.user._id;
-      const data=  await profileService.getFollowingUsers(userId);
+      const data = await profileService.getFollowingUsers(userId);
       res.status(200).send(data);
+    } catch (error) {
+      next(error);
+    }
+  },
+  uploadWeNetTickRequestPic: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const imageFile = req.file;
+      if (!imageFile) throw new Error("Image File not found");
+
+      req.body.imageUrl = await profileService.uploadImage(
+        imageFile,
+        "wenet-tick-request"
+      );
+      next();
     } catch (error) {
       next(error);
     }

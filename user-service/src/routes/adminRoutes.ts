@@ -21,5 +21,15 @@ router.get(
   verifyAdmin,
   adminController.dashboardChartDataAccountType
 );
+router.get(
+  "/getTickRequestsData",
+  verifyAdmin,
+  adminController.getTickRequestsData
+);
+router.patch(
+  "/changeTickRequestStatus/:requestId",
+  verifyAdmin,
+  adminController.changeTickRequestStatus
+);
 
 export default router;

@@ -50,7 +50,6 @@ export = {
 
         //userData with email, to ads Service
         await userService.sendUserDataToAdsMQ(_id, MQActions.addUser);
-
       } catch (error: any) {
         console.log(error.message);
       }
@@ -150,8 +149,11 @@ export = {
 
       try {
         SERVICES.allOtherServices.forEach(async () => {
-          if(!userData._id) throw new Error('user Id not found to send in MQ')
-          await userService.sendUserDataToMQ(userData._id?.toString(), MQActions.editUser);
+          if (!userData._id) throw new Error("user Id not found to send in MQ");
+          await userService.sendUserDataToMQ(
+            userData._id?.toString(),
+            MQActions.editUser
+          );
         });
       } catch (error: any) {
         console.log(error.message);
@@ -161,6 +163,57 @@ export = {
       res.cookie("token", token);
 
       res.status(200).send("Account type updated successfully");
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
+  requestWenetTick: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { imageUrl, description } = req.body;
+      const userId = req.user._id;
+
+      const wenetRequestData = await userService.requestWenetTick(
+        userId,
+        imageUrl,
+        description
+      );
+
+      res.status(200).send(wenetRequestData);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
+  hasRequestedTick: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const userId = req.user._id;
+
+      const data = await userService.hasRequestedTick(userId);
+
+      res.status(200).send(data);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
+  hasWenetTick: async (
+    req: any,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { username } = req.params;
+      const data = await userService.hasWenetTick(username);
+      res.status(200).send(data);
     } catch (error) {
       console.error(error);
       next(error);

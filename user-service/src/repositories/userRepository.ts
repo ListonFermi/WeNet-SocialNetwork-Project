@@ -1,5 +1,6 @@
 import { OTPCollection } from "../models/OTP";
 import userCollection, { IUser } from "../models/User";
+import wenetTickRequestCollection from "../models/WenetTickRequest";
 import { OTPHelper } from "../utils/OTPHelper";
 import hash from "../utils/hash";
 import halfwayUser from "../utils/isHalfwayUser";
@@ -8,7 +9,7 @@ import { JwtPayload, jwtDecode } from "jwt-decode";
 import dotenv from "dotenv";
 import { IGoogleCredentialRes } from "../types/types";
 import "core-js/stable/atob";
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { generateStrongPassword } from "../utils/generateStrongPassword";
 import { MQUserData, MQUserDataToAds, publisher } from "../rabbitMq/publisher";
 
@@ -78,7 +79,6 @@ export = {
 
       const isVerified = hash.compareHash(otp, otpFromDb.otp);
       if (isVerified) {
-
         const user = await userCollection.findOne({ _id });
         if (!user) throw new Error("user not found");
         user.isRestricted = false;
@@ -97,7 +97,7 @@ export = {
       const user = await userCollection.findOne({ username });
       if (!user) throw new Error("Please enter valid credentials");
 
-      if(user.isRestricted) throw new Error("Sorry this user is restricted")
+      if (user.isRestricted) throw new Error("Sorry this user is restricted");
 
       const passwordMatches = hash.compareHash(password, user.password);
       if (!passwordMatches) throw new Error("Please enter valid credentials");
@@ -264,12 +264,41 @@ export = {
         user.accountType = {
           isProfessional: true,
           category: accountType,
-          hasWeNetTick: true,
+          hasWeNetTick: false,
         };
       }
       await user.save();
 
       return user;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  requestWenetTick: async (
+    userId: string,
+    imageUrl: string,
+    description: string
+  ) => {
+    try {
+      return await wenetTickRequestCollection.create({
+        userId: new Types.ObjectId(userId),
+        imageUrl,
+        description,
+      });
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getTickRequestData: async (userId: string) => {
+    try {
+      return await wenetTickRequestCollection.findOne({userId: new Types.ObjectId(userId)});
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getUserData : async (username: string) => {
+    try {
+      return await userCollection.findOne({username});
     } catch (error: any) {
       throw new Error(error.message);
     }

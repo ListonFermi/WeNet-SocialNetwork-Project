@@ -108,4 +108,40 @@ export = {
       throw new Error(error.message);
     }
   },
+  requestWenetTick: async (
+    userId: string,
+    imageUrl: string,
+    description: string
+  ) => {
+    try {
+      return await userRepository.requestWenetTick(
+        userId,
+        imageUrl,
+        description
+      );
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  hasRequestedTick: async (userId: string) => {
+    try {
+      const tickRequestData = await userRepository.getTickRequestData(userId);
+      if (!tickRequestData) return { hasRequestedTick: false, status: null };
+
+      return { hasRequestedTick: true, status: tickRequestData.status };
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  hasWenetTick: async (username: string) => {
+    try {
+      const user = await userRepository.getUserData(username);
+      if (!user) throw new Error("User not found");
+
+      if (user.accountType?.hasWeNetTick) return true;
+      else return false;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
 };

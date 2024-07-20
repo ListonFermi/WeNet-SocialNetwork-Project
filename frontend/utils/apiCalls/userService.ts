@@ -81,7 +81,7 @@ export default {
     try {
       const url = `${userServiceUrl}/profile/getFollowing`;
       const res = await axios.get(url, { withCredentials: true });
-      return res.data; 
+      return res.data;
     } catch (error: any) {
       const errorMessage =
         error.response && error.response?.data?.length
@@ -176,4 +176,36 @@ export default {
     }
   },
 
+  requestWenetTick: async function (formData: FormData) {
+    try {
+      const url = `${userServiceUrl}/requestWenetTick`;
+      const res = await axios.post(url, formData, {
+        withCredentials: true,
+      });
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  hasRequestedTick: async function () {
+    try {
+      const url = `${userServiceUrl}/hasRequestedTick`;
+      const res = await axios.get(url, {
+        withCredentials: true,
+      });
+      console.log({res: res.data})
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  hasWenetTick: async function (username: string){
+    try {
+      const url = `${userServiceUrl}/hasWenetTick/${username}`;
+      const res = await axios.get(url);
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
 };

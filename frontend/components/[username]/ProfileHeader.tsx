@@ -31,7 +31,7 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
         const userData = await userService.getProfileData(paramsUsername);
         const { _id } = userData;
         if (_id != currUserId) {
-          console.log({_id})
+          console.log({ _id });
           const isBlocked = await userService.isBlocked(_id);
           setIsBlocked(isBlocked);
         }
@@ -48,7 +48,7 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
 
   if (!userData) return <ProfileHeaderLoading />;
 
-  const { _id, firstName, lastName, username } = userData;
+  const { _id, firstName, lastName, username, accountType } = userData;
   let { dateOfBirth, bio, profilePicUrl, coverPicUrl, location } = userData;
 
   const isOwnProfile = _id === currUserId;
@@ -82,6 +82,8 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
     }
   }
 
+  const isVerified = accountType?.hasWeNetTick;
+
   return (
     <>
       {isBlocked && <BlockedOverlay />}
@@ -114,21 +116,38 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
             </div>
             {/* Full name && username  */}
             <div className="flex flex-col w-[40%] align-middle">
-              <h1 className="text-2xl lg:text-3xl md:text-xl sm:text-lg font-bold text-white px-4 sm:px-2">{`${firstName} ${lastName}`}</h1>
-              <h1 className="text-xs lg:text-xs md:text-xs sm:text-xs font-bold text-white py-2 px-4 sm:py-1 sm:px-2">{`@${username}`}</h1>
+              <div className="flex items-center">
+                <h1 className="text-2xl lg:text-2xl md:text-xl sm:text-lg font-bold text-white px-4 sm:px-2">
+                  {`${firstName} ${lastName}`}
+                </h1>
+                {isVerified && (
+                  <Image
+                    src="/icons/wenetTick.png"
+                    alt="wenet-tick"
+                    height={24}
+                    width={24}
+                    className="ml-2"
+                  />
+                )}
+              </div>
+              <h1 className="text-xs lg:text-xs md:text-xs sm:text-xs font-bold text-white py-2 px-4 sm:py-1 sm:px-2">
+                {`@${username}`}
+              </h1>
             </div>
 
             {/* Edit / follow button */}
             <div className="w-[30%] flex flex-col items-center align-middle">
               {isOwnProfile ? (
-                <a href={`/profile/${username}/edit`}>
-                  <button
-                    type="button"
-                    className="bg-rootBg hover:bg-green-700 text-white text-xs md:text-sm font-bold p-1 rounded focus:outline-none focus-shadow-outline"
-                  >
-                    Edit Profile
-                  </button>
-                </a>
+                <div className="mt-2">
+                  <a href={`/profile/${username}/edit`}>
+                    <button
+                      type="button"
+                      className="bg-rootBg hover:bg-green-700 text-white text-xs md:text-sm font-bold p-1 rounded focus:outline-none focus-shadow-outline"
+                    >
+                      Edit Profile
+                    </button>
+                  </a>
+                </div>
               ) : (
                 <>
                   <div className="flex">

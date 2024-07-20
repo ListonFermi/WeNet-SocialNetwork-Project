@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import userCollection from "../models/User";
+import wenetTickRequestCollection from "../models/WenetTickRequest";
 
 export = {
   verifyLogin: async (username: string, password: string): Promise<string> => {
@@ -92,4 +93,56 @@ export = {
       throw new Error(error.message);
     }
   },
+  getTickRequestsData: async (skip: number, limit: number) => {
+    try {
+      return await wenetTickRequestCollection
+        .find()
+        .skip(skip)
+        .limit(limit)
+        .populate("userId");
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getTickRequestDocumentCount: async () => {
+    try {
+      return await wenetTickRequestCollection.countDocuments();
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  changeTickRequestStatus: async (
+    requestId: string,
+    status: "approved" | "rejected"
+  ) => {
+    try {
+      const tickRequestData = await wenetTickRequestCollection.findById(
+        requestId
+      );
+      if (!tickRequestData) throw new Error("Tick request data not found");
+
+      tickRequestData.status = status;
+      await tickRequestData.save();
+
+      return tickRequestData;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  giveTickToUser: async (userId: string) => {
+    try {
+      const updatedUser = await userCollection.findByIdAndUpdate(
+        userId,
+        { $set: { 'accountType.hasWeNetTick': true } },
+        { new: true, runValidators: true }
+      );
+  
+      if (!updatedUser) throw new Error("User not found");
+  
+      return updatedUser;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  
 };
