@@ -70,4 +70,42 @@ export = {
       next(error);
     }
   },
+  getTickRequestsData: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { pageNo, rowsPerPage } = req.query;
+      const data = await adminService.getTickRequestsData(
+        Number(pageNo),
+        Number(rowsPerPage)
+      );
+      res.status(200).send(data);
+    } catch (error: any) {
+      next(error);
+    }
+  },
+  changeTickRequestStatus: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { requestId } = req.params;
+      const { status, userId } = req.body;
+
+      if (status != "approved" && status != "rejected")
+        throw new Error("Invalid status for the tick request");
+
+      const data = await adminService.changeTickRequestStatus(
+        requestId,
+        status,
+        userId
+      );
+      res.status(200).send(data);
+    } catch (error: any) {
+      next(error);
+    }
+  },
 };

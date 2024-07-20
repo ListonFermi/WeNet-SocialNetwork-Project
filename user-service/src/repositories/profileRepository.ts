@@ -69,7 +69,6 @@ export = {
   getProfileData: async (username: string): Promise<IUser> => {
     try {
       const userData = await userCollection.findOne({ username });
-      console.log("here?");
       if (!userData) throw new Error("No user found");
       return userData;
     } catch (error: any) {

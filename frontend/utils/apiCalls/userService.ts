@@ -182,9 +182,30 @@ export default {
       const res = await axios.post(url, formData, {
         withCredentials: true,
       });
-      return res.data
+      return res.data;
     } catch (error: any) {
       throw new Error(error.message);
     }
   },
+  hasRequestedTick: async function () {
+    try {
+      const url = `${userServiceUrl}/hasRequestedTick`;
+      const res = await axios.get(url, {
+        withCredentials: true,
+      });
+      console.log({res: res.data})
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  hasWenetTick: async function (username: string){
+    try {
+      const url = `${userServiceUrl}/hasWenetTick/${username}`;
+      const res = await axios.get(url);
+      return res.data;
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
 };

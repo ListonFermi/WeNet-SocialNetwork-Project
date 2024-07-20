@@ -58,7 +58,62 @@ export = {
         ["Celebrity Accounts", celebrityAccountCount],
         ["Company/Institution Accounts", companyAccountCount],
       ];
-      return responseFormat
+      return responseFormat;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getTickRequestsData: async (pageNo: number, rowsPerPage: number) => {
+    try {
+      const skip = rowsPerPage * (pageNo - 1);
+      const limit = rowsPerPage;
+
+      const tickRequestData = await adminRepository.getTickRequestsData(
+        skip,
+        limit
+      );
+
+      const documentCount = await adminRepository.getTickRequestDocumentCount();
+
+      const responseFormat = tickRequestData.map((data: any, index) => {
+        const { imageUrl, description, status, createdAt, userId } = data;
+        const requestId = data._id;
+        const { username, firstName, lastName, profilePicUrl } = userId;
+
+        return {
+          sNo: skip + index + 1,
+          requestId,
+          userId: userId._id,
+          username,
+          firstName,
+          lastName,
+          profilePicUrl,
+          imageUrl,
+          description,
+          status,
+          createdAt,
+        };
+      });
+
+      return [responseFormat, documentCount];
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  changeTickRequestStatus: async (
+    requestId: string,
+    status: "approved" | "rejected",
+    userId: string
+  ) => {
+    try {
+      const tickRequestData = await adminRepository.changeTickRequestStatus(
+        requestId,
+        status
+      );
+
+      if (status === "approved") await adminRepository.giveTickToUser(userId);
+
+      return tickRequestData;
     } catch (error: any) {
       throw new Error(error.message);
     }

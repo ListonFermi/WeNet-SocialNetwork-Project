@@ -287,3 +287,7 @@ Jul 20, Sat
 - WeNet tick request- user side request done
 
 --- "WeNet-Tick: user request done" ---
+
+- Admin: Ads management completed
+
+--- "Admin: Ads management completed" ---

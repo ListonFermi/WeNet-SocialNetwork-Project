@@ -56,7 +56,7 @@ function PromotedPost({ postData }: props) {
                   height={150}
                   className="h-4 w-4"
                 />
-                <p className="text-gray-400 text-xs font-semibold px-2">
+                <p className="text-white text-xs font-semibold px-2">
                   {timestamp}
                 </p>
               </div>

@@ -34,6 +34,12 @@ userRoutes.post(
   profileController.uploadWeNetTickRequestPic,
   userController.requestWenetTick
 );
+userRoutes.get(
+  "/hasRequestedTick",
+  verifyUser,
+  userController.hasRequestedTick
+);
+userRoutes.get("/hasWenetTick/:username", userController.hasWenetTick);
 
 // Profile routes
 const profileRoutes = Router();

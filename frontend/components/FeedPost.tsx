@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import FeedPostSkeleton from "./FeedPostSkeleton";
 import BasicPopover from "./post/[id]/BasicPopover";
 import HeartAnimation from "./post/[id]/HeartAnimation";
@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { toastOptions } from "@/utils/toastOptions";
 import { formatDate } from "@/utils/formatString";
 import PromotedPost from "./PromotedPost";
+import userService from "@/utils/apiCalls/userService";
 
 type props = {
   postData: IPost | null;
@@ -26,7 +27,7 @@ function FeedPost({ postData, currUserData }: props) {
   let isPublicFeed = false;
   if (!currUserData) isPublicFeed = true;
 
-  if(postData?.fromAdsService) return <PromotedPost postData={postData}/>
+  if (postData?.fromAdsService) return <PromotedPost postData={postData} />;
 
   const {
     _id,
@@ -44,10 +45,24 @@ function FeedPost({ postData, currUserData }: props) {
   const commentsCount = comments?.length;
   const timestamp = formatDate(createdAt);
 
+  const [isVerified, setIsVerified] = React.useState(false);
+
   const [showHeart, setShowHeart] = React.useState(false);
   const [liked, setLiked] = React.useState(isLiked);
   const [bookmarked, setBookmarked] = React.useState(isBookmarked);
   const [likesCount, setLikesCount] = React.useState(likedBy?.length || 0);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const hasWenetTick = await userService.hasWenetTick(username);
+        setIsVerified(hasWenetTick);
+      } catch (error: any) {
+        console.log("Error checking isVerified in post");
+        console.log(error.message);
+      }
+    })();
+  }, []);
 
   const handleLike = async () => {
     if (isPublicFeed) return;
@@ -116,10 +131,21 @@ function FeedPost({ postData, currUserData }: props) {
             </p>
           </div>
           <div className="px-4">
-            <h3
-              className="text-white text-xl font-bold cursor-pointer"
-              onClick={handleClickProfile}
-            >{`${firstName} ${lastName}`}</h3>
+            <div className="flex items-center">
+              <h3
+                className="text-white text-xl font-bold cursor-pointer"
+                onClick={handleClickProfile}
+              >{`${firstName} ${lastName}  `}</h3>
+              {isVerified && (
+                <Image
+                  src="/icons/wenetTick.png"
+                  alt="wenet-tick"
+                  height={24}
+                  width={24}
+                  className="ml-2"
+                />
+              )}
+            </div>
             <div
               className="flex items-center cursor-pointer"
               onClick={() => router.push(`/post/${_id}`)}
@@ -137,7 +163,9 @@ function FeedPost({ postData, currUserData }: props) {
             </div>
           </div>
         </div>
-       { !isPublicFeed  && <BasicPopover postData={postData} currUserData={currUserData} />}
+        {!isPublicFeed && (
+          <BasicPopover postData={postData} currUserData={currUserData} />
+        )}
       </div>
       <p className="font-semibold px-6 py-2 text-white">{caption}</p>
       <div className="relative" onDoubleClick={handleLike}>
@@ -181,7 +209,7 @@ function FeedPost({ postData, currUserData }: props) {
           <p className="font-bold">{commentsCount}</p>
         </span>
         <Image
-          onClick={()=>handleBookmarkPost}
+          onClick={() => handleBookmarkPost}
           // src="/icons/bookmark.svg"
           src="/icons/bookmarked.png"
           width={150}

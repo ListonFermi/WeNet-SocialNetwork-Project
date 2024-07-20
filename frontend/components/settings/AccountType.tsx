@@ -28,17 +28,11 @@ const Transition = React.forwardRef(function Transition(
 });
 
 function AccountType({ currUser }: { currUser: IUser }) {
-  if (!currUser) return;
+  if (!currUser) return null;
 
-  const [open, setOpen] = React.useState(false);
-  const [isProfessional, setIsProfessional] = useState(
-    currUser.accountType.isProfessional
-  );
+  const [open, setOpen] = useState(false);
   const [accountType, setAccountType] = useState(
-    isProfessional ? currUser.accountType.category : "personalAccount"
-  );
-  const [selectedValue, setSelectedValue] = useState(
-    isProfessional ? currUser.accountType.category : "personalAccount"
+    currUser.accountType.isProfessional ? currUser.accountType.category : "personalAccount"
   );
 
   const handleClickOpen = () => {
@@ -49,24 +43,20 @@ function AccountType({ currUser }: { currUser: IUser }) {
     setOpen(false);
   };
 
-  const handleChange = (event: any) => {
-    setSelectedValue(event.target.value);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAccountType(event.target.value);
   };
 
   const handleChangeAccountType = async () => {
     try {
-      if (!selectedValue) return;
-      const res = await toast.promise(
-        userService.changeAccountType(selectedValue),
+      if (!accountType) return;
+      await toast.promise(
+        userService.changeAccountType(accountType),
         {
           pending: "Changing account type",
           success: {
             render({ data }) {
-              setAccountType(selectedValue);
-              if (selectedValue === "celebrity" || selectedValue === "company")
-                setIsProfessional(true);
-              else setIsProfessional(false);
-              setOpen(false);
+              handleClose();
               return `Success: ${data}`;
             },
           },
@@ -78,28 +68,22 @@ function AccountType({ currUser }: { currUser: IUser }) {
         }
       );
     } catch (error: any) {
-      console.log(error.message);
+      toast.error(`Error: ${error.message}`);
     }
   };
 
+  const isProfessional = accountType === "celebrity" || accountType === "company";
+
   return (
-    <div className=" overflow-y-auto no-scrollbar w-full">
+    <div className="h-full overflow-y-auto no-scrollbar w-full">
       <ToastContainer />
-      <div className="bg-secColor h-72 w-full">
+      <div className={`bg-secColor ${isProfessional ? 'h-72' : 'h-full'} w-full`}>
         <div className="h-[20%] flex items-center justify-center">
-          <h1 className="text-white font-bold text-2xl hidden md:block">
-            Account Type
-          </h1>
+          <h1 className="text-white font-bold text-2xl hidden md:block">Account Type</h1>
         </div>
         <div className="w-full h-[50%] flex items-center justify-center">
           <Image
-            src={`/icons/${
-              isProfessional
-                ? accountType === "celebrity"
-                  ? "celebrity.png"
-                  : "company.png"
-                : "personalAccount.svg"
-            }`}
+            src={`/icons/${isProfessional ? (accountType === "celebrity" ? "celebrity.png" : "company.png") : "personalAccount.svg"}`}
             alt="Account Type"
             height={60}
             width={60}
@@ -121,9 +105,11 @@ function AccountType({ currUser }: { currUser: IUser }) {
           </button>
         </div>
       </div>
-      <div className="bg-secColor h-48 w-full mt-2">
-        <RequestWeNetTick />
-      </div>
+      {isProfessional && (
+        <div className="bg-secColor h-48 w-full mt-2">
+          <RequestWeNetTick />
+        </div>
+      )}
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -131,31 +117,19 @@ function AccountType({ currUser }: { currUser: IUser }) {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Change account type"}</DialogTitle>
+        <DialogTitle>Change account type</DialogTitle>
         <DialogContent>
-          <RadioGroup value={selectedValue} onChange={handleChange}>
-            <FormControlLabel
-              value="personalAccount"
-              control={<Radio />}
-              label="Personal Account"
-            />
-            <FormControlLabel
-              value="celebrity"
-              control={<Radio />}
-              label="Professional Account: Creator/Celebrity"
-            />
-            <FormControlLabel
-              value="company"
-              control={<Radio />}
-              label="Professional Account: Company/Institution"
-            />
+          <RadioGroup value={accountType} onChange={handleChange}>
+            <FormControlLabel value="personalAccount" control={<Radio />} label="Personal Account" />
+            <FormControlLabel value="celebrity" control={<Radio />} label="Professional Account: Creator/Celebrity" />
+            <FormControlLabel value="company" control={<Radio />} label="Professional Account: Company/Institution" />
           </RadioGroup>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
           <AlertDialog
             onConfirm={handleChangeAccountType}
-            alert={`Are you sure you want to change the account type to ${selectedValue} ?`}
+            alert={`Are you sure you want to change the account type to ${accountType}?`}
           >
             <Button>Change account type</Button>
           </AlertDialog>

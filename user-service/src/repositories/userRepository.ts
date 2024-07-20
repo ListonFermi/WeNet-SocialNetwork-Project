@@ -264,7 +264,7 @@ export = {
         user.accountType = {
           isProfessional: true,
           category: accountType,
-          hasWeNetTick: true,
+          hasWeNetTick: false,
         };
       }
       await user.save();
@@ -285,6 +285,20 @@ export = {
         imageUrl,
         description,
       });
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getTickRequestData: async (userId: string) => {
+    try {
+      return await wenetTickRequestCollection.findOne({userId: new Types.ObjectId(userId)});
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getUserData : async (username: string) => {
+    try {
+      return await userCollection.findOne({username});
     } catch (error: any) {
       throw new Error(error.message);
     }
