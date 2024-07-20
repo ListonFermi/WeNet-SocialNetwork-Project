@@ -57,4 +57,11 @@ export = {
       throw new Error(error.message);
     }
   },
+  getPosts: async function(){
+    try {
+      return await adsRepository.getPosts()
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
 };

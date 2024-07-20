@@ -14,12 +14,12 @@ export = {
     PayUOrderId: string,
     PayUTransactionId: string,
     status: "success" | "failed",
-    transactionAmount : string
+    transactionAmount: string
   ): Promise<ITransaction> {
     try {
       const transaction = await transactionCollection.create({
-        userId : new Types.ObjectId(userId),
-        PayUOrderId : new Types.ObjectId(PayUOrderId) ,
+        userId: new Types.ObjectId(userId),
+        PayUOrderId: new Types.ObjectId(PayUOrderId),
         PayUTransactionId,
         transactionStatus: status,
         transactionAmount,
@@ -81,6 +81,24 @@ export = {
         adsServiceMessageData,
         MQActions.addWeNetAd
       );
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  getPosts: async function () {
+    try {
+      const currentDate = new Date();
+      const postData = await postsCollection.find({
+        isDeleted: false,
+        "WeNetAds.isPromoted": true,
+        "WeNetAds.expiresOn": { $gt: currentDate },
+      }).populate('userId');
+
+      if (!postData || postData.length === 0) {
+        return [];
+      }
+
+      return postData;
     } catch (error: any) {
       throw new Error(error.message);
     }
