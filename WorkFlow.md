@@ -295,3 +295,9 @@ Jul 20, Sat
 - Minor changes
 
 --- "Minor changes" ---
+
+Jul 22, Mon
+
+- Cleared a bug during review, updating that.
+
+--- "Changed state variable in account type change" ---

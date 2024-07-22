@@ -121,7 +121,7 @@ function AccountType({ currUser }: { currUser: IUser }) {
       >
         <DialogTitle>Change account type</DialogTitle>
         <DialogContent>
-          <RadioGroup value={accountType} onChange={handleChange}>
+          <RadioGroup value={accountTypeValue} onChange={handleChange}>
             <FormControlLabel value="personalAccount" control={<Radio />} label="Personal Account" />
             <FormControlLabel value="celebrity" control={<Radio />} label="Professional Account: Creator/Celebrity" />
             <FormControlLabel value="company" control={<Radio />} label="Professional Account: Company/Institution" />

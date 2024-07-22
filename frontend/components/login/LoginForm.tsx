@@ -8,6 +8,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginUser } from "@/redux/userSlice";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const toastOptions: ToastOptions = {
   position: "top-center",
@@ -22,8 +23,7 @@ const toastOptions: ToastOptions = {
 };
 
 function LoginForm() {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const router = useRouter();
 
   type Inputs = {
@@ -50,14 +50,14 @@ function LoginForm() {
         toastOptions
       );
       dispatch(loginUser({ _id: response.data._id }));
-      setTimeout(()=>router.replace("/feed"),2500)
+      setTimeout(() => router.replace("/feed"), 2500);
     } catch (error: any) {
-      console.error(error)
+      console.error(error);
       const errorMessage = error?.response?.data?.length
         ? error.response.data
         : "Failed to Login";
       toast.error(errorMessage, toastOptions);
-    }    
+    }
   };
 
   return (
@@ -108,9 +108,6 @@ function LoginForm() {
             />
             <p className="text-red-600">{errors.password?.message}</p>
           </div>
-          <div className="mb-6">
-            <a href="/forgotPassword/sendEmail" className="text-white">Forgot your password ? Click here!</a>
-          </div>
           <div className="w-full flex justify-center items-center">
             <button
               type="submit"
@@ -120,6 +117,11 @@ function LoginForm() {
             </button>
           </div>
         </form>
+        <div className="mb-6 mt-4">
+        <Link href="/forgotPassword/sendEmail">
+            <div className="text-white">Forgot your password? Click here!</div>
+          </Link>
+        </div>
       </div>
     </>
   );
