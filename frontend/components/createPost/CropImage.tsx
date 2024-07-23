@@ -35,7 +35,7 @@ interface CropImageProps {
 
 function CropImage({ setIsCaptionPage, setPostData }: CropImageProps) {
   const [image, setImage] = useState<string | null>(null);
-  const cropperRef = createRef<ReactCropperElement>();
+  const cropperRef = createRef<ReactCropperElement | any>();
   const [cropData, setCropData] = useState<string>("/");
 
   function imageHandler(e: ChangeEvent<HTMLInputElement> | DragEvent) {

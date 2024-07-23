@@ -315,3 +315,7 @@ Jul 23, Tue
 - A type error in admin-usermanagement table
 
 --- "Cleared errors from vercel deployment-3" ---
+
+- A type error in CropImage component
+
+--- "Cleared errors from vercel deployment-4" ---
