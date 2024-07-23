@@ -319,3 +319,7 @@ Jul 23, Tue
 - A type error in CropImage component
 
 --- "Cleared errors from vercel deployment-4" ---
+
+- Removed temp.json file which was used to show static conversations
+
+--- "Cleared errors from vercel deployment-5" ---
