@@ -3,16 +3,7 @@ import userService from "@/utils/apiCalls/admin/userService";
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 
-export const data = [
-  ["Task", "Hours per Day"],
-  ["Work", 8.5],
-  ["Eat", 1.5],
-  ["Commute", 0.75],
-  ["Watch TV", 3],
-  ["Sleep", 8],
-];
-
-export const options = {
+const options = {
   title: "Account Type",
   is3D: true,
 };

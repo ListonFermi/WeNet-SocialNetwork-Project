@@ -4,7 +4,6 @@ import React, {
   createRef,
   ChangeEvent,
   FormEvent,
-  useRef,
 } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";

@@ -1,5 +1,5 @@
 import AdsManagementTable from "@/components/admin/adsManagement/AdsManagementTable";
-import React, { useEffect } from "react";
+import React from "react";
 
 function page() {
   return (

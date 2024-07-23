@@ -1,8 +1,7 @@
 "use client";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
-import { IComment, IUser } from "@/types/types";
+import { IComment } from "@/types/types";
 import { useSelector } from "react-redux";
 
 type props = {

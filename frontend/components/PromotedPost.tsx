@@ -2,14 +2,8 @@
 import Image from "next/image";
 import React from "react";
 import FeedPostSkeleton from "./FeedPostSkeleton";
-import BasicPopover from "./post/[id]/BasicPopover";
-import HeartAnimation from "./post/[id]/HeartAnimation";
-import postService from "@/utils/apiCalls/postService";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { IPost, IUser } from "@/types/types";
 import { useRouter } from "next/navigation";
-import { toastOptions } from "@/utils/toastOptions";
 import { formatDate } from "@/utils/formatString";
 
 type props = {

@@ -6,7 +6,6 @@ import Image from "next/image";
 function FeedRightDiv() {
   return (
     <div className="relative flex items-center justify-center h-full">
-      {/* Background Image */}
       <Image
         src="/img/HomePageRight.jpg"
         alt="Right-Background"
@@ -14,7 +13,6 @@ function FeedRightDiv() {
         height={150}
         className="absolute inset-0 w-full h-full object-cover opacity-10"
       />
-      {/* Text Content */}
       <div className="z-10 p-4 bg-none bg-opacity-50 rounded">
         <p className="text-2xl font-bold text-center text-white">
           What’s happening ? Find out now!

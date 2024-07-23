@@ -1,7 +1,6 @@
 import PayUApiCalls from "@/utils/apiCalls/PayUApiCalls";
 import { NextApiResponse } from "next";
 import { redirect } from "next/navigation";
-import { cookies } from 'next/headers'
 
 export async function POST(req: any, res: NextApiResponse) {
   const contentType = req.headers.get("content-type") || "";

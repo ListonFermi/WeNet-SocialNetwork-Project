@@ -3,7 +3,7 @@ import userService from "@/utils/apiCalls/admin/userService";
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 
-export const options = {
+const options = {
   title: "Users count",
   curveType: "function",
   legend: { position: "bottom" },

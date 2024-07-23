@@ -323,3 +323,7 @@ Jul 23, Tue
 - Removed temp.json file which was used to show static conversations
 
 --- "Cleared errors from vercel deployment-5" ---
+
+- Checked for any errors in componets by going through all components
+
+--- "Cleared errors from vercel deployment-6" ---

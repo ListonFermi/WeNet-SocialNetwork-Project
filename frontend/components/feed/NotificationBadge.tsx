@@ -2,7 +2,6 @@
 import * as React from "react";
 import Badge from "@mui/material/Badge";
 import notificationService from "@/utils/apiCalls/notificationService";
-import { IUser } from "@/types/types";
 
 type props = {
   children: React.ReactNode;

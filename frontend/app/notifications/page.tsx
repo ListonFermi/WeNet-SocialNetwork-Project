@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import BottomNav from "@/components/feed/BottomNav";
 import FeedLeftDiv from "@/components/feed/FeedLeftDiv";
-import Feed from "@/components/feed/UserFeed";
 import NotificationBar from "@/components/notifications/NotificationBar";
 import React from "react";
 
