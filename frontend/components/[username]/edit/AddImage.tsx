@@ -31,7 +31,7 @@ const toastOptions: ToastOptions = {
 
 const AddImage: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
-  const cropperRef = createRef<ReactCropperElement>();
+  const cropperRef = createRef<ReactCropperElement| any>();
   const [cropData, setCropData] = useState<string>("/");
 
   const router = useRouter();
