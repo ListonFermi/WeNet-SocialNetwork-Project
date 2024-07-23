@@ -311,3 +311,7 @@ Jul 23, Tue
 - Clearing errors from vercel deployment.
 
 --- "Cleared errors from vercel deployment-2" ---
+
+- A type error in admin-usermanagement table
+
+--- "Cleared errors from vercel deployment-3" ---

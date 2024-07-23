@@ -34,7 +34,7 @@ interface Column {
     | "privacy"
     | "followersCount"
     | "followingCount"
-    | "postsCount";
+    // | "postsCount";
   // | "actions";
   label: string;
   minWidth?: number;
