@@ -40,7 +40,7 @@ function AdsManagementTable() {
         alert(error.message);
       }
     })(currentPage, rowsPerPage);
-  }, [currentPage,changed]);
+  }, [currentPage,rowsPerPage,changed]);
 
   function handlePageChange(event: any, value: any) {
     setCurrentPage(value);

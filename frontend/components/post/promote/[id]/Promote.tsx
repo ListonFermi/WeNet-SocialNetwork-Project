@@ -25,7 +25,7 @@ function Promote({currUserData}:{currUserData: IUser}) {
         console.log({ error });
       }
     })(id);
-  }, []);
+  }, [id]);
 
   if (!postData)
     return (

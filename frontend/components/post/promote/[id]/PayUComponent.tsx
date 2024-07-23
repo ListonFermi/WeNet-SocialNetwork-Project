@@ -13,7 +13,7 @@ const PayUComponent = ({ currUserData, postId }: props) => {
   const [hash, setHash] = useState(null);
 
   const { firstName, lastName, email } = currUserData;
-  console.log({currUserData})
+  console.log({ currUserData });
 
   const txnidRef = useRef(generateTxnId(8));
   const txnid = txnidRef.current;
@@ -36,10 +36,10 @@ const PayUComponent = ({ currUserData, postId }: props) => {
         setHash(res.hash);
       } catch (error: any) {
         console.error("Payment Error: " + error.message);
-        alert(error.message)
+        alert(error.message);
       }
     })(data);
-  }, []);
+  }, [amount, email, firstname, productinfo, txnid]);
 
   return (
     <form action="https://test.payu.in/_payment" method="post">

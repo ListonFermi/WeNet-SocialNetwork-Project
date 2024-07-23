@@ -17,7 +17,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AlertDialog from "./AlertDialog";
 import { toastOptions } from "@/utils/toastOptions";
-import NoUsersBlocked from "./NoUsersBlocked";
 
 const darkTheme = createTheme({
   palette: {
@@ -43,7 +42,7 @@ function BlockedUsers() {
         alert(error.message);
       }
     })(currentPage, rowsPerPage);
-  }, [currentPage, changed]);
+  }, [currentPage, rowsPerPage, changed]);
 
   function handlePageChange(event: any, value: any) {
     setCurrentPage(value);
@@ -68,7 +67,9 @@ function BlockedUsers() {
 
   if (blockedUsersData.length === 0) {
     return (
-      <>        <div className="h-full w-full flex flex-col items-center justify-center bg-secColor">
+      <>
+        {" "}
+        <div className="h-full w-full flex flex-col items-center justify-center bg-secColor">
           <div className="h-[10%] w-full">
             <h1 className="flex font-bold text-white text-xl items-center justify-center">
               Blocked Users
@@ -82,7 +83,9 @@ function BlockedUsers() {
               height={150}
             />
             <div>
-                <h1 className="font-semibold text-white">You haven't blocked any users yet!</h1>
+              <h1 className="font-semibold text-white">
+                {`You haven't blocked any users yet!`}
+              </h1>
             </div>
           </div>
         </div>

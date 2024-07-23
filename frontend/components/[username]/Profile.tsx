@@ -10,7 +10,7 @@ function Profile() {
     userData = decoded.userData;
   } catch (error: any) {
     console.log(error.message);
-    return <div>Error getting current user's data</div>;
+    return <div>{`Error getting current user's data`}</div>;
   }
 
   return (

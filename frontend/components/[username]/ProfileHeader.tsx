@@ -44,7 +44,7 @@ function ProfileHeader({ currUser }: { currUser: IUser }) {
     if (paramsUsername) {
       fetchUserData();
     }
-  }, [paramsUsername, changed]);
+  }, [paramsUsername, changed, currUserId]);
 
   if (!userData) return <ProfileHeaderLoading />;
 

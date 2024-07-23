@@ -24,6 +24,7 @@ function NotificationBar() {
       {notifications.length &&
         notifications.map((notification: any) => {
           const {
+            _id,
             doneByUser,
             notificationMessage,
             entityType,
@@ -34,6 +35,7 @@ function NotificationBar() {
 
           return (
             <SingleNotification
+              key={_id}
               username={username}
               firstName={firstName}
               lastName={lastName}

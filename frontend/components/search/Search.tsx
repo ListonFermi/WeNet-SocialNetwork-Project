@@ -27,7 +27,7 @@ function Search() {
     return () => {
       clearTimeout(debounceTimeoutRef.current);
     };
-  }, [keyword]);
+  }, [keyword, handleSearch]);
 
   async function handleSearch() {
     try {

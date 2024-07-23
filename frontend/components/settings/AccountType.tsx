@@ -28,13 +28,13 @@ const Transition = React.forwardRef(function Transition(
 });
 
 function AccountType({ currUser }: { currUser: IUser }) {
-  if (!currUser) return null;
-
   const [open, setOpen] = useState(false);
   const [accountType, setAccountType] = useState(
     currUser.accountType.isProfessional ? currUser.accountType.category : "personalAccount"
   );
   const [accountTypeValue, setAccountTypeValue] = useState<any>(null)
+
+  if (!currUser) return null;
 
   const handleClickOpen = () => {
     setOpen(true);

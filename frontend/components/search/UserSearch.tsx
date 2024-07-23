@@ -7,10 +7,10 @@ function UserSearch({ results }: { results: IUser[] }) {
     <>
       {results.length &&
         results.map((result) => {
-          const { username, firstName, lastName, profilePicUrl } = result;
+          const { _id, username, firstName, lastName, profilePicUrl } = result;
 
           return (
-            <a href={`/profile/${username}`} className="w-[75%] flex items-center justify-center border-2 border-secColorH mt-2 hover:bg-rootBg">
+            <a key={_id} href={`/profile/${username}`} className="w-[75%] flex items-center justify-center border-2 border-secColorH mt-2 hover:bg-rootBg">
               <div className="h-20 w-full flex bg-secColor mt-2">
                 <div className="w-30%">
                   <div className="h-full w-full flex items-center">

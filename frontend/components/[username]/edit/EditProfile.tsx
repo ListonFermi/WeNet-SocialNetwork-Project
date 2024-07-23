@@ -62,7 +62,7 @@ function EditProfile() {
     };
 
     fetchUserData();
-  }, []);
+  }, [dispatch]);
 
   if (loading) {
     toast("loading", toastOptions);

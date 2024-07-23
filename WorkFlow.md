@@ -301,3 +301,9 @@ Jul 22, Mon
 - Cleared a bug during review, updating that.
 
 --- "Changed state variable in account type change" ---
+
+Jul 23, Tue
+
+- Cleared errors from vercel deployment.
+
+--- "Cleared errors from vercel deployment" ---

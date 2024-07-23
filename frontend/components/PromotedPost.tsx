@@ -17,9 +17,10 @@ type props = {
 };
 
 function PromotedPost({ postData }: props) {
+  const router = useRouter();
+
   if (!postData) return <FeedPostSkeleton />;
 
-  const router = useRouter();
   const { _id, userId, caption, imageUrl, createdAt } = postData;
 
   const { username, firstName, lastName, profilePicUrl } = userId;

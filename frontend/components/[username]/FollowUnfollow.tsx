@@ -24,7 +24,7 @@ function FollowUnfollow(props: props) {
         alert(error.messaage);
       }
     })(userId);
-  }, []);
+  }, [userId]);
 
   if (isFollowing === null) return;
 

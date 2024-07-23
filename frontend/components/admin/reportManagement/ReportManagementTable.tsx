@@ -72,7 +72,7 @@ export default function ReportManagementTable() {
         toast.error(error);
       }
     })(currentPage, rowsPerPage);
-  }, [currentPage, changed]);
+  }, [currentPage,rowsPerPage, changed]);
 
   function handlePageChange(event: any, value: any) {
     setCurrentPage(value);

@@ -50,7 +50,7 @@ function EditPost() {
         console.log({ error });
       }
     })(id);
-  }, []);
+  }, [id]);
 
   if (!postData)
     return (

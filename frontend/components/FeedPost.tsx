@@ -20,14 +20,39 @@ type props = {
 };
 
 function FeedPost({ postData, currUserData }: props) {
-  if (!postData) return <FeedPostSkeleton />;
-
   const router = useRouter();
+
+  const [isVerified, setIsVerified] = React.useState(false);
+  const [showHeart, setShowHeart] = React.useState(false);
+  const [liked, setLiked] = React.useState(false);
+  const [bookmarked, setBookmarked] = React.useState(false);
+  const [likesCount, setLikesCount] = React.useState(0);
+
+  useEffect(() => {
+    if (postData) {
+      setLiked(postData.isLiked);
+      setBookmarked(postData.isBookmarked);
+    }
+  }, [postData]);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        if(postData){
+          const hasWenetTick = await userService.hasWenetTick(postData.username);
+          setIsVerified(hasWenetTick);
+        }
+      } catch (error: any) {
+        console.log("Error checking isVerified in post");
+        console.log(error.message);
+      }
+    })();
+  }, [postData?.username]);
+
+  if (!postData) return <FeedPostSkeleton />;
 
   let isPublicFeed = false;
   if (!currUserData) isPublicFeed = true;
-
-  if (postData?.fromAdsService) return <PromotedPost postData={postData} />;
 
   const {
     _id,
@@ -36,33 +61,12 @@ function FeedPost({ postData, currUserData }: props) {
     lastName,
     caption,
     imageUrl,
-    isLiked,
     profilePicUrl,
-    isBookmarked,
   } = postData;
 
   const { likedBy, comments, createdAt } = postData;
   const commentsCount = comments?.length;
   const timestamp = formatDate(createdAt);
-
-  const [isVerified, setIsVerified] = React.useState(false);
-
-  const [showHeart, setShowHeart] = React.useState(false);
-  const [liked, setLiked] = React.useState(isLiked);
-  const [bookmarked, setBookmarked] = React.useState(isBookmarked);
-  const [likesCount, setLikesCount] = React.useState(likedBy?.length || 0);
-
-  useEffect(() => {
-    (async function () {
-      try {
-        const hasWenetTick = await userService.hasWenetTick(username);
-        setIsVerified(hasWenetTick);
-      } catch (error: any) {
-        console.log("Error checking isVerified in post");
-        console.log(error.message);
-      }
-    })();
-  }, []);
 
   const handleLike = async () => {
     if (isPublicFeed) return;
@@ -105,7 +109,7 @@ function FeedPost({ postData, currUserData }: props) {
     router.push(`/profile/${username}`);
   }
 
-  // function handlePostClickOnPublicFeed(event) {}
+  if (postData?.fromAdsService) return <PromotedPost postData={postData} />;
 
   return (
     <div

@@ -100,7 +100,7 @@ function AddCommentForm({ userData }: { userData: IUser }) {
       {commentData.length &&
         userData._id &&
         commentData.map((comment) => (
-          <Comment commentData={comment} currentUserId={userData._id} />
+          <Comment key={comment._id} commentData={comment} currentUserId={userData._id} />
         ))}
     </>
   );

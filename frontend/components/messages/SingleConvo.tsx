@@ -30,6 +30,8 @@ function SingleConvo({ currUser }: { currUser: IUser }) {
 
   const [emojiOpen, setEmojiOpen] = useState(false);
 
+  const convoId = searchParams.get("convoId");
+
   useEffect(() => {
     (async function () {
       try {
@@ -40,7 +42,7 @@ function SingleConvo({ currUser }: { currUser: IUser }) {
         alert(error.message);
       }
     })();
-  }, [searchParams]);
+  }, [searchParams, convoId]);
 
   useEffect(() => {
     if (!socket) return;
@@ -52,7 +54,6 @@ function SingleConvo({ currUser }: { currUser: IUser }) {
     };
   }, [socket]);
 
-  const convoId = searchParams.get("convoId");
   if (!convoId) return <AddConversation />;
 
   async function handleSubmitMessageSend(event: FormEvent<HTMLFormElement>) {

@@ -30,7 +30,7 @@ function Post({ currUserData }: { currUserData: IUser }) {
         toast.error("error", toastOptions);
       }
     })(id);
-  }, []);
+  }, [id,dispatch]);
 
   return (
     <>

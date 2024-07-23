@@ -21,7 +21,7 @@ function ProfileFeed({ currUserData }: { currUserData: IUser }) {
         alert(error.message);
       }
     })(paramsUsername);
-  }, []);
+  }, [paramsUsername]);
 
   if (postData?.length === 0) {
     return (
