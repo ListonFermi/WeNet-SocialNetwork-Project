@@ -1,18 +1,18 @@
-name: dockerhub-user-service
+name: dockerhub-message-service
 
 on:
   push:
     branches: [ "main" ]
-    paths: ["user-service/**"]
+    paths: ["message-service/**"]
     
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       -  uses: actions/checkout@v4
-      -  run: cd user-service && docker build -t listonfermi/wenet-user-service .
+      -  run: cd message-service && docker build -t listonfermi/wenet-message-service .
       -  run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
          env: 
              DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
              DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      -  run: docker push listonfermi/wenet-user-service
+      -  run: docker push listonfermi/wenet-message-service

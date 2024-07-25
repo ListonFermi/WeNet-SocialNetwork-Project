@@ -335,3 +335,7 @@ Jul 23, Tue
 --- "Test dockerhub workflow-user-service-2" ---
 
 --- "Test dockerhub workflow-user-service-3" ---
+
+- Added dockerfile & workflow for all services
+
+--- "Added dockerfilw and workflow" ---
