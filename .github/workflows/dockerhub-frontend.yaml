@@ -1,4 +1,4 @@
-name: dockerhub-ads-service
+name: dockerhub-frontend-service
 
 on:
   push:

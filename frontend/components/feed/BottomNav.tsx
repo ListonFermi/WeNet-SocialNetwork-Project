@@ -1,8 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import getUserData from "@/utils/getUserData";
+import { unstable_noStore } from "next/cache";
 
 const BottomNav = () => {
+  unstable_noStore()
   let userData;
   try {
     const decoded: any = getUserData();

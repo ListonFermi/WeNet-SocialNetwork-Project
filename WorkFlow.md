@@ -343,3 +343,7 @@ Jul 23, Tue
 Jul 26, Fri
 
 --- "Added dockerfile and workflow-2" ---
+
+- frontend: Included unstable_noStore for opt out of static rendering
+
+--- "unstable_noStore" ---

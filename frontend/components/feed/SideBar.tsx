@@ -2,8 +2,10 @@ import getUserData from "@/utils/getUserData";
 import Image from "next/image";
 import NotificationBadge from "./NotificationBadge";
 import MessagesBadge from "./MessagesBadge";
+import { unstable_noStore } from "next/cache";
 
 function SideBar() {
+  unstable_noStore()
   let userData;
   try {
     const decoded: any = getUserData();
