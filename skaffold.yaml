@@ -8,4 +8,19 @@ build:
   local:
     push: false
   artifacts:
-    
+    - image: listonfermi/wenet-user-service
+      context: user-service
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: listonfermi/wenet-posts-service
+      context: posts-service
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .        

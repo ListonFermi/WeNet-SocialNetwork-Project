@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts-service
+  template:
+    metadata:
+      labels:
+        app: posts-service
+    spec:
+      containers:
+        - name: posts-service
+          image: asia-south1-docker.pkg.dev/named-foundry-425207-e1/wenet/posts-service
+          envFrom:
+            - configMapRef:
+                name: posts-service-env
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-service
+spec:
+  selector:
+    app: posts-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 5002gke-gcloud-auth-plugin --version

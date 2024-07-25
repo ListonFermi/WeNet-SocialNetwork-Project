@@ -14,17 +14,20 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: listonfermi/wenet-user-service
+          image: asia-south1-docker.pkg.dev/named-foundry-425207-e1/wenet/user-service
+          envFrom:
+            - configMapRef:
+                name: user-service-env
 ---
 apiVersion: v1
 kind: Service
-metadata: 
+metadata:
   name: user-service-srv
 spec:
   selector:
     app: user-service
   ports:
-    - name: user-service
+    - name: http
       protocol: TCP
-      port: 5001
+      port: 80
       targetPort: 5001

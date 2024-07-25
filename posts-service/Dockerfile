@@ -10,6 +10,6 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 5001
+EXPOSE 5002
 
 CMD ["node", "dist/server.js"]
