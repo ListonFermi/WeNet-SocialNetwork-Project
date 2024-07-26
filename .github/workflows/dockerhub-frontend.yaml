@@ -15,4 +15,4 @@ jobs:
          env: 
              DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
              DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      -  run: docker push listonfermi/frontend
+      -  run: docker push listonfermi/wenet-frontend

@@ -347,3 +347,7 @@ Jul 26, Fri
 - frontend: Included unstable_noStore for opt out of static rendering
 
 --- "unstable_noStore" ---
+
+- few changes in yaml files
+
+--- "Changes in yaml files" ---

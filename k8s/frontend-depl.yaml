@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        type: frontend
+        app: frontend
+    spec:
+      containers:
+        - name: frontend-container
+          image: listonfermi/wenet-frontend
+          envFrom:
+            - configMapRef:
+                name: frontend-env
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: frontend-srv
+spec:
+  type: LoadBalancer
+  selector:
+      type: frontend
+      app: frontend
+  ports: 
+    - port: 3000
+      targetPort: 3000

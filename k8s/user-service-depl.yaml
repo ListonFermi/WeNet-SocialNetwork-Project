@@ -6,15 +6,17 @@ spec:
   replicas: 1
   selector:
     matchLabels:
+      type: backend
       app: user-service
   template:
     metadata:
       labels:
+        type: backend
         app: user-service
     spec:
       containers:
-        - name: user-service
-          image: asia-south1-docker.pkg.dev/named-foundry-425207-e1/wenet/user-service
+        - name: user-service-container
+          image: listonfermi/wenet-user-service
           envFrom:
             - configMapRef:
                 name: user-service-env
@@ -25,9 +27,8 @@ metadata:
   name: user-service-srv
 spec:
   selector:
+    type: backend
     app: user-service
   ports:
-    - name: http
-      protocol: TCP
       port: 5001
       targetPort: 5001
