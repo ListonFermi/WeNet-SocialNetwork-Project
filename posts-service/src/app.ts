@@ -13,24 +13,38 @@ dotenv.config();
 
 const app = express();
 
+/* 
 const frontEndUrl = process.env.FRONTEND_URL;
 const corsOptions = {
   origin: frontEndUrl,
   credentials: true,
 };
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // Handle preflight requests
+
+app.use(cors(corsOptions)); 
+
+// Handle preflight requests
+app.options("*", cors(corsOptions));
+*/
+//test:
+app.use(cors())
 
 app.use(morgan("dev"));
 
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/api/posts-service/", postsRoutes);
+/* dev routes:
 app.use("/api/posts-service/comment", commentsRoutes);
 app.use("/api/posts-service/report", reportsRoutes);
 app.use("/api/posts-service/admin", adminRoutes);
+app.use("/api/posts-service/", postsRoutes);
+*/
 
+// prod routes:
+app.use("/comment", commentsRoutes);
+app.use("/report", reportsRoutes);
+app.use("/admin", adminRoutes);
+app.use("/", postsRoutes);
 
 app.use(errorHandler);
 
