@@ -6,12 +6,10 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      type: backend
       app: user-service
   template:
     metadata:
       labels:
-        type: backend
         app: user-service
     spec:
       containers:
@@ -27,7 +25,6 @@ metadata:
   name: user-service-srv
 spec:
   selector:
-    type: backend
     app: user-service
   ports:
     - name: user-service-ports

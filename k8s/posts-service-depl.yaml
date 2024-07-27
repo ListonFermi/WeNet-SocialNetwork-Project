@@ -6,16 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      type: backend
       app: posts-service
   template:
     metadata:
       labels:
-        type: backend
         app: posts-service
     spec:
       containers:
-        - name: posts-service-container
+        - name: posts-service
           image: listonfermi/wenet-posts-service
           envFrom:
             - configMapRef:
@@ -27,10 +25,9 @@ metadata:
   name: posts-service-srv
 spec:
   selector:
-    type: backend
     app: posts-service
   ports:
     - name: posts-service-ports
       protocol: TCP
-      port: 5001
-      targetPort: 5001
+      port: 5002
+      targetPort: 5002

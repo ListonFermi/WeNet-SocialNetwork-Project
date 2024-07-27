@@ -28,18 +28,14 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 
-/*
-// dev routes:
 
 app.use("/api/user-service/", userRoutes);
 app.use("/api/user-service/admin/", adminRoutes);
 
-*/
+// // test:
 
-// prod routes:
-
-app.use("/", userRoutes);
-app.use("/admin/", adminRoutes);
+// app.use("/", userRoutes);
+// app.use("/admin/", adminRoutes);
 
 app.use(errorHandler);
 

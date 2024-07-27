@@ -10,11 +10,10 @@ spec:
   template:
     metadata:
       labels:
-        type: frontend
         app: frontend
     spec:
       containers:
-        - name: frontend-container
+        - name: frontend
           image: listonfermi/wenet-frontend
           envFrom:
             - configMapRef:
@@ -26,7 +25,6 @@ metadata:
   name: frontend-srv
 spec:
   selector:
-    type: frontend
     app: frontend
   ports:
     - name: frontend-ports

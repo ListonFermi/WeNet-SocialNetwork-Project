@@ -33,18 +33,16 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 
-/* dev routes:
 app.use("/api/posts-service/comment", commentsRoutes);
 app.use("/api/posts-service/report", reportsRoutes);
 app.use("/api/posts-service/admin", adminRoutes);
 app.use("/api/posts-service/", postsRoutes);
-*/
 
-// prod routes:
-app.use("/comment", commentsRoutes);
-app.use("/report", reportsRoutes);
-app.use("/admin", adminRoutes);
-app.use("/", postsRoutes);
+// test routes:
+// app.use("/comment", commentsRoutes);
+// app.use("/report", reportsRoutes);
+// app.use("/admin", adminRoutes);
+// app.use("/", postsRoutes);
 
 app.use(errorHandler);
 

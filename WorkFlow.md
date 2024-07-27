@@ -359,3 +359,7 @@ Jul 27, Sat
 --- "Changes in k8s manifests" ---
 
 --- "Changes in k8s manifests-2" ---
+
+- Tried changing routes in user & posts service
+
+--- "Changing user and posts service routes" ---
