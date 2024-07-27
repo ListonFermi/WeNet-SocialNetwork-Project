@@ -1,20 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: posts-service-deployment
+  name: posts-service-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
+      type: backend
       app: posts-service
   template:
     metadata:
       labels:
+        type: backend
         app: posts-service
     spec:
       containers:
-        - name: posts-service
-          image: asia-south1-docker.pkg.dev/named-foundry-425207-e1/wenet/posts-service
+        - name: posts-service-container
+          image: listonfermi/wenet-posts-service
           envFrom:
             - configMapRef:
                 name: posts-service-env
@@ -22,12 +24,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-service
+  name: posts-service-srv
 spec:
   selector:
+    type: backend
     app: posts-service
   ports:
-    - name: http
+    - name: posts-service-ports
       protocol: TCP
-      port: 80
-      targetPort: 5002gke-gcloud-auth-plugin --version
+      port: 5001
+      targetPort: 5001

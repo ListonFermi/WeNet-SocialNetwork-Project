@@ -30,5 +30,7 @@ spec:
     type: backend
     app: user-service
   ports:
+    - name: user-service-ports
+      protocol: TCP
       port: 5001
       targetPort: 5001

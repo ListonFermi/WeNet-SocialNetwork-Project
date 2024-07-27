@@ -351,3 +351,9 @@ Jul 26, Fri
 - few changes in yaml files
 
 --- "Changes in yaml files" ---
+
+Jul 27, Sat
+
+- few changes in yaml files
+
+--- "Changes in k8s manifests" ---
