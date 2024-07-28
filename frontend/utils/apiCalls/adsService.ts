@@ -1,7 +1,8 @@
 import axios from "axios";
+import { ADS_SERVICE_URL } from "../constants";
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_ADS_SERVICE_URL,
+  baseURL: ADS_SERVICE_URL,
   withCredentials: true,
   timeout: 120000,
 });

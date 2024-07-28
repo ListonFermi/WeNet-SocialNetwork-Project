@@ -1,4 +1,5 @@
 "use client";
+import { POSTS_SERVICE_URL } from "@/utils/constants";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -39,7 +40,7 @@ function AddCaption({ postData }: props) {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const postsServiceUrl = process.env.NEXT_PUBLIC_POSTS_SERVICE_URL;
+    const postsServiceUrl = POSTS_SERVICE_URL;
     try {
       data._id = postData._id;
       const res: any= await toast.promise(

@@ -7,6 +7,7 @@ import {
   toBeRedirectedAdminRoutes,
   toBeRedirectedRoutes,
 } from "./utils/routes";
+import { JWT_SECRET } from "./utils/constants";
 
 const adminRoutes = /^\/admin(\/.*)?$/;
 
@@ -66,7 +67,7 @@ async function verifyToken(
     return false;
   }
 
-  const secret = process.env.JWT_SECRET;
+  const secret = JWT_SECRET;
   if (!secret) {
     console.log("JWT secret not found in env");
     return false;

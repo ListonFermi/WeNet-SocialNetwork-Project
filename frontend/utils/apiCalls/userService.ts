@@ -1,6 +1,7 @@
 import axios from "axios";
+import { USER_SERVICE_URL } from "../constants";
 
-const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+const userServiceUrl = USER_SERVICE_URL;
 
 export default {
   changePassword: async function (

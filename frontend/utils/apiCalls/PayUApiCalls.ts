@@ -1,15 +1,16 @@
 import axios from "axios";
+import { ADS_SERVICE_URL } from "../constants";
 
 const apiClient = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_ADS_SERVICE_URL}/PayU`,
+  baseURL: `${ADS_SERVICE_URL}/PayU`,
   withCredentials: true,
   timeout: 120000,
 });
 
 export const PayUUrl = {
-  payment: `${process.env.NEXT_PUBLIC_ADS_SERVICE_URL}/PayU/payment`,
-  response: `${process.env.NEXT_PUBLIC_ADS_SERVICE_URL}/PayU/response`,
-  test: `${process.env.NEXT_PUBLIC_ADS_SERVICE_URL}/PayU/response/test`,
+  payment: `${ADS_SERVICE_URL}/PayU/payment`,
+  response: `${ADS_SERVICE_URL}/PayU/response`,
+  test: `${ADS_SERVICE_URL}/PayU/response/test`,
 };
 
 export default {

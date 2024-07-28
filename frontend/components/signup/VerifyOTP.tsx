@@ -1,4 +1,5 @@
 "use client";
+import { USER_SERVICE_URL } from "@/utils/constants";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -51,7 +52,7 @@ function VerifyOTP() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+      const userServiceUrl = USER_SERVICE_URL;
       data._id = _id;
 
       await toast.promise(

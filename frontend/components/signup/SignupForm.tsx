@@ -7,6 +7,7 @@ import { ToastContainer, toast, Bounce, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { verifyUser } from "@/redux/userSlice";
+import { USER_SERVICE_URL } from "@/utils/constants";
 
 interface SignupFormProps {
   setIsVerifyForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,7 +45,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ setIsVerifyForm }) => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+      const userServiceUrl = USER_SERVICE_URL;
       let response: any = await toast.promise(
         axios.post(`${userServiceUrl}/signup`, data),
         {

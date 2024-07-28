@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "@/redux/userSlice";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { USER_SERVICE_URL } from "@/utils/constants";
 
 const toastOptions: ToastOptions = {
   position: "top-center",
@@ -39,7 +40,7 @@ function LoginForm() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+      const userServiceUrl = USER_SERVICE_URL;
       let response: any = await toast.promise(
         axios.post(`${userServiceUrl}/login`, data, { withCredentials: true }),
         {

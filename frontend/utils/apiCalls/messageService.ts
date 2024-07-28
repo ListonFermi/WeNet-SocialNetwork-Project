@@ -1,7 +1,8 @@
 import axios from "axios";
+import { MESSAGE_SERVICE_URL } from "../constants";
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_MESSAGE_SERVICE_URL,
+  baseURL: MESSAGE_SERVICE_URL,
   withCredentials: true,
   timeout: 120000,
 });

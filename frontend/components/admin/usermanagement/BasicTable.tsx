@@ -11,6 +11,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { USER_SERVICE_URL } from "@/utils/constants";
 
 const toastOptions: ToastOptions = {
   position: "top-center",
@@ -113,7 +114,7 @@ export default function AdminUserManagementTable() {
 
   React.useEffect(() => {
     (async function grabData() {
-      const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+      const userServiceUrl = USER_SERVICE_URL;
       try {
         let response: any = await axios.get(
           `${userServiceUrl}/admin/usermanagement`,

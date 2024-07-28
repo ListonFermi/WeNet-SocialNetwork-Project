@@ -1,7 +1,8 @@
+import { ADS_SERVICE_URL } from "@/utils/constants";
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_ADS_SERVICE_ADMIN_URL,
+  baseURL: `${ADS_SERVICE_URL}/admin`,
   withCredentials: true,
   timeout: 120000,
 });

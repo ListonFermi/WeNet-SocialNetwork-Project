@@ -5,6 +5,7 @@ import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { USER_SERVICE_URL } from "@/utils/constants";
 
 const toastOptions: ToastOptions = {
   position: "top-center",
@@ -35,7 +36,7 @@ function AdminLoginForm() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const userServiceAdminUrl = process.env.NEXT_PUBLIC_USER_SERVICE_ADMIN_URL;
+      const userServiceAdminUrl = `${USER_SERVICE_URL}/admin`;
       let response: any = await toast.promise(
         axios.post(`${userServiceAdminUrl}/login`, data, { withCredentials: true }),
         {

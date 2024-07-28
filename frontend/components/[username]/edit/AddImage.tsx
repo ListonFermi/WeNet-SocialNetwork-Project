@@ -11,6 +11,7 @@ import axios from "axios";
 import Image from "next/image";
 import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { USER_SERVICE_URL } from "@/utils/constants";
 
 type ReactCropperElement = HTMLDivElement & {
   cropper: Cropper;
@@ -69,7 +70,7 @@ const AddImage: React.FC = () => {
       const formData = new FormData();
       formData.append("image", croppedBlob, "croppedImage.png");
 
-      const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+      const userServiceUrl = USER_SERVICE_URL;
 
       try {
         await toast.promise(

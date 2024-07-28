@@ -2,6 +2,7 @@
 import { saveUser } from "@/redux/userSlice";
 import { IUser } from "@/types/types";
 import userService from "@/utils/apiCalls/userService";
+import { USER_SERVICE_URL } from "@/utils/constants";
 import { validateDateOfBirthEdit } from "@/utils/validateDOB";
 import axios from "axios";
 import Image from "next/image";
@@ -50,7 +51,7 @@ function EditProfile() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+        const userServiceUrl = USER_SERVICE_URL;
         const userData = await userService.getCurrUserData()
         setUserData(userData);
         dispatch(saveUser({ userData }));
@@ -89,7 +90,7 @@ function EditProfile() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+      const userServiceUrl = USER_SERVICE_URL;
       data._id = userData?._id;
       await toast.promise(
         axios.patch(`${userServiceUrl}/profile/userData`, data, {

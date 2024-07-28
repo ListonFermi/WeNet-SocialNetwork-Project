@@ -11,6 +11,7 @@ import axios from "axios";
 import Image from "next/image";
 import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { POSTS_SERVICE_URL } from "@/utils/constants";
 
 type ReactCropperElement = HTMLDivElement & {
   cropper: Cropper;
@@ -72,7 +73,7 @@ function CropImage({ setIsCaptionPage, setPostData }: CropImageProps) {
       const formData = new FormData();
       formData.append("image", croppedBlob, "croppedImage.png");
 
-      const postsServiceUrl = process.env.NEXT_PUBLIC_POSTS_SERVICE_URL;
+      const postsServiceUrl = POSTS_SERVICE_URL;
 
       try {
         const res: any = await toast.promise(

@@ -363,3 +363,9 @@ Jul 27, Sat
 - Tried changing routes in user & posts service
 
 --- "Changing user and posts service routes" ---
+
+Jul 28, Sun
+
+- Changed constants in frontend
+
+--- "Changed constants in frontend && frontend workflow change" ---

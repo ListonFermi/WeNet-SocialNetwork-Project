@@ -1,7 +1,8 @@
 import axios from "axios";
+import { POSTS_SERVICE_URL } from "../constants";
 
-const postServiceUrl = process.env.NEXT_PUBLIC_POSTS_SERVICE_URL;
-const postServiceAdminUrl = process.env.NEXT_PUBLIC_POSTS_SERVICE_ADMIN_URL;
+const postServiceUrl = POSTS_SERVICE_URL;
+const postServiceAdminUrl = `${POSTS_SERVICE_URL}/admin`;
 
 export default {
   //posts

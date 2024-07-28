@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { Bounce, ToastContainer, ToastOptions, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import VerifyOTP from "./VerifyOTP";
+import { USER_SERVICE_URL } from "@/utils/constants";
 
 interface VerifyUserFormProps {
   setIsVerifyOTPComp: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,7 +45,7 @@ const VerifyUserForm: React.FC<VerifyUserFormProps> = ({
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+      const userServiceUrl = USER_SERVICE_URL;
 
       data._id = verifyUser;
       let response = await toast.promise(

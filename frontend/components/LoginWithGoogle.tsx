@@ -4,6 +4,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { Bounce, ToastOptions, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { USER_SERVICE_URL } from "@/utils/constants";
 
 const toastOptions: ToastOptions = {
   position: "top-center",
@@ -23,7 +24,7 @@ function LoginWithGoogle() {
 
   async function handleSubmit(credentialResponse: any) {
     try {
-      const userServiceUrl = process.env.NEXT_PUBLIC_USER_SERVICE_URL;
+      const userServiceUrl = USER_SERVICE_URL;
       await toast.promise(
         axios.post(`${userServiceUrl}/login/googleSignin`, credentialResponse, {
           withCredentials: true,
