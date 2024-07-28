@@ -2,6 +2,7 @@ import amqp, { Channel, Connection } from "amqplib";
 import { Types } from "mongoose";
 import { MQExchangeName, MQPostsAds, MQRoutingKey } from "./config";
 import { IWeNetAds } from "../models/postsCollection";
+import { RABBITMQ_URL } from "../utils/constants";
 
 export interface MQINotification {
   userId: string | Types.ObjectId;
@@ -33,7 +34,7 @@ export const publisher = {
   connectRabbitMQ: async function (): Promise<[Channel, Connection]> {
     try {
       // Establish connection to RabbitMQ
-      const connection: Connection = await amqp.connect("amqp://rabbitmq:5672");
+      const connection: Connection = await amqp.connect(RABBITMQ_URL);
       const channel: Channel = await connection.createChannel();
       return [channel, connection];
     } catch (error: any) {

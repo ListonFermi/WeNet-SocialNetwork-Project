@@ -373,3 +373,7 @@ Jul 28, Sun
 - Frontend- typo in SocketProvider
 
 --- "Frontend- typo in SocketProvider" ---
+
+- Added rabbitMQ URL in user & posts services
+
+--- "Added rabbitMQ URL in user & posts services" ---
