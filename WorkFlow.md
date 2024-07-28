@@ -377,3 +377,7 @@ Jul 28, Sun
 - Added rabbitMQ URL in user & posts services
 
 --- "Added rabbitMQ URL in user & posts services" ---
+
+- Changed rabbitMQ url in user & post service
+
+--- "Changed rabbitMQ url in user & post service" ---
