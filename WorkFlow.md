@@ -393,3 +393,7 @@ Jul 28, Sun
 - Deploying message, notification and ads service
 
 --- "Deploying message, notification and ads service" ---
+
+- SSL Certificate Applied
+
+--- "HTTP to HTTPS" ---

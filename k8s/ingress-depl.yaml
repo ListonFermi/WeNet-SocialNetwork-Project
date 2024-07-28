@@ -1,0 +1,75 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-controller
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "http://wenet.life, https://wenet.life"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: wenet.life
+      http:
+        paths:
+          - path: /.well-known/acme-challenge/
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: cm-acme-http-solver-<random>
+                port:
+                  number: 8089
+          - path: /api/user-service/
+            pathType: Prefix
+            backend:
+              service:
+                name: user-service-srv
+                port:
+                  number: 5001
+          - path: /api/posts-service/
+            pathType: Prefix
+            backend:
+              service:
+                name: posts-service-srv
+                port:
+                  number: 5002
+          - path: /socket.io
+            pathType: Prefix
+            backend:
+              service:
+                name: message-service-srv
+                port:
+                  number: 5003
+          - path: /api/message-service/
+            pathType: Prefix
+            backend:
+              service:
+                name: message-service-srv
+                port:
+                  number: 5003
+          - path: /api/notification-service/
+            pathType: Prefix
+            backend:
+              service:
+                name: notification-service-srv
+                port:
+                  number: 5004
+          - path: /api/ads-service/
+            pathType: Prefix
+            backend:
+              service:
+                name: ads-service-srv
+                port:
+                  number: 5005
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-srv
+                port:
+                  number: 3000
+  tls:
+  - hosts:
+    - wenet.life
+    secretName: wenet-life-tls

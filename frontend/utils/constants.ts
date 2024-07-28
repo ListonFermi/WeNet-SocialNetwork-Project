@@ -3,9 +3,9 @@ export const PayU = {
 };
 
 //  /* PROD: 
-export const FRONTEND_DOMAIN = "http://wenet.life";
+export const FRONTEND_DOMAIN = "https://wenet.life";
 
-const DOMAIN = "http://wenet.life";
+const DOMAIN = "https://wenet.life";
 
 const USER_SERVICE_DOMAIN = DOMAIN;
 const POSTS_SERVICE_DOMAIN = DOMAIN;
