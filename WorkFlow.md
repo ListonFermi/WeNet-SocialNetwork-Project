@@ -385,3 +385,7 @@ Jul 28, Sun
 - Changed rabbitMQ url in user & post service
 
 --- "Changed rabbitMQ url in user & post service- 2" ---
+
+- Checking the rabbitMQ url
+
+--- "Debugging: Checking the rabbitMQ url" ---

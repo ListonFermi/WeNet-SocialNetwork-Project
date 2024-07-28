@@ -5,6 +5,7 @@ import { RABBITMQ_URL } from '../utils/constants';
 
 export default async () => {
   try {
+    console.log({RABBITMQ_URL})
     const connection = await amqp.connect(RABBITMQ_URL);
     const channel = await connection.createChannel();
 
