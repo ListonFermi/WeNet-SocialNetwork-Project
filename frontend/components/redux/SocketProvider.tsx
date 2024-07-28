@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import cookies from "js-cookie";
+import { SOCKET_URI } from "@/utils/constants";
 
 interface SocketContextType {
   socket: Socket | null;
@@ -16,7 +17,7 @@ const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
   useEffect(() => {
     const token = cookies.get("token");
     if (token) {
-      const socketInstance = io(SOCKET_URI!, {
+      const socketInstance = io(SOCKET_URI, {
         withCredentials: true,
         auth: { token },
       });

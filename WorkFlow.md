@@ -369,3 +369,7 @@ Jul 28, Sun
 - Changed constants in frontend
 
 --- "Changed constants in frontend && frontend workflow change" ---
+
+- Frontend- typo in SocketProvider
+
+--- "Frontend- typo in SocketProvider" ---
