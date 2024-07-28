@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-service-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: message-service
+  template:
+    metadata:
+      labels:
+        app: message-service
+    spec:
+      containers:
+        - name: message-service-container
+          image: listonfermi/wenet-message-service
+          envFrom:
+            - configMapRef:
+                name: message-service-env
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: message-service-srv
+spec:
+  selector:
+    app: message-service
+  ports:
+    - name: message-service-ports
+      protocol: TCP
+      port: 5003
+      targetPort: 5003

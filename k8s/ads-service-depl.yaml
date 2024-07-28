@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ads-service-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ads-service
+  template:
+    metadata:
+      labels:
+        app: ads-service
+    spec:
+      containers:
+        - name: ads-service-container
+          image: listonfermi/wenet-ads-service
+          envFrom:
+            - configMapRef:
+                name: ads-service-env
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ads-service-srv
+spec:
+  selector:
+    app: ads-service
+  ports:
+    - name: ads-service-ports
+      protocol: TCP
+      port: 5005
+      targetPort: 5005

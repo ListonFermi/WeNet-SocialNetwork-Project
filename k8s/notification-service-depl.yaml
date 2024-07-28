@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+        - name: notification-service-container
+          image: listonfermi/wenet-notification-service
+          envFrom:
+            - configMapRef:
+                name: notification-service-env
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service-srv
+spec:
+  selector:
+    app: notification-service
+  ports:
+    - name: notification-service-ports
+      protocol: TCP
+      port: 5004
+      targetPort: 5004

@@ -38,12 +38,6 @@ app.use("/api/posts-service/report", reportsRoutes);
 app.use("/api/posts-service/admin", adminRoutes);
 app.use("/api/posts-service/", postsRoutes);
 
-// test routes:
-// app.use("/comment", commentsRoutes);
-// app.use("/report", reportsRoutes);
-// app.use("/admin", adminRoutes);
-// app.use("/", postsRoutes);
-
 app.use(errorHandler);
 
 startConsumer();

@@ -389,3 +389,7 @@ Jul 28, Sun
 - Checking the rabbitMQ url
 
 --- "Debugging: Checking the rabbitMQ url" ---
+
+- Deploying message, notification and ads service
+
+--- "Deploying message, notification and ads service" ---
