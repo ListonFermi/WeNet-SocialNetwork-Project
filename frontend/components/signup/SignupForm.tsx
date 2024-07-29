@@ -87,7 +87,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ setIsVerifyForm }) => {
               {...register("username", {
                 required: "Username is required",
                 pattern: {
-                  value: /^(?=.{1,15}$)[A-Za-z][A-Za-z0-9._]*$/,
+                  value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*()_+~`|}{[\]:;?><,./-]).{8,}$/,
                   message:
                     "Username can only contain letters, numbers, periods, and underscores. It must start with a letter.",
                 },

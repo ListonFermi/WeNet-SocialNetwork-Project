@@ -409,3 +409,7 @@ Jul 29, Mon
 - Frontend: forgot password page- no-unescaped-entities
 
 --- "Error fix- Frontend: forgot password page- no-unescaped-entities" ---
+
+- Changed input tag validation pattern- login && signup forms
+
+--- "Input tag validation pattern" ---
