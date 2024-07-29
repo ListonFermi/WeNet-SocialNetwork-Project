@@ -417,3 +417,7 @@ Jul 29, Mon
 - Completely changed the rabbitMQ producers & consumers of all services
 
 --- "Changed all rabbitMQ producers & consumers" ---
+
+- Changed rabbitMQ urls back to production
+
+--- "Changed rabbitMQ urls back to production" ---
