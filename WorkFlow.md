@@ -405,3 +405,7 @@ Jul 29, Mon
 - User-service: Google login- MQ to adsService
 
 --- "Forgot password page && google login- MQ to adsService" ---
+
+- Frontend: forgot password page- no-unescaped-entities
+
+--- "Error fix- Frontend: forgot password page- no-unescaped-entities" ---

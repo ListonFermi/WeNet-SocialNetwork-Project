@@ -81,7 +81,7 @@ const VerifyUserForm: React.FC = () => {
           </div>
         </form>
         <h2 className="text-white">
-          If your email is verified you'll get your new password in your email.
+          {`If your email is verified you'll get your new password in your email.`}
         </h2>
       </div>
     </>
