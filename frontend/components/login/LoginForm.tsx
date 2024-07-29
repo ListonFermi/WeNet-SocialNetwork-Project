@@ -8,7 +8,6 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginUser } from "@/redux/userSlice";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { USER_SERVICE_URL } from "@/utils/constants";
 
 const toastOptions: ToastOptions = {
@@ -119,9 +118,11 @@ function LoginForm() {
           </div>
         </form>
         <div className="mb-6 mt-4">
-        <Link href="/forgotPassword/sendEmail">
-            <div className="text-white">Forgot your password? Click here!</div>
-          </Link>
+          <a href="/forgotPassword/sendEmail">
+            <button className="text-white cursor-pointer">
+              Forgot your password? Click here!
+            </button>
+          </a>
         </div>
       </div>
     </>

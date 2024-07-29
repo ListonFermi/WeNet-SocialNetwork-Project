@@ -86,13 +86,21 @@ export = {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const userData: any = await userService.googleSignin(req.body);
+      const { user, exisitngUser }: any = await userService.googleSignin(
+        req.body
+      );
 
-      await userService.sendUserDataToMQ(userData._id, MQActions.addUser);
+      const action = exisitngUser ? MQActions.editUser : MQActions.addUser;
 
-      const token = await userService.generateJWT(userData);
+      await userService.sendUserDataToMQ(user._id, action);
+      await userService.sendUserDataToAdsMQ(user._id, action);
+
+      const token = await userService.generateJWT(user);
       res.cookie("token", token);
-      res.status(200).json({ userData, message: "Logged in successfully" });
+      res
+        .status(200)
+        .json({ userData: user, message: "Logged in successfully" });
+        
     } catch (error) {
       console.error(error);
       next(error);

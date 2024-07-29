@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar";
 import Feed from "@/components/page/PublicFeed";
 import LeftDiv from "@/components/page/LeftDiv";
 import RightDiv from "@/components/page/RightDiv";
-import { POSTS_SERVICE_URL, USER_SERVICE_URL } from "@/utils/constants";
 
 export const metadata = {
   title: "WeNet | Social Network Platform",
@@ -12,9 +11,6 @@ export const metadata = {
 };
 
 function Page() {
-
-  // test
-  console.log({USER_SERVICE_URL, POSTS_SERVICE_URL})
 
   return (
     <div className="max-h-screen flex flex-col">

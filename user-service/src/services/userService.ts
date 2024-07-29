@@ -47,9 +47,11 @@ export = {
   },
   googleSignin: async (
     credentialResponse: IGoogleCredentialRes
-  ): Promise<IUser> => {
+  ): Promise<{user: IUser,exisitngUser: boolean }> => {
     try {
-      return await userRepository.googleSignin(credentialResponse);
+      const {user, exisitngUser}= await userRepository.googleSignin(credentialResponse);
+
+      return {user, exisitngUser}
     } catch (error: any) {
       throw new Error(error.message);
     }

@@ -121,12 +121,10 @@ export = {
   },
   googleSignin: async (
     credentialResponse: IGoogleCredentialRes
-  ): Promise<IUser> => {
+  ): Promise<{user: IUser,exisitngUser: boolean }> => {
     try {
       const { credential } = credentialResponse;
-      console.log({ credential });
       const decodedCredential: any = jwtDecode<JwtPayload>(credential);
-      console.log({ decodedCredential });
 
       const {
         email,
@@ -138,7 +136,7 @@ export = {
       //logic for email already exists
       //grab the user data and sign it using JWT & send
       let user = await userCollection.findOne({ email });
-      if (user) return user;
+      if (user) return {user, exisitngUser: true};
 
       //logic for email doesn't exist
       // create a new user with email, name and generate random username
@@ -152,7 +150,8 @@ export = {
         password: "tempPassword", //handle password later- giving empty string as of now
       };
       user = new userCollection(userData);
-      return await user.save();
+      const userDataToReturn= await user.save();
+      return {user: userDataToReturn , exisitngUser: false}
     } catch (error: any) {
       console.log(error);
       throw new Error(error.message);

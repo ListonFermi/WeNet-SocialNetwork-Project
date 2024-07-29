@@ -1,7 +1,6 @@
 const protectedRoutes = new Set([
   "/feed",
   "/createPost",
-  "/forgotPassword/sendEmail",
   "/messages",
   "/notifications",
   "/search",
@@ -11,7 +10,11 @@ const protectedRoutes = new Set([
 const profileRoutePattern = /^\/profile\/[^/]+\/?.*$/;
 const postRoutePattern = /^\/post\/[^/]+\/?.*$/;
 
-const changeToFeedRoutes = new Set(["/", "/login", "/signup"]);
+const changeToFeedRoutes = new Set([
+  "/",
+  "/login",
+  "/signup",
+]);
 
 export function isProtectedRoute(pathname: string): boolean {
   return (

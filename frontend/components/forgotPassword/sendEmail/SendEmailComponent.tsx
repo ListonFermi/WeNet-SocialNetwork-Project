@@ -4,7 +4,7 @@ import { toastOptions } from "@/utils/toastOptions";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import {  ToastContainer, ToastOptions, toast } from "react-toastify";
+import { ToastContainer, ToastOptions, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const VerifyUserForm: React.FC = () => {
@@ -19,7 +19,7 @@ const VerifyUserForm: React.FC = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const router= useRouter()
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
@@ -32,7 +32,7 @@ const VerifyUserForm: React.FC = () => {
         },
         toastOptions
       );
-      router.push('/login')
+      router.push("/login");
     } catch (error: any) {
       const errorMessage =
         error.response && error.response.data
@@ -80,6 +80,9 @@ const VerifyUserForm: React.FC = () => {
             </button>
           </div>
         </form>
+        <h2 className="text-white">
+          If your email is verified you'll get your new password in your email.
+        </h2>
       </div>
     </>
   );

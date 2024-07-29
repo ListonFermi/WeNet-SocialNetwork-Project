@@ -394,6 +394,14 @@ Jul 28, Sun
 
 --- "Deploying message, notification and ads service" ---
 
+Jul 29, Mon
+
 - SSL Certificate Applied
 
 --- "HTTP to HTTPS" ---
+
+- Frontend: forgot password- page
+
+- User-service: Google login- MQ to adsService
+
+--- "Forgot password page && google login- MQ to adsService" ---
