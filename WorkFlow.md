@@ -421,3 +421,7 @@ Jul 29, Mon
 - Changed rabbitMQ urls back to production
 
 --- "Changed rabbitMQ urls back to production" ---
+
+- Frontend: Change password input tag pattern
+
+--- "Frontend: Change password input tag pattern" ---

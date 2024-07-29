@@ -61,7 +61,7 @@ function ChangePassword() {
                 required: "Enter a password",
                 pattern: {
                   value:
-                    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/,
+                    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*()_+~`|}{[\]:;?><,./-]).{8,}$/,
                   message:
                     "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character",
                 },
