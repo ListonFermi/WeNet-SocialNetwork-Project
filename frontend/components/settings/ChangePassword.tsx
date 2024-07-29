@@ -59,12 +59,12 @@ function ChangePassword() {
               placeholder="Current Password"
               {...register("currentPassword", {
                 required: "Enter a password",
-                pattern: {
-                  value:
-                    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*()_+~`|}{[\]:;?><,./-]).{8,}$/,
-                  message:
-                    "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character",
-                },
+                // pattern: {
+                //   value:
+                //     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*()_+~`|}{[\]:;?><,./-]).{8,}$/,
+                //   message:
+                //     "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character",
+                // },
               })}
               className="bg-black shadow appearance-none  rounded w-full py-2 px-3 text-white text-lg font-semibold leading-tight focus:outline-none focus:shadow-outline"
             />
