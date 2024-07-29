@@ -1,7 +1,6 @@
 import { Types } from "mongoose";
 import { IUser } from "../models/User";
 import profileRepository from "../repositories/profileRepository";
-import { SERVICES } from "../rabbitMq/config";
 
 export = {
   getUserData: async (_id: string | Types.ObjectId): Promise<IUser> => {
@@ -57,16 +56,14 @@ export = {
 
       if (isFollowing) {
         try {
-          SERVICES.notification.forEach(async () => {
-            await profileRepository.sendNotificationToMQ(
-              userToFollow,
-              currentUserId,
-              "follow",
-              "Started following you",
-              "users",
-              currentUserId
-            );
-          });
+          await profileRepository.sendNotificationToMQ(
+            userToFollow,
+            currentUserId,
+            "follow",
+            "Started following you",
+            "users",
+            currentUserId
+          );
         } catch (error: any) {
           console.log(error.message);
         }
@@ -154,7 +151,7 @@ export = {
       const following = await profileRepository.getFollowingUsers(
         currentUserId
       );
-      if(following?.length==0) return []
+      if (following?.length == 0) return [];
 
       const responseFormat = following?.map((user) => {
         return user._id.toString();

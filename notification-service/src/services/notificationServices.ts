@@ -16,6 +16,15 @@ export = {
       } catch (error: any) {
         throw new Error(error.message);
       }
+
+      //sending live notification
+      try {
+        
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+
+
     } catch (error: any) {
       throw new Error(error.message);
     }

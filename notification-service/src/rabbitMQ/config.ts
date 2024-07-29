@@ -1,36 +1,18 @@
+export const MQExchangeName = "wenet_exchange";
+
 export const MQActions = {
   addUser: "createUser",
   editUser: "updateUser",
-  addNotification : "createNotification",
+  addNotification: "createNotification",
   addPost: "createPost",
   editPost: "updatePost",
   addComment: "createComment",
-  editComment: "updateComment"
+  editComment: "updateComment",
 };
 
-export const MQExchangeName = "wenet_exchange";
-
-export const MQRoutingKey = [
-  "wenet-user-service",
-  "wenet-notification-service",
-  "wenet-posts-service"
+export const notificationServiceConsumers = [
+  { queueName: "user-notification", routingKey: "wenet-user-notification-key" },
+  { queueName: "post-notification", routingKey: "wenet-post-notification-key" },
 ];
 
-export const MQQueueName = ["user-queue", "notification-queue","posts-queue"];
-
-export const SERVICES = {
-  notification: ["notification-service"],
-
-  allServices: [
-    "user-service",
-    "posts-service",
-    "message-service",
-    "notification-service",
-  ],
-
-  allOtherServices: [
-    "posts-service",
-    "message-service",
-    "notification-service",
-  ],
-};
+export const notificationServiceProducers = []; //routing keys 

@@ -1,7 +1,7 @@
-import amqp from 'amqplib';
-import consumeMessages from './consumer';
-import { MQExchangeName, MQQueueName, MQRoutingKey } from './config';
-import { RABBITMQ_URL } from '../constants';
+import amqp from "amqplib";
+import consumeMessages from "./consumer";
+import { MQExchangeName, messageServiceConsumers } from "./config";
+import { RABBITMQ_URL } from "../constants"; 
 
 export default async () => {
   try {
@@ -9,25 +9,31 @@ export default async () => {
     const channel = await connection.createChannel();
 
     const exchangeName = MQExchangeName;
-    const queueName = MQQueueName;  // Queue name to be bound
-    const routingKey = MQRoutingKey;
+    const consumers = messageServiceConsumers;
 
-    console.log('Declaring exchange and queue...');
-    await channel.assertExchange(exchangeName, 'direct', { durable: true });
-    await channel.assertQueue(queueName, { durable: true, exclusive : false});
+    await channel.assertExchange(exchangeName, "direct", { durable: true });
+    consumers.forEach(
+      async ({ queueName }) =>
+        await channel.assertQueue(queueName, {
+          durable: true,
+          exclusive: false,
+        })
+    );
 
-    console.log('Binding queue to exchange...');
-    await channel.bindQueue(queueName, exchangeName, routingKey);
+    consumers.forEach(
+      async ({ queueName, routingKey }) =>
+        await channel.bindQueue(queueName, exchangeName, routingKey)
+    );
 
     // Set prefetch count
-    const prefetchCount = 1; 
+    const prefetchCount = 1;
     await channel.prefetch(prefetchCount);
 
-    console.log('Starting to consume messages...');
-    await consumeMessages(channel, queueName);
-
-    console.log('Consumer is up and running.');
+    consumers.forEach(async ({ queueName }) => {
+      await consumeMessages(channel, queueName);
+      console.log(`Started consuming messages in ${queueName} queue` )
+    });
   } catch (error) {
-    console.error('Error setting up consumer:', error);
+    console.error("Error setting up consumer:", error);
   }
 };

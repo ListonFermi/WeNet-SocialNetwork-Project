@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import profileService from "../services/profileService";
 import userService from "../services/userService";
-import { MQActions, SERVICES } from "../rabbitMq/config";
+import { MQActions } from "../rabbitMq/config";
 
 export = {
   getUser: async (
@@ -34,16 +34,8 @@ export = {
       if (!userData) throw new Error("User data not found");
 
       try {
-        SERVICES.allOtherServices.forEach(async (serviceName) => {
-          if (serviceName === "ads-service") {
-            return await userService.sendUserDataToAdsMQ(
-              userData._id,
-              MQActions.editUser
-            );
-          }
-
-          await userService.sendUserDataToMQ(userData._id, MQActions.editUser);
-        });
+        await userService.sendUserDataToMQ(userData._id, MQActions.editUser);
+        await userService.sendUserDataToAdsMQ(userData._id, MQActions.editUser);
       } catch (error: any) {
         console.log(error.message);
       }

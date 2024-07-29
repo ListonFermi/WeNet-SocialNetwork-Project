@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 
 export function verifyUser(req: any, res: Response, next: NextFunction) {
   const userToken = req.cookies?.token;
-  console.log({userToken})
 
   if (!userToken) {
     return res.status(401).send("JWT not found in the cookies");

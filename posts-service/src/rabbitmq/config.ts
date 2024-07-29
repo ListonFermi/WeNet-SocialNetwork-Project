@@ -1,3 +1,5 @@
+export const MQExchangeName = "wenet_exchange";
+
 export const MQActions = {
   addUser: "createUser",
   editUser: "updateUser",
@@ -9,43 +11,9 @@ export const MQActions = {
   addWeNetAd: "createWeNetAd",
 };
 
-// export const MQExchangeName = "wenet_exchange";
-// export const MQRoutingKey = "wenet-user-service";
-
-// // consumer queue name
-
-// export const MQQueueName = 'user-queue'
-
-export const MQExchangeName = "wenet_exchange";
-
-export const MQRoutingKey = [
-  "wenet-user-service",
-  "wenet-notification-service",
-  "wenet-posts-service",
-  "wenet-ads-post-service"
+export const postServiceConsumers = [
+  { queueName: "user-post", routingKey: "wenet-user-post-key" },
+  { queueName: "ads-post", routingKey: "wenet-ads-post-key" },
 ];
 
-// consumer queue name
-export const MQQueueName = ["user-queue", "notification-queue", "posts-queue","ads-post-queue"];
-
-export const SERVICES = {
-  notification: ["notification-service"],
-
-  allServices: [
-    "user-service",
-    "posts-service",
-    "message-service",
-    "notification-service",
-  ],
-
-  allOtherServices: [
-    "posts-service",
-    "message-service",
-    "notification-service",
-  ],
-};
-
-export const MQPostsAds = {
-  queueName: "posts-ads-queue",
-  routingKey: "wenet-posts-ads-service",
-};
+export const postServiceProducers = ["wenet-post-ads-key","wenet-post-notification-key"]; //routing keys 

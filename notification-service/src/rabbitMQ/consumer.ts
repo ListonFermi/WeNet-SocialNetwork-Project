@@ -2,7 +2,6 @@ import { Channel, ConsumeMessage } from "amqplib";
 import { MessageHandler } from "./messageHandler";
 
 const consumeMessages = async (channel: Channel, queue: string) => {
-  console.log("Ready to consume messages...");
 
   const onMessage = async (message: ConsumeMessage | null) => {
     if (!message) return;

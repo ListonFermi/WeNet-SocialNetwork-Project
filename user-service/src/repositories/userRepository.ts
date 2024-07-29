@@ -12,6 +12,7 @@ import "core-js/stable/atob";
 import mongoose, { Types } from "mongoose";
 import { generateStrongPassword } from "../utils/generateStrongPassword";
 import { MQUserData, MQUserDataToAds, publisher } from "../rabbitMq/publisher";
+import { userServiceProducers } from "../rabbitMq/config";
 
 dotenv.config();
 
@@ -121,7 +122,7 @@ export = {
   },
   googleSignin: async (
     credentialResponse: IGoogleCredentialRes
-  ): Promise<{user: IUser,exisitngUser: boolean }> => {
+  ): Promise<{ user: IUser; exisitngUser: boolean }> => {
     try {
       const { credential } = credentialResponse;
       const decodedCredential: any = jwtDecode<JwtPayload>(credential);
@@ -136,7 +137,7 @@ export = {
       //logic for email already exists
       //grab the user data and sign it using JWT & send
       let user = await userCollection.findOne({ email });
-      if (user) return {user, exisitngUser: true};
+      if (user) return { user, exisitngUser: true };
 
       //logic for email doesn't exist
       // create a new user with email, name and generate random username
@@ -150,8 +151,8 @@ export = {
         password: "tempPassword", //handle password later- giving empty string as of now
       };
       user = new userCollection(userData);
-      const userDataToReturn= await user.save();
-      return {user: userDataToReturn , exisitngUser: false}
+      const userDataToReturn = await user.save();
+      return { user: userDataToReturn, exisitngUser: false };
     } catch (error: any) {
       console.log(error);
       throw new Error(error.message);
@@ -175,7 +176,10 @@ export = {
         lastName,
         profilePicUrl: profilePicUrl ? profilePicUrl : "",
       };
-      await publisher.publishUserMessage(userData, action);
+      userServiceProducers.forEach(async (routingKey) => {
+        if (routingKey != userServiceProducers[3])
+          await publisher.publishUserMessage(userData, action, routingKey);
+      });
     } catch (error: any) {
       console.error("Error sending user data to MQ:", error.message);
       throw new Error(error.message);
@@ -290,14 +294,16 @@ export = {
   },
   getTickRequestData: async (userId: string) => {
     try {
-      return await wenetTickRequestCollection.findOne({userId: new Types.ObjectId(userId)});
+      return await wenetTickRequestCollection.findOne({
+        userId: new Types.ObjectId(userId),
+      });
     } catch (error: any) {
       throw new Error(error.message);
     }
   },
-  getUserData : async (username: string) => {
+  getUserData: async (username: string) => {
     try {
-      return await userCollection.findOne({username});
+      return await userCollection.findOne({ username });
     } catch (error: any) {
       throw new Error(error.message);
     }

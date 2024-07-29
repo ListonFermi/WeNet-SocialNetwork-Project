@@ -1,5 +1,5 @@
 import amqp, { Channel, Connection } from "amqplib";
-import { MQExchangeName, MQRoutingKey } from "./config";
+import { adsServiceProducers, MQExchangeName } from "./config";
 import { RABBITMQ_URL } from "../utils/constants";
 
 export interface MQIAdsServiceMessage{
@@ -40,7 +40,7 @@ export const publisher = {
       const [channel, connection] = await this.connectRabbitMQ();
 
       const exchangeName = MQExchangeName;
-      const routingKey = MQRoutingKey[2]; // Specific routing key
+      const routingKey = adsServiceProducers[0]; // Specific routing key
       await channel.assertExchange(exchangeName, "direct", { durable: true });
 
       const messageProperties = {

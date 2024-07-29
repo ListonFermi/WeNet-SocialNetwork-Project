@@ -13,7 +13,7 @@ dotenv.config();
 
 const app = express();
 
-/* 
+// /* 
 const frontEndUrl = process.env.FRONTEND_URL;
 const corsOptions = {
   origin: frontEndUrl,
@@ -24,9 +24,11 @@ app.use(cors(corsOptions));
 
 // Handle preflight requests
 app.options("*", cors(corsOptions));
-*/
-//test:
+// */ 
+
+/*test:
 app.use(cors())
+*/
 
 app.use(morgan("dev"));
 

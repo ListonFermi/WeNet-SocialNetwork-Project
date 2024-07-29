@@ -1,5 +1,4 @@
 import { IComment } from "../models/commentCollection";
-import { SERVICES } from "../rabbitmq/config";
 import commentsRepository from "../repositories/commentsRepository";
 import postsRepository from "../repositories/postsRepository";
 
@@ -24,16 +23,14 @@ export = {
         const postId = commentData.postId;
 
         if (userId !== doneByUser) {
-          SERVICES.notification.forEach(async () => {
-            await postsRepository.sendNotificationToMQ(
-              userId,
-              doneByUser,
-              "comment",
-              `Commented on your post`,
-              "posts",
-              postId
-            );
-          });
+          await postsRepository.sendNotificationToMQ(
+            userId,
+            doneByUser,
+            "comment",
+            `Commented on your post`,
+            "posts",
+            postId
+          );
         }
       } catch (error: any) {
         console.log(error.message);

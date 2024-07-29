@@ -1,6 +1,6 @@
 import amqp, { Channel, Connection } from "amqplib";
 import { ObjectId, Types } from "mongoose";
-import { MQExchangeName, MQRoutingKey } from "./config";
+import { MQExchangeName, userServiceProducers } from "./config";
 import { RABBITMQ_URL } from "../utils/constants";
 
 export type MQUserData = {
@@ -54,12 +54,11 @@ export const publisher = {
     }
   },
 
-  publishUserMessage: async function (userData: MQUserData, action: string) {
+  publishUserMessage: async function (userData: MQUserData, action: string, routingKey : string) {
     try {
       const [channel, connection] = await this.connectRabbitMQ();
 
       const exchangeName = MQExchangeName;
-      const routingKey = MQRoutingKey[0]; // Specific routing key
       await channel.assertExchange(exchangeName, "direct", { durable: true });
 
       const messageProperties = {
@@ -90,7 +89,7 @@ export const publisher = {
       const [channel, connection] = await this.connectRabbitMQ();
 
       const exchangeName = MQExchangeName;
-      const routingKey = MQRoutingKey[3]; // Specific routing key
+      const routingKey = userServiceProducers[3]; // Specific routing key
       await channel.assertExchange(exchangeName, "direct", { durable: true });
 
       const messageProperties = {
@@ -124,7 +123,7 @@ export const publisher = {
       const [channel, connection] = await this.connectRabbitMQ();
 
       const exchangeName = MQExchangeName;
-      const routingKey = MQRoutingKey[1]; // Specific routing key
+      const routingKey = userServiceProducers[2]; // Specific routing key
       await channel.assertExchange(exchangeName, "direct", { durable: true });
 
       const messageProperties = {

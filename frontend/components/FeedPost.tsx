@@ -32,6 +32,7 @@ function FeedPost({ postData, currUserData }: props) {
     if (postData) {
       setLiked(postData.isLiked);
       setBookmarked(postData.isBookmarked);
+      setLikesCount(postData?.likedBy?.length || 0)
     }
   }, [postData]);
 
@@ -79,7 +80,7 @@ function FeedPost({ postData, currUserData }: props) {
       }
       const likesCount = await postService.toggleLike("post", _id);
       console.log({ likesCount });
-      setLikesCount(() => likesCount);
+      setLikesCount(likesCount);
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -213,7 +214,7 @@ function FeedPost({ postData, currUserData }: props) {
           <p className="font-bold">{commentsCount}</p>
         </span>
         <Image
-          onClick={() => handleBookmarkPost}
+          onClick={handleBookmarkPost}
           // src="/icons/bookmark.svg"
           src="/icons/bookmarked.png"
           width={150}

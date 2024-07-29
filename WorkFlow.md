@@ -413,3 +413,7 @@ Jul 29, Mon
 - Changed input tag validation pattern- login && signup forms
 
 --- "Input tag validation pattern" ---
+
+- Completely changed the rabbitMQ producers & consumers of all services
+
+--- "Changed all rabbitMQ producers & consumers" ---

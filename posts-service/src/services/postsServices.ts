@@ -1,5 +1,5 @@
 import { IPost, IWeNetAds } from "../models/postsCollection";
-import { MQActions, SERVICES } from "../rabbitmq/config";
+import { MQActions } from "../rabbitmq/config";
 import postsRepository from "../repositories/postsRepository";
 
 export = {
@@ -35,16 +35,14 @@ export = {
       //To notification service
       try {
         const { _id, caption, imageUrl, isDeleted } = postData as IPost;
-        SERVICES.notification.forEach(async () => {
-          await postsRepository.sendPostDataToMQ(
-            _id,
-            userId,
-            caption,
-            imageUrl,
-            isDeleted,
-            MQActions.addPost
-          );
-        });
+        await postsRepository.sendPostDataToMQ(
+          _id,
+          userId,
+          caption,
+          imageUrl,
+          isDeleted,
+          MQActions.addPost
+        );
       } catch (error: any) {
         console.log(error.message);
       }
@@ -109,10 +107,12 @@ export = {
         const doneByUser = currUserId;
         const postId = post._id.toString();
 
-        const postIsLiked = await postsRepository.postIsLiked(doneByUser,postId)
+        const postIsLiked = await postsRepository.postIsLiked(
+          doneByUser,
+          postId
+        );
 
-        if (userId !== doneByUser && postIsLiked == true ) {
-          SERVICES.notification.forEach(async () => {
+        if (userId !== doneByUser && postIsLiked == true) {
             await postsRepository.sendNotificationToMQ(
               userId,
               doneByUser,
@@ -121,7 +121,6 @@ export = {
               "posts",
               postId
             );
-          });
         }
       } catch (error: any) {
         console.log(error.message);
