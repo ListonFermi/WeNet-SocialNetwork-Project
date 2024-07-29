@@ -2,7 +2,7 @@ import { USER_SERVICE_URL } from "@/utils/constants";
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: `${USER_SERVICE_URL}\admin`,
+  baseURL: `${USER_SERVICE_URL}/admin`,
   withCredentials: true,
   timeout: 120000,
 });

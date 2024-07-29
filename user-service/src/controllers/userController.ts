@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import userService from "../services/userService";
 import { IUser } from "../models/User";
-import { MQActions, SERVICES } from "../rabbitMq/config";
+import { MQActions } from "../rabbitMq/config";
 import profileService from "../services/profileService";
 
 export = {
@@ -44,9 +44,7 @@ export = {
       await userService.verifyOTP(_id, otp);
 
       try {
-        SERVICES.servicesToPublishAddUser.forEach(async () => {
-          await userService.sendUserDataToMQ(_id, MQActions.addUser);
-        });
+        await userService.sendUserDataToMQ(_id, MQActions.addUser);
 
         //userData with email, to ads Service
         await userService.sendUserDataToAdsMQ(_id, MQActions.addUser);
@@ -100,7 +98,6 @@ export = {
       res
         .status(200)
         .json({ userData: user, message: "Logged in successfully" });
-        
     } catch (error) {
       console.error(error);
       next(error);
@@ -154,18 +151,6 @@ export = {
 
       const userData = await userService.changeAccountType(userId, accountType);
       if (!userData) throw new Error("user data not found");
-
-      try {
-        SERVICES.allOtherServices.forEach(async () => {
-          if (!userData._id) throw new Error("user Id not found to send in MQ");
-          await userService.sendUserDataToMQ(
-            userData._id?.toString(),
-            MQActions.editUser
-          );
-        });
-      } catch (error: any) {
-        console.log(error.message);
-      }
 
       const token = await profileService.generateJWT(userData);
       res.cookie("token", token);

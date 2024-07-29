@@ -87,7 +87,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ setIsVerifyForm }) => {
               {...register("username", {
                 required: "Username is required",
                 pattern: {
-                  value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*()_+~`|}{[\]:;?><,./-]).{8,}$/,
+                  value: /^(?=.{1,15}$)[A-Za-z][A-Za-z0-9._]*$/,
                   message:
                     "Username can only contain letters, numbers, periods, and underscores. It must start with a letter.",
                 },
@@ -149,7 +149,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ setIsVerifyForm }) => {
                 required: "Enter a password",
                 pattern: {
                   value:
-                    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/,
+                    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*()_+~`|}{[\]:;?><,./-]).{8,}$/,
                   message:
                     "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character",
                 },

@@ -1,6 +1,6 @@
 import amqp, { Channel, Connection } from "amqplib";
 import { Types } from "mongoose";
-import { MQExchangeName, MQPostsAds, MQRoutingKey } from "./config";
+import { MQExchangeName, postServiceProducers } from "./config";
 import { IWeNetAds } from "../models/postsCollection";
 import { RABBITMQ_URL } from "../utils/constants";
 
@@ -60,7 +60,38 @@ export const publisher = {
       const [channel, connection] = await this.connectRabbitMQ();
 
       const exchangeName = MQExchangeName;
-      const routingKey = MQRoutingKey[2]; // Specific routing key
+      const routingKey = postServiceProducers[0]  // Specific routing key
+      await channel.assertExchange(exchangeName, "direct", { durable: true });
+
+      const messageProperties = {
+        headers: {
+          function: action,
+        },
+      };
+
+      const message = JSON.stringify(postData);
+      channel.publish(
+        exchangeName,
+        routingKey,
+        Buffer.from(message),
+        messageProperties
+      );
+
+      console.log("Message published to RabbitMQ:", postData);
+
+      await this.disconnectRabbitMQ(channel, connection);
+    } catch (error: any) {
+      console.error("Error publishing message to RabbitMQ:", error);
+      throw new Error(error.message);
+    }
+  },
+
+  publishPostMessageToNotification: async function (postData: MQIPost, action: string) {
+    try {
+      const [channel, connection] = await this.connectRabbitMQ();
+
+      const exchangeName = MQExchangeName;
+      const routingKey = postServiceProducers[1]  // Specific routing key
       await channel.assertExchange(exchangeName, "direct", { durable: true });
 
       const messageProperties = {
@@ -94,7 +125,7 @@ export const publisher = {
       const [channel, connection] = await this.connectRabbitMQ();
 
       const exchangeName = MQExchangeName;
-      const routingKey = MQRoutingKey[1]; // Specific routing key
+      const routingKey = postServiceProducers[1]  // Specific routing key
       await channel.assertExchange(exchangeName, "direct", { durable: true });
 
       const messageProperties = {
@@ -125,7 +156,7 @@ export const publisher = {
       const [channel, connection] = await this.connectRabbitMQ();
 
       const exchangeName = MQExchangeName;
-      const routingKey = MQPostsAds.routingKey; // Specific routing key
+      const routingKey = postServiceProducers[0]  // Specific routing key
       await channel.assertExchange(exchangeName, "direct", { durable: true });
 
       const messageProperties = {

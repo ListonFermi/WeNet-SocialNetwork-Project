@@ -309,7 +309,7 @@ export = {
         isDeleted,
       };
 
-      await publisher.publishPostMessage(postData, action);
+      await publisher.publishPostMessageToNotification(postData, action);
     } catch (error: any) {
       console.error("Error sending user data to MQ:", error.message);
       throw new Error(error.message);

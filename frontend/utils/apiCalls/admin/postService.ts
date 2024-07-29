@@ -2,7 +2,7 @@ import { POSTS_SERVICE_URL } from "@/utils/constants";
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: `${POSTS_SERVICE_URL}\admin`,
+  baseURL: `${POSTS_SERVICE_URL}/admin`,
   withCredentials: true,
   timeout: 120000,
 });

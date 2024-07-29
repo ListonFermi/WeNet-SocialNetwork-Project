@@ -1,3 +1,5 @@
+export const MQExchangeName = "wenet_exchange";
+
 export const MQActions = {
   addUser: "createUser",
   editUser: "updateUser",
@@ -8,9 +10,8 @@ export const MQActions = {
   editComment: "updateComment"
 };
 
-export const MQExchangeName = "wenet_exchange";
-export const MQRoutingKey = "wenet-user-service";
+export const messageServiceConsumers = [
+  { queueName: "user-message", routingKey: "wenet-user-message-key" },
+];
 
-// consumer queue name
-
-export const MQQueueName = "user-queue";
+export const messageServiceProducers = []; //routing keys 
