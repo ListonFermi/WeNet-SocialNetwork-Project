@@ -4,22 +4,11 @@ metadata:
   name: ingress-controller
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "http://wenet.life, https://wenet.life"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: "nginx"
   rules:
-    - host: wenet.life
-      http:
+    - http:
         paths:
-          - path: /.well-known/acme-challenge/
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: cm-acme-http-solver-wenet
-                port:
-                  number: 8089
           - path: /api/user-service/
             pathType: Prefix
             backend:
@@ -69,7 +58,3 @@ spec:
                 name: frontend-srv
                 port:
                   number: 3000
-  tls:
-  - hosts:
-    - wenet.life
-    secretName: wenet-life-tls

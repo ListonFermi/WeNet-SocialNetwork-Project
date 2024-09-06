@@ -15,4 +15,4 @@ export const notificationServiceConsumers = [
   { queueName: "post-notification", routingKey: "wenet-post-notification-key" },
 ];
 
-export const notificationServiceProducers = []; //routing keys 
+export const notificationServiceProducers = ['wenet-notification-message-key']; //routing keys 

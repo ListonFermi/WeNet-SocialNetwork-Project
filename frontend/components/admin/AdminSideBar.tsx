@@ -26,7 +26,7 @@ function AdminSideBar() {
             <p className="pl-5 text-xl text-white font-bold">WeNet Dashboard</p>
           </div>
         </a>
-        <a href={"/admin/userManagement"}>
+        <a href={"/admin/usermanagement"}>
           <div className="flex items-center mt-[3%] mx-[10%] rounded-lg cursor-pointer hover:bg-secColorH">
             <Image
               src="/icons/admin/userManagement.png"

@@ -427,3 +427,10 @@ Jul 29, Mon
 --- "Frontend: Change password input tag pattern" ---
 
 --- "Frontend: Change password input tag pattern-2" ---
+
+Aug 06, Fri
+
+- Few Changes in k8s manifests done throughout last month
+- Admin Sidebar : usermanagement url updated
+
+--- "k8s manifests && Admin Sidebar: url updated" ---
